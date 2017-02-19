@@ -1,4 +1,8 @@
 #include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "../logger.h"
 
 std::string Util::ReplaceString(std::string subject, const std::string& search, const std::string& replace)
 {
@@ -104,4 +108,22 @@ long Util::GetEpochTime()
 	auto duration = std::chrono::system_clock::now().time_since_epoch();
 
 	return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+}
+
+
+void Util::MoveMouse(int x, int y)
+{
+    Log << " @ MoveMouse" << std::endl;
+    Display *display = XOpenDisplay(NULL);
+    XWarpPointer(display, None, None, 0, 0, 0, 0, x, y);
+    XCloseDisplay(display);
+}
+
+bool Util::KeyDown(KeySym keySym)
+{
+    static Display *display = XOpenDisplay(NULL);
+    char keyState[32];
+    XQueryKeymap(display, keyState);
+    int keyCode = (int)XKeysymToKeycode(display, keySym);
+    return keyState[keyCode/8] & (0x1 << keyCode%8);
 }

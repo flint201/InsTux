@@ -1,6 +1,7 @@
 #include "entity.h"
 #include "math.h"
 
+/*
 bool Entity::IsVisible(C_BasePlayer* player, Bone bone, float fov, bool smoke_check)
 {
 	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
@@ -41,22 +42,7 @@ bool Entity::IsVisible(C_BasePlayer* player, Bone bone, float fov, bool smoke_ch
 
 	return tr.m_pEntityHit == player;
 }
-
-bool Entity::IsPlanting(C_BasePlayer* player)
-{
-	C_BaseCombatWeapon* activeWeapon = (C_BaseCombatWeapon*)entityList->GetClientEntityFromHandle(player->GetActiveWeapon());
-	if (!activeWeapon)
-		return false;
-
-	ClientClass* clientClass = activeWeapon->GetClientClass();
-	if (!clientClass)
-		return false;
-
-	if (clientClass->m_ClassID != EClassIds::CC4)
-		return false;
-
-	return ((C_WeaponC4*)activeWeapon)->GetStartedArming();
-}
+*/
 
 Bone Entity::GetBoneByName(C_BasePlayer* player, const char* boneName)
 {

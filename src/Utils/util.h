@@ -11,6 +11,14 @@
 #include <codecvt>
 #include <sstream>
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysymdef.h>
+
+#include "util_sdk.h"
+
+#define RandomInt(nMin, nMax) (rand() % (nMax - nMin + 1) + nMin)
+
 namespace Util
 {
 	std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
@@ -22,6 +30,9 @@ namespace Util
 	std::string ToUpper(std::string str);
 	std::string WstringToString(std::wstring wstr);
 	std::wstring StringToWstring(std::string str);
+
+    bool KeyDown(KeySym keySym);
+    void MoveMouse(int x, int y);
 
 	long GetEpochTime();
 

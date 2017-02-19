@@ -1,5 +1,7 @@
 #include "util_sdk.h"
+#include "../logger.h"
 
+/*
 char Util::GetButtonString(ButtonCode_t key)
 {
 	switch (key)
@@ -55,9 +57,12 @@ ButtonCode_t Util::GetButtonCode(std::string buttonName)
 
 	return ButtonCode_t::BUTTON_CODE_INVALID;
 }
+*/
 
 IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool ignorez, bool nofog, bool model, bool nocull, bool halflambert)
 {
+    Log << "    + Util::CreateMaterial" << std::endl;
+
 	std::stringstream materialData;
 	materialData << "\"" + type + "\"\n"
 			"{\n"
@@ -69,11 +74,31 @@ IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool igno
 			"\t\"$halflambert\" \"" + std::to_string(halflambert) + "\"\n"
 			"}\n" << std::flush;
 
-	std::string materialName = "aimtux_" + std::to_string(RandomInt(10, 100000));
+	std::string materialName = "mymat_" + std::to_string(RandomInt(10, 100000));
 	KeyValues* keyValues = new KeyValues(materialName.c_str());
+    Log << "    + after new KeyValues" << std::endl;
 
 	InitKeyValues(keyValues, type.c_str());
+    Log << "    + after InitKeyValues" << std::endl;
+
 	LoadFromBuffer(keyValues, materialName.c_str(), materialData.str().c_str(), nullptr, NULL, nullptr);
+    Log << "    + after LoadFromBuffer" << std::endl;
 
 	return material->CreateMaterial(materialName.c_str(), keyValues);
+}
+
+bool Util::Ray(C_BasePlayer* localplayer, Vector vecStart, Vector vecEnd)
+{
+	Ray_t ray;
+	ray.Init(vecStart, vecEnd);
+
+	CTraceFilter traceFilter;
+	traceFilter.pSkip = localplayer;
+
+	trace_t tr;
+
+	trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+
+    // Log << "    tr.m_pEntityHit = " << tr.m_pEntityHit <<  endl;
+	return (unsigned)tr.m_pEntityHit & 0x8;
 }

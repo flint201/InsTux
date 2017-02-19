@@ -54,6 +54,14 @@ void Math::ClampAngles(QAngle& angle)
 	angle.z = 0;
 }
 
+QAngle Math::DeltaAngles(const QAngle& start, const QAngle& end)
+{
+    QAngle delta = end - start;
+    NormalizeAngles(delta);
+    ClampAngles(delta);
+    return delta;
+}
+
 void Math::CorrectMovement(QAngle vOldAngles, CUserCmd* pCmd, float fOldForward, float fOldSidemove)
 {
 	// side/forward move correction
@@ -88,6 +96,16 @@ float Math::GetFov(const QAngle& viewAngle, const QAngle& aimAngle)
 	NormalizeAngles(delta);
 
 	return sqrtf(powf(delta.x, 2.0f) + powf(delta.y, 2.0f));
+}
+
+float Math::GetDistance(const Vector& source, const Vector& destination)
+{
+	Vector delta = destination - source;
+	return sqrtf(
+		powf(delta.x, 2.0f) +
+		powf(delta.y, 2.0f) +
+		powf(delta.z, 2.0f)
+	);
 }
 
 void Math::VectorAngles(const Vector& forward, QAngle &angles)

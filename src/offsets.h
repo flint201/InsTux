@@ -25,8 +25,6 @@ struct COffsets
 
 	struct
 	{
-		std::ptrdiff_t m_flAnimTime;
-		std::ptrdiff_t m_flSimulationTime;
 		std::ptrdiff_t m_vecOrigin;
 		std::ptrdiff_t m_nRenderMode;
 		std::ptrdiff_t m_iTeamNum;

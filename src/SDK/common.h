@@ -1,5 +1,6 @@
 #pragma once
 #include <cstring>
+#include "../logger.h"
 
 typedef void* (*InstantiateInterfaceFn) ();
 
@@ -31,13 +32,16 @@ interface* GetInterface(const char* filename, const char* version, bool exact = 
 {
 	void* library = dlopen(filename, RTLD_NOLOAD | RTLD_NOW);
 
-	if (!library)
+	if (!library) {
+        Log << "    -- " << filename << " dlopen failed." << std::endl;
 		return nullptr;
+    }
 
 	void* interfaces_sym = dlsym(library, "s_pInterfaceRegs");
 
 	if (!interfaces_sym)
 	{
+        Log << "    -- " << filename << " dlsym s_pInterfaceRegs failed." << std::endl;
 		dlclose(library);
 		return nullptr;
 	}
@@ -62,6 +66,7 @@ interface* GetInterface(const char* filename, const char* version, bool exact = 
 		}
 	}
 
+    Log << "    -- " << filename << " Cannot find interface." << std::endl;
 	return nullptr;
 }
 

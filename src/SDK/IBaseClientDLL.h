@@ -56,16 +56,13 @@ struct RecvProp
 	const char *m_pParentArrayPropName;
 };
 
-class IClientNetworkable;
-typedef IClientNetworkable* (*CreateClientClassFn)(int entnum, int serialNum);
-typedef IClientNetworkable* (*CreateEventFn)();
+typedef void* (*CreateClientClassFn)(int entnum, int serialNum);
 
-class ClientClass
+struct ClientClass
 {
-public:
 	CreateClientClassFn m_pCreateFn;
-	CreateEventFn *m_pCreateEventFn;
-	char* m_pNetworkName;
+	void *m_pCreateEventFn;
+	char *m_pNetworkName;
 	RecvTable *m_pRecvTable;
 	ClientClass* m_pNext;
 	EClassIds m_ClassID;

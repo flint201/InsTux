@@ -51,22 +51,28 @@
 #define LOADFROMBUFFER_SIGNATURE "\x55\x48\x89\xE5\x48\x89\x5D\xD8\x48\x89\xD3\x4C\x89\x65\xE0\x4D\x89\xCC"
 #define LOADFROMBUFFER_MASK "xxxxxxxxxxxxxxxxxx"
 
+#define GETCSWPNDATA_SIGNATURE "\x55\x48\x89\xE5\x0F\xB7\xBF\xD4\x3A"
+#define GETCSWPNDATA_MASK "xxxxxxxxx"
+
 #define CROSSHAIRWEAPONTYPECHECK_SIGNATURE "\x83\xF8\x05\x0F\x84\x00\x00\x00\x00\x49\x8B\x07"
 #define CROSSHAIRWEAPONTYPECHECK_MASK "xxxxx????xxx"
 
 #define CAMTHINK_SVCHEATSCHECK_SIGNATURE "\x74\x00\x49\x83\x00\x00\x00\x00\x00\x00\x00\x0F\x84\x00\x00\x00\x00\x49\x8B"
 #define CAMTHINK_SVCHEATSCHECK_MASK "x?xx??????xxx????xx"
 
+#define CGAMESERVER_SIGNATURE "\x48\x8B\x1D\x38\x92\xB8\x00\x49\x89\xC6"
+#define CGAMESERVER_MASK "xxxxxx?xxx"
+
 #include <memory>
 #include <unordered_map>
 #include <sys/mman.h>
 #include <link.h>
 #include "Utils/patternfinder.h"
-#include "Utils/recvproxyhook.h"
+//#include "Utils/recvproxyhook.h"
 #include "SDK/SDK.h"
 #include "Utils/vmt.h"
 #include "Utils/util.h"
-#include "glhook.h"
+//#include "glhook.h"
 #include "interfaces.h"
 
 struct dlinfo_t
@@ -80,10 +86,14 @@ namespace Hooker
 {
 	bool GetLibraryInformation(const char* library, uintptr_t* address, size_t* size);
 	void InitializeVMHooks();
-	bool HookRecvProp(const char* className, const char* propertyName, std::unique_ptr<RecvPropHook>& recvPropHook);
+	void FindInitKeyValues();
+	void FindLoadFromBuffer();
 	void FindIClientMode();
+    /*
+	bool HookRecvProp(const char* className, const char* propertyName, std::unique_ptr<RecvPropHook>& recvPropHook);
 	void FindGlobalVars();
 	void FindCInput();
+	void FindCGameServer();
 	void FindGlowManager();
 	void FindPlayerResource();
 	void FindGameRules();
@@ -96,12 +106,11 @@ namespace Hooker
 	void FindSurfaceDrawing();
 	void FindGetLocalClient();
 	void FindLineGoesThroughSmoke();
-	void FindInitKeyValues();
-	void FindLoadFromBuffer();
-	void FindVstdlibFunctions();
+	void FindGetCSWpnData();
 	void FindCrosshairWeaponTypeCheck();
 	void FindCamThinkSvCheatsCheck();
 	void HookSwapWindow();
 	void HookPollEvent();
 	void FindSDLInput();
+    */
 }

@@ -7,11 +7,10 @@
 #include "../SDK/SDK.h"
 #include "../Hooks/hooks.h"
 #include "../interfaces.h"
-#include "../settings.h"
 #include "../Utils/entity.h"
+#include "../Utils/util_sdk.h"
 
 namespace Chams
 {
-	void DrawModelExecute(void* thisptr, void* context, void *state, const ModelRenderInfo_t &pInfo, matrix3x4_t* pCustomBoneToWorld);
-	void CreateMove(CUserCmd* cmd);
+	bool DrawModelExecute(void* thisptr, void* context, void *state, const ModelRenderInfo_t &pInfo, matrix3x4_t* pCustomBoneToWorld);
 }

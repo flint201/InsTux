@@ -2,35 +2,7 @@
 
 #include "vector.h"
 
-#define MAX_SHOOT_SOUNDS 16
-#define MAX_WEAPON_STRING 80
-#define MAX_WEAPON_PREFIX 16
-#define MAX_WEAPON_AMMO_NAME 32
-
-enum WeaponSound_t
-{
-	EMPTY,
-	SINGLE,
-	SINGLE_NPC,
-	WPN_DOUBLE, // Can't be "DOUBLE" because windows.h uses it.
-	DOUBLE_NPC,
-	BURST,
-	RELOAD,
-	RELOAD_NPC,
-	MELEE_MISS,
-	MELEE_HIT,
-	MELEE_HIT_WORLD,
-	SPECIAL1,
-	SPECIAL2,
-	SPECIAL3,
-	TAUNT,
-	FAST_RELOAD,
-
-	// Add new shoot sound types here
-	REVERSE_THE_NEW_SOUND,
-
-	NUM_SHOOT_SOUND_TYPES,
-};
+extern uintptr_t* GetCSWpnData_address;
 
 enum MoveType_t
 {
@@ -59,9 +31,9 @@ enum DataUpdateType_t
 class ICollideable
 {
 public:
-	virtual void pad0();
-	virtual const Vector& OBBMins() const;
-	virtual const Vector& OBBMaxs() const;
+	virtual void pad0( );
+	virtual const Vector& OBBMins( ) const;
+	virtual const Vector& OBBMaxs( ) const;
 };
 
 class IHandleEntity
@@ -114,8 +86,11 @@ public:
 
 	bool GetDormant()
 	{
+        /*
 		typedef bool (* oGetDormant)(void*);
 		return getvfunc<oGetDormant>(this, 9)(this);
+        */
+        return (bool) *((bool*)this + 0xE1);
 	}
 
 	int GetIndex()
@@ -161,16 +136,6 @@ public:
 	int* GetModelIndex()
 	{
 		return (int*)((uintptr_t)this + offsets.DT_BaseViewModel.m_nModelIndex);
-	}
-
-	float GetAnimTime()
-	{
-		return *(float*)((uintptr_t)this + offsets.DT_BaseEntity.m_flAnimTime);
-	}
-
-	float GetSimulationTime()
-	{
-		return *(float*)((uintptr_t)this + offsets.DT_BaseEntity.m_flSimulationTime);
 	}
 
 	TeamID GetTeam()
@@ -323,11 +288,6 @@ public:
 		return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_bHasHelmet);
 	}
 
-	float GetFlashBangTime()
-	{
-		return *(float*)((uintptr_t)this + 0xABE4);
-	}
-
 	float GetFlashDuration()
 	{
 		return *(float*)((uintptr_t)this + offsets.DT_CSPlayer.m_flFlashDuration);
@@ -457,6 +417,12 @@ public:
 	{
 		return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_iAccountID);
 	}
+
+	float GetInaccuracy()
+	{
+		typedef float (* oGetInaccuracy)(void*);
+		return getvfunc<oGetInaccuracy>(this, 552)(this);
+	}
 };
 
 class C_BaseViewModel: public C_BaseEntity
@@ -473,8 +439,6 @@ public:
 	}
 };
 
-class CHudTexture;
-
 class FileWeaponInfo_t
 {
 public:
@@ -486,51 +450,8 @@ public:
 	bool bParsedScript;
 	bool bLoadedHudElements;
 
-	char szClassName[MAX_WEAPON_STRING];
-	char szPrintName[MAX_WEAPON_STRING];
-
-	char szViewModel[MAX_WEAPON_STRING];
-	char szWorldModel[MAX_WEAPON_STRING];
-	char szAmmo1[MAX_WEAPON_AMMO_NAME];
-	char szWorldDroppedModel[MAX_WEAPON_STRING];
-	char szAnimationPrefix[MAX_WEAPON_PREFIX];
-	int iSlot;
-	int iPosition;
-	int iMaxClip1;
-	int iMaxClip2;
-	int iDefaultClip1;
-	int iDefaultClip2;
-	int iWeight;
-	int iRumbleEffect;
-	bool bAutoSwitchTo;
-	bool bAutoSwitchFrom;
-	int iFlags;
-	char szAmmo2[MAX_WEAPON_AMMO_NAME];
-	char szAIAddOn[MAX_WEAPON_STRING];
-
-	// Sound blocks
-	char aShootSounds[NUM_SHOOT_SOUND_TYPES][MAX_WEAPON_STRING];
-
-	int iAmmoType;
-	int iAmmo2Type;
-	bool m_bMeleeWeapon;
-
-	// This tells if the weapon was built right-handed (defaults to true).
-	// This helps cl_righthand make the decision about whether to flip the model or not.
-	bool m_bBuiltRightHanded;
-	bool m_bAllowFlipping;
-
-	// Sprite data, read from the data file
-	int iSpriteCount;
-	CHudTexture* iconActive;
-	CHudTexture* iconInactive;
-	CHudTexture* iconAmmo;
-	CHudTexture* iconAmmo2;
-	CHudTexture* iconCrosshair;
-	CHudTexture* iconAutoaim;
-	CHudTexture* iconZoomedCrosshair;
-	CHudTexture* iconZoomedAutoaim;
-	CHudTexture* iconSmall;
+	char szClassName[80];
+	char szPrintName[80];
 };
 
 class CCSWeaponInfo : public FileWeaponInfo_t
@@ -600,9 +521,9 @@ public:
 		return *(int*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_hOwner);
 	}
 
-	int GetAmmo()
+	unsigned int GetAmmo()
 	{
-		return *(int*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_iClip1);
+		return *(unsigned int*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_iClip1);
 	}
 
 	float GetNextPrimaryAttack()
@@ -622,26 +543,8 @@ public:
 
 	CCSWeaponInfo* GetCSWpnData()
 	{
-		typedef CCSWeaponInfo* (* oGetCSWpnData)(void*);
-		return getvfunc<oGetCSWpnData>(this, 524)(this);
-	}
-
-	float GetInaccuracy()
-	{
-		typedef float (* oGetInaccuracy)(void*);
-		return getvfunc<oGetInaccuracy>(this, 552)(this);
-	}
-
-	float GetSpread()
-	{
-		typedef float (* oGetSpread)(void*);
-		return getvfunc<oGetSpread>(this, 553)(this);
-	}
-
-	void UpdateAccuracyPenalty()
-	{
-		typedef void (* oUpdateAccuracyPenalty)(void*);
-		return getvfunc<oUpdateAccuracyPenalty>(this, 554)(this);
+		typedef CCSWeaponInfo* (* oGetCSWpnData) (void*);
+		return reinterpret_cast<oGetCSWpnData>(GetCSWpnData_address)(this);
 	}
 };
 

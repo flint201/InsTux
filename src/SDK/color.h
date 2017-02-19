@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ImGUI/imgui.h"
+//#include "../ImGUI/imgui.h"
 
 struct Color
 {
@@ -118,6 +118,7 @@ struct Color
 		}
 	}
 
+    /*
 	static Color FromImColor(ImColor color)
 	{
 		return Color(
@@ -137,4 +138,5 @@ struct Color
 				color.a / 255.f
 		);
 	}
+    */
 };

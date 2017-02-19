@@ -487,7 +487,7 @@ public:
 	void GetModelMaterials(const model_t *model, int count, IMaterial** ppMaterial)
 	{
 		typedef studiohdr_t* (* oGetModelMaterials)(void*, const model_t*, int, IMaterial**);
-		getvfunc<oGetModelMaterials>(this, 18)(this, model, count, ppMaterial);
+		getvfunc<oGetModelMaterials>(this, 17)(this, model, count, ppMaterial);
 	}
 
 	studiohdr_t* GetStudioModel(const model_t* model)

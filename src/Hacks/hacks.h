@@ -1,4 +1,6 @@
+#include "chams.h"
 #include "aimbot.h"
+/*
 #include "airstuck.h"
 #include "antiaim.h"
 #include "asuswalls.h"
@@ -7,7 +9,6 @@
 #include "autodefuse.h"
 #include "autostrafe.h"
 #include "bhop.h"
-#include "chams.h"
 #include "clantagchanger.h"
 #include "customglow.h"
 #include "dlights.h"
@@ -36,3 +37,4 @@
 #include "triggerbot.h"
 #include "valvedscheck.h"
 #include "view.h"
+*/

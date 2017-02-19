@@ -4,25 +4,40 @@
 #include <sys/mman.h>
 #include <link.h>
 #include <fstream>
-#include "Utils/patternfinder.h"
 #include "SDK/SDK.h"
+#include "Utils/patternfinder.h"
 #include "Utils/vmt.h"
 #include "Utils/util.h"
 
+typedef void(*MsgFn)(const char* msg, va_list);
+void Msg(const char* msg, ...);
+
+extern ICvar* cvar;
+
 extern IBaseClientDLL* client;
+extern IClientEntityList* entityList;
+extern IClientMode* clientMode;
+extern IEngineClient* engine;
+extern IEngineTrace* trace;
+extern IVModelRender* modelRender;
+extern IMaterialSystem* material;
+extern IVModelInfo* modelInfo;
+
+extern VMT* materialVMT;
+extern VMT* modelRenderVMT;
+extern VMT* clientModeVMT;
+extern VMT* clientVMT;
+
+extern InitKeyValuesFn InitKeyValues;
+extern LoadFromBufferFn LoadFromBuffer;
+
+extern bool* bSendPacket;
+/*
 extern ISurface* surface;
 extern IVPanel* panel;
-extern IEngineClient* engine;
-extern IClientEntityList* entityList;
 extern IVDebugOverlay* debugOverlay;
-extern IVModelInfo* modelInfo;
-extern IVModelRender* modelRender;
-extern IClientMode* clientMode;
-extern IEngineTrace* trace;
 extern IInputSystem* inputSystem;
 extern IInputInternal* inputInternal;
-extern IMaterialSystem* material;
-extern ICvar* cvar;
 extern CGlobalVars* globalVars;
 extern CEffects* effects;
 extern IGameEventManager2* gameEvents;
@@ -40,32 +55,20 @@ extern IEngineSound* sound;
 extern ILocalize* localize;
 extern ICommandLine* commandline;
 extern CInput* input;
+extern CGameServer* sv;
 
 extern VMT* panelVMT;
-extern VMT* clientVMT;
-extern VMT* modelRenderVMT;
-extern VMT* clientModeVMT;
 extern VMT* gameEventsVMT;
 extern VMT* viewRenderVMT;
 extern VMT* inputInternalVMT;
-extern VMT* materialVMT;
 extern VMT* surfaceVMT;
 extern VMT* launcherMgrVMT;
 extern VMT* engineVGuiVMT;
 extern VMT* soundVMT;
 
 extern LineGoesThroughSmokeFn LineGoesThroughSmoke;
-extern InitKeyValuesFn InitKeyValues;
-extern LoadFromBufferFn LoadFromBuffer;
-
-extern RandomSeedFn RandomSeed;
-extern RandomFloatFn RandomFloat;
-extern RandomFloatExpFn RandomFloatExp;
-extern RandomIntFn RandomInt;
-extern RandomGaussianFloatFn RandomGaussianFloat;
 
 extern int* nPredictionRandomSeed;
-extern bool* bSendPacket;
 extern CMoveData* g_MoveData;
 extern uint8_t* CrosshairWeaponTypeCheck;
 extern uint8_t* CamThinkSvCheatsCheck;
@@ -75,6 +78,7 @@ extern uintptr_t* swapWindowJumpAddress;
 
 extern uintptr_t oPollEvent;
 extern uintptr_t* polleventJumpAddress;
+//*/
 
 namespace Interfaces
 {
