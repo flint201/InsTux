@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(AimTux)
+project(InsTux)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.2)
@@ -24,13 +24,14 @@ FUNCTION (EXCLUDE_FILES_FROM_DIR_IN_LIST _InFileList _excludeDirName _verbose)
     set(SOURCE_FILES ${_InFileList} PARENT_SCOPE) # Return the SOURCE_FILES variable to the calling parent
 ENDFUNCTION (EXCLUDE_FILES_FROM_DIR_IN_LIST)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-maybe-uninitialized -Wno-unused-result -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-maybe-uninitialized -Wno-unused-result -O3") #force 32bit compilation
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++")
 set(CMAKE_BUILD_TYPE Debug)
 
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
-EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "src/ImGUI/examples/" FALSE)
-EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "src/ImGUI/extra_fonts" FALSE)
 
-add_library(AimTux SHARED ${SOURCE_FILES})
-target_link_libraries(AimTux SDL2 GL dl)
+add_library(InsTux SHARED ${SOURCE_FILES})
+set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
+#target_link_libraries(InsTux SDL2 GL dl)
+target_link_libraries(InsTux dl)
