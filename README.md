@@ -23,3 +23,6 @@ To use, start the game and wait until it finishes loading, then run "./load" in 
 
 # Known issues
 Currently there seems to be some false positives when it comes to visibility check, which causes the auto-aim to target players behind cover occasionally. This does not include cases when the targets is within 1 degree fov of center of screen, which is intended as a force targeting feature.
+
+# Disclaimer
+This project is for education purpose ONLY. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
