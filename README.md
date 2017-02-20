@@ -1,7 +1,8 @@
 # InsTux
 
-This is InsTux, a hack for Insurgency on Linux. It is currently a work in progress
-Features include:
+This is InsTux, a hack for Insurgency on Linux. It is currently a work in progress.
+
+# Features
 
 - XQZ Cham
     ![cham](http://i.imgur.com/oJ7cZaS.png)
