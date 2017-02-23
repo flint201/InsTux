@@ -6,7 +6,13 @@
 
 #define NUM_BONE 128
 
-C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint)
+namespace Aimbot
+{
+    int targetIdx = -1;
+    Vector lastAimPoint;
+}
+
+C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint, bool locked)
 {
     TeamID myteam = localplayer->GetTeam();
     Vector eyePos = localplayer->GetEyePosition();
@@ -27,43 +33,72 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 			continue;
         }
 
-        Bone targetBones[] = { Bone::SPINE_4, Bone::NECK, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
-		static matrix3x4_t BoneMatrix[NUM_BONE];
-		player->SetupBones(BoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
+        if (locked
+                && i != Aimbot::targetIdx
+                && Math::GetDistance(Aimbot::lastAimPoint, player->GetEyePosition()) > 12*10) // 12 feet
+        {
+            continue;
+        }
 
-        matrix3x4_t playerCenter = BoneMatrix[(int)targetBones[0]];
-        Vector vecCenterMass = Vector(playerCenter[0][3], playerCenter[1][3], playerCenter[2][3]);
+
+        Vector vecCenterMass = player->GetEyePosition();
 		float fov = Math::GetFov(cmd->viewangles, Math::CalcAngle(eyePos, vecCenterMass));
-
-        matrix3x4_t playerHead = BoneMatrix[(int) Bone::HEAD];
-        Vector vecHead = Vector(playerHead[0][3], playerHead[1][3], playerHead[2][3]);
 
 		if (fov > bestFov)
             continue;
 
-        if (fov < forceSelectFov)
+        Bone targetBones[] = { Bone::SPINE_4, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
+		static matrix3x4_t BoneMatrix[NUM_BONE];
+		player->SetupBones(BoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
+
+        bool found = false;
+        for (Bone b : targetBones)
         {
+            matrix3x4_t currBone = BoneMatrix[(int)b];
+            Vector vecBone = Vector(currBone[0][3], currBone[1][3], currBone[2][3]);
+            
+            /*
+            Vector vecEnd = vecBone;
+            Ray_t ray;
+            ray.Init(localplayer->GetEyePosition(), vecEnd);
+
+            CTraceFilter traceFilter;
+            traceFilter.pSkip = localplayer;
+
+            trace_t tr;
+
+            trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+
+            Log << "    ---- trace vec end, bone = " << vecEnd.x << " " << vecEnd.y << " " << vecEnd.z << " " << (int)b << endl;
+            Log << "    tr.hitgroup = " << (unsigned) tr.hitgroup <<  endl;
+            Log << "    tr.physicsbone = " << (unsigned) tr.physicsbone <<  endl;
+            Log << "    tr.worldSurfaceIndex = " << (unsigned) tr.worldSurfaceIndex <<  endl;
+            Log << "    tr.m_pEntityHit = " << (unsigned) tr.m_pEntityHit <<  endl;
+            Log << "    tr.hitbox = " << (unsigned) tr.hitbox <<  endl;
+            */
+
+            if (!Util::Ray(localplayer, eyePos, vecBone))
+            {
+                continue;
+            }
+
+            Aimbot::targetIdx = i;
+            closestEntity = player;
+            bestFov = fov;
+            bestBone = b;
+            aimPoint = vecBone;
+            found = true;
+            break;
+        }
+
+        if (!found && fov < forceSelectFov)
+        {
+            Aimbot::targetIdx = i;
             closestEntity = player;
             bestFov = fov;
             bestBone = Bone::HEAD;
-            aimPoint = vecHead;
-        }
-        else
-        {
-            for (Bone b : targetBones)
-            {
-                matrix3x4_t currBone = BoneMatrix[(int)b];
-                Vector vecBone = Vector(currBone[0][3], currBone[1][3], currBone[2][3]);
-                if (!Util::Ray(localplayer, eyePos, vecBone))
-                {
-                    continue;
-                }
-
-                closestEntity = player;
-                bestFov = fov;
-                bestBone = b;
-                aimPoint = vecBone;
-            }
+            matrix3x4_t currBone = BoneMatrix[(int)bestBone];
+            aimPoint = Vector(currBone[0][3], currBone[1][3], currBone[2][3]);
         }
 	}
 
@@ -107,11 +142,13 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
 	Bone bone = Bone::SPINE_3;
     Vector aimPoint;
-	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint);
+	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, Util::KeyDown(XK_Shift_L));
+    Log << "bestBone " << (int)bone << endl;
 	if (player)
 	{
 		Vector eyePos = localplayer->GetEyePosition();
         angle = Math::CalcAngle(eyePos, aimPoint);
+        lastAimPoint = aimPoint;
 	}
 
 	Math::NormalizeAngles(angle);
@@ -119,27 +156,11 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     if (Util::KeyDown(XK_Shift_L))
     {
-        if (angle != cmd->viewangles)// + cmd->aimdirection)
+        if (angle != cmd->viewangles)
         {
-            QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);// + cmd->aimdirection
+            QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
             MouseSim::sim(dAngle);
         }
-        /*
-		matrix3x4_t BoneMatrix[MAXSTUDIOBONES];
-
-		localplayer->SetupBones(BoneMatrix, MAXSTUDIOBONES, BONE_USED_BY_HITBOX, 0);
-	    Vector vo = localplayer->GetVecOrigin();
-        Log << "VecOrigin: " << vo.x << "," << vo.y << "," << vo.z << endl;
-        for (int i = 0; i < 128; i++)
-        {
-		    matrix3x4_t hitbox = BoneMatrix[i];
-            Log << i << endl;
-            for (int c = 0; c < 4; c++)
-            {
-                Log << hitbox[0][c] << "," << hitbox[1][c] << "," << hitbox[2][c] << endl;
-            }
-        }
-        */
     }
 
 }

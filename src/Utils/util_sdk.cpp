@@ -96,9 +96,8 @@ bool Util::Ray(C_BasePlayer* localplayer, Vector vecStart, Vector vecEnd)
 	traceFilter.pSkip = localplayer;
 
 	trace_t tr;
-
 	trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
 
-    // Log << "    tr.m_pEntityHit = " << tr.m_pEntityHit <<  endl;
-	return (unsigned)tr.m_pEntityHit & 0x8;
+	return (unsigned)tr.m_pEntityHit & 0x8 && (int)tr.hitgroup > 0;
 }
+
