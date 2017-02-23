@@ -8,6 +8,8 @@
 #include <time.h>
 #include <math.h>
 
+#include "pid.h"
+
 namespace MouseSim
 {
     float k = 2.5; // correction constant for aim sensitivity
@@ -16,9 +18,9 @@ namespace MouseSim
     float degree = 300; // total number of degree moved, accumulative
     int pixel = thresh; // total number of pixels moved, accumulative
 
-    float omega = 3; // angular velocity of noise vector in rad/second
-    float theta = 1; // angle of noise vector in rad
-    float noiseCoeff = 0.618; // magnitude of noise vector measured in times of norm of error
+    float omega = 2; // angular velocity of noise vector in rad/second
+    float theta = 1.5; // angle of noise vector in rad
+    float noiseCoeff = 0.618;//1/0.618; // magnitude of noise vector measured in times of norm of error
 
     int fd; // file descriptor to the mouse device
 }
@@ -95,7 +97,7 @@ long MouseSim::getDT()
     long dt = msNow - lasttime;
 
     if (dt > 10)
-        dt = 2;
+        dt = 4;
 
     lasttime = msNow;
     return dt;
@@ -109,11 +111,36 @@ void MouseSim::sim(QAngle deltaAngle)
 
     float normVec = norm(dx, dy);
 
-    if (normVec < sensitivity())
+    if (normVec < sensitivity() / 2.0)
         return;
-
+    
     long dt = getDT();
 
+    // pid for both x and y
+    static const float ku = 8; // 8
+    static const float tu = 0.10; // 0.22
+
+    static const float kp = 0.6 * ku;
+    static const float ki = 1.2 * ku / tu;
+    static const float kd = 3 / 40 * ku * tu;
+
+    static PID pidX(kp, ki, kd);
+    static PID pidY(kp, ki, kd);
+
+    if (dt > 50)
+    {
+        pidX.clear();
+        pidY.clear();
+    }
+
+    dx = pidX.step(dx);
+    dy = pidY.step(dy);
+
+    float lim = limit(normVec, dt) + 10;
+    dx = dx<lim ? dx : lim;
+    dy = dy<lim ? dy : lim;
+
+    /*
     float lim = limit(normVec, dt);
     lim = lim < normVec/sensitivity() ? lim : normVec/sensitivity();
 
@@ -124,6 +151,7 @@ void MouseSim::sim(QAngle deltaAngle)
     noise(lim, dt, nx, ny);
     dx += nx;
     dy += ny;
+    */
 
     struct input_event ev;
     memset(&ev, 0, sizeof(struct input_event));

@@ -148,7 +148,7 @@ void Hooker::FindIClientMode()
 {
     Log << "++ client.so base = " << hex0((unsigned)GetLibraryBase("bin/client.so")) << std::endl;
 
-	GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetLibraryBase("bin/client.so") + 0x7041C0);
+	GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetLibraryBase("bin/client.so") + 0x705300);
 	clientMode = GetClientMode();
     Log << "* GetClientMode returned " << hex0((unsigned)clientMode) << std::endl;
 	clientModeVMT = new VMT(clientMode);
