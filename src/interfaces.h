@@ -31,9 +31,10 @@ extern VMT* clientVMT;
 extern InitKeyValuesFn InitKeyValues;
 extern LoadFromBufferFn LoadFromBuffer;
 
+extern ISurface* surface;
+
 extern bool* bSendPacket;
 /*
-extern ISurface* surface;
 extern IVPanel* panel;
 extern IVDebugOverlay* debugOverlay;
 extern IInputSystem* inputSystem;

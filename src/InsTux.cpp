@@ -18,6 +18,7 @@ int __attribute__((constructor)) instux_init()
     //Hooker::FindInitKeyValues();
     //Hooker::FindLoadFromBuffer();
     Hooker::FindIClientMode();
+    Hooker::FindSendPacket();
 
     Hooker::InitializeVMHooks();
 

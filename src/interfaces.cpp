@@ -35,8 +35,9 @@ IEngineTrace* trace = nullptr;
 IVModelRender* modelRender = nullptr;
 IMaterialSystem* material = nullptr;
 IVModelInfo* modelInfo = nullptr;
-/*
+
 ISurface* surface = nullptr;
+/*
 IVPanel* panel = nullptr;
 IVDebugOverlay* debugOverlay = nullptr;
 IInputSystem* inputSystem = nullptr;
@@ -105,8 +106,9 @@ void Interfaces::FindInterfaces()
 	material = GetInterface<IMaterialSystem>("./bin/materialsystem.so", "VMaterialSystem");
     checknull(material, "material");
 
+	surface = GetInterface<ISurface>("./bin/vguimatsurface.so", "VGUI_Surface");
+    checknull(surface, "surface");
     /*
-	surface = GetInterface<ISurface>("./bin/linux64/vguimatsurface_client.so", "VGUI_Surface");
 	panel = GetInterface<IVPanel>("./bin/linux64/vgui2_client.so", "VGUI_Panel");
 	debugOverlay = GetInterface<IVDebugOverlay>("./bin/linux64/engine_client.so", "VDebugOverlay");
 	inputSystem = GetInterface<IInputSystem>("./bin/linux64/inputsystem_client.so", "InputSystemVersion");

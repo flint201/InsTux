@@ -146,12 +146,27 @@ void Hooker::FindLoadFromBuffer()
 
 void Hooker::FindIClientMode()
 {
-    Log << "++ client.so base = " << hex0((unsigned)GetLibraryBase("bin/client.so")) << std::endl;
+	//GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetLibraryBase("bin/client.so") + 0x705300);
+	uintptr_t func_ptr = PatternFinder::FindPatternInModule("bin/client.so", (unsigned char*) ICLIENTMODE_SIG, ICLIENTMODE_MASK) + strlen(ICLIENTMODE_MASK);
 
-	GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetLibraryBase("bin/client.so") + 0x705300);
+    GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetAbsoluteAddress(func_ptr, 0, 4));
+
 	clientMode = GetClientMode();
     Log << "* GetClientMode returned " << hex0((unsigned)clientMode) << std::endl;
+
 	clientModeVMT = new VMT(clientMode);
+}
+
+void Hooker::FindSendPacket()
+{
+	uintptr_t bool_address = PatternFinder::FindPatternInModule("engine.so", (unsigned char*) BSENDPACKET_SIGNATURE, BSENDPACKET_MASK) + strlen(BSENDPACKET_MASK) - 1;
+
+	Log << "  bool_address = " << hex0(bool_address) << endl;
+
+	bSendPacket = reinterpret_cast<bool*>(bool_address);
+
+	Util::ProtectAddr(bSendPacket, PROT_READ | PROT_WRITE | PROT_EXEC);
+	Log << "  bool value = " << *bSendPacket << endl;
 }
 
 /*
@@ -245,15 +260,6 @@ void Hooker::FindViewRender()
 	uintptr_t func_addr = PatternFinder::FindPatternInModule("client_client.so", (unsigned char*) VIEWRENDER_SIGNATURE, VIEWRENDER_MASK);
 
 	viewRender = reinterpret_cast<CViewRender*>(GetAbsoluteAddress(func_addr + 14, 3, 7));
-}
-
-void Hooker::FindSendPacket()
-{
-	uintptr_t bool_address = PatternFinder::FindPatternInModule("engine_client.so", (unsigned char*) BSENDPACKET_SIGNATURE, BSENDPACKET_MASK);
-	bool_address = GetAbsoluteAddress(bool_address, 2, 1);
-
-	bSendPacket = reinterpret_cast<bool*>(bool_address);
-	Util::ProtectAddr(bSendPacket, PROT_READ | PROT_WRITE | PROT_EXEC);
 }
 
 void Hooker::FindPrediction()

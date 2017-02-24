@@ -28,7 +28,6 @@ uintptr_t PatternFinder::FindPatternInModule(const char* moduleName, unsigned ch
 
 	if (!Hooker::GetLibraryInformation(moduleName, &baseAddress, &memSize))
 		return 0;
-    Log << moduleName << " " << (unsigned) baseAddress << std::endl;
 
 	return FindPattern(baseAddress, baseAddress + memSize, bMask, szMask);
 }

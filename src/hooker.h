@@ -12,8 +12,8 @@
 #define VIEWRENDER_SIGNATURE "\xB8\xFF\xFF\x7F\x7F\x31\xD2\x55\x89\x05\x00\x00\x00\x00\x48\x8D\x3D\x00\x00\x00\x00"
 #define VIEWRENDER_MASK "xxxxxxxxxx????xxx????"
 
-#define BSENDPACKET_SIGNATURE "\x41\xBD\x01\x00\x00\x00\xE9\x2A\xFE"
-#define BSENDPACKET_MASK "xxx???xxx"
+#define BSENDPACKET_SIGNATURE "\x90\x8d\x74\x26\x00\xc6\x45\xc3\x01"
+#define BSENDPACKET_MASK "xxxxxxxxx"
 
 #define PREDICTION_RANDOM_SEED_SIGNATURE "\x48\x8B\x05\x00\x00\x00\x00\xF3\x0F\x11\x45\xDC\xF3"
 #define PREDICTION_RANDOM_SEED_MASK "xxx????xxxxxx"
@@ -63,6 +63,9 @@
 #define CGAMESERVER_SIGNATURE "\x48\x8B\x1D\x38\x92\xB8\x00\x49\x89\xC6"
 #define CGAMESERVER_MASK "xxxxxx?xxx"
 
+#define ICLIENTMODE_MASK "xxxxxxxxxx????xx????xxxxxxxxx????x"
+#define ICLIENTMODE_SIG "\x55\x89\xe5\x83\xec\x18\x89\x5d\xf8\xe8\x00\x00\x00\x00\x81\xc3\x00\x00\x00\x00\x89\x75\xfc\x0f\xb6\x75\x0c\x81\xe6\x00\x00\x00\x00\xe8"
+
 #include <memory>
 #include <unordered_map>
 #include <sys/mman.h>
@@ -89,6 +92,7 @@ namespace Hooker
 	void FindInitKeyValues();
 	void FindLoadFromBuffer();
 	void FindIClientMode();
+    void FindSendPacket();
     /*
 	bool HookRecvProp(const char* className, const char* propertyName, std::unique_ptr<RecvPropHook>& recvPropHook);
 	void FindGlobalVars();
