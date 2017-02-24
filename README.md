@@ -9,7 +9,8 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 
 - Natural auto-aim activated when Shift is pressed
 
-Demo video:
+# Demo video
+[![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
 
 # Installation
 
@@ -21,8 +22,9 @@ Demo video:
 The process is virtually identical to that of project AimTux, please see thier detailed installation guide if you do now know what tools are needed.
 To use, start the game and wait until it finishes loading, then run "./load" in the repo directory.
 
-# Known issues
-Currently there seems to be some false positives when it comes to visibility check, which causes the auto-aim to target players behind cover occasionally. This does not include cases when the targets is within 1 degree fov of center of screen, which is intended as a force targeting feature.
-
 # Disclaimer
 This project is for education purpose ONLY. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
+
+# Credits
+Special thanks to contributors of project AimTux for open source such an awesome project, I learned a lot from their code.
+Also, tons of thanks to [aixxe](aixxe.net), the blog is very informative and helpful.
