@@ -146,12 +146,15 @@ void MouseSim::sim(QAngle deltaAngle)
 
     dx *= k * lim / normVec;
     dy *= k * lim / normVec;
-
-    float nx, ny;
-    noise(lim, dt, nx, ny);
-    dx += nx;
-    dy += ny;
     */
+
+    if (dx > 10 || dy > 10)
+    {
+        float nx, ny;
+        noise(lim, dt, nx, ny);
+        dx += nx;
+        dy += ny;
+    }
 
     struct input_event ev;
     memset(&ev, 0, sizeof(struct input_event));
