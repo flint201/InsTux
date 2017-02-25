@@ -159,7 +159,7 @@ void Hooker::FindIClientMode()
 
 void Hooker::FindSendPacket()
 {
-	uintptr_t bool_address = PatternFinder::FindPatternInModule("engine.so", (unsigned char*) BSENDPACKET_SIGNATURE, BSENDPACKET_MASK) + strlen(BSENDPACKET_MASK) - 1;
+	uintptr_t bool_address = PatternFinder::FindPatternInModule("engine.so", (unsigned char*) BSENDPACKET_SIGNATURE, BSENDPACKET_MASK) + strlen(BSENDPACKET_MASK);
 
 	Log << "  bool_address = " << hex0(bool_address) << endl;
 

@@ -5,9 +5,6 @@
 #include "../Hooks/hooks.h"
 #include "../Utils/util.h"
 
-namespace FakeLag {
-    extern bool enable;
-    extern int lagDuration;
-    void Lag(int dur);
+namespace AtomicPeek {
 	void CreateMove(CUserCmd* cmd);
 };

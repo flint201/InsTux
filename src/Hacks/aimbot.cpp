@@ -3,8 +3,11 @@
 #include "../interfaces.h"
 #include "../Utils/mousesim.h"
 #include <math.h>
+#include "hacks.h"
 
 #define NUM_BONE 128
+
+float silentFov = 4;
 
 namespace Aimbot
 {
@@ -12,7 +15,7 @@ namespace Aimbot
     Vector lastAimPoint;
 }
 
-C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint, bool locked)
+C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint, bool locked, QAngle& angSilent)
 {
     TeamID myteam = localplayer->GetTeam();
     Vector eyePos = localplayer->GetEyePosition();
@@ -47,10 +50,23 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 		if (fov > bestFov)
             continue;
 
-        Bone targetBones[] = { Bone::SPINE_4, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
+        Bone targetBones[] = { Bone::SPINE_3, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
 		static matrix3x4_t BoneMatrix[NUM_BONE];
 		player->SetupBones(BoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
 
+        // for silent aim targeting
+        matrix3x4_t boneHead = BoneMatrix[(int)Bone::HEAD];
+        Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3]);
+        if (Util::Ray(localplayer, eyePos, vecBoneHead))
+        {
+            QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
+            if (Math::GetFov(cmd->viewangles, angHead) < silentFov)
+            {
+                angSilent = angHead;
+            }
+        }
+
+        // find best bone for legit aim
         bool found = false;
         for (Bone b : targetBones)
         {
@@ -142,8 +158,8 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
 	Bone bone = Bone::SPINE_3;
     Vector aimPoint;
-	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, Util::KeyDown(XK_Shift_L));
-    Log << "bestBone " << (int)bone << endl;
+    QAngle angSilent = cmd->viewangles;
+	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, Util::KeyDown(XK_Shift_L), angSilent);
 	if (player)
 	{
 		Vector eyePos = localplayer->GetEyePosition();
@@ -160,6 +176,11 @@ void Aimbot::CreateMove(CUserCmd* cmd)
         {
             QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
             MouseSim::sim(dAngle);
+        }
+
+        if (angSilent != cmd->viewangles)
+        {
+            cmd->viewangles = angSilent;
         }
     }
 

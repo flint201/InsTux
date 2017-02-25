@@ -3,12 +3,23 @@
 static int ticks = 0;
 int ticksMax = 16;
 int lag_value = 8;
-bool enable = true;
+
+namespace FakeLag
+{
+    bool enable = true;
+    int lagDuration = 0;
+}
+
+void FakeLag::Lag(int dur)
+{
+    lagDuration = dur;
+}
 
 void FakeLag::CreateMove(CUserCmd* cmd)
 {
-    if (!enable)
+    if (!enable || lagDuration == 0)
     {
+        ticks = 0;
         return;
     }
 
@@ -29,8 +40,9 @@ void FakeLag::CreateMove(CUserCmd* cmd)
 	}
 	else
 	{
-		CreateMove::sendPacket = ticks < 16;
+		CreateMove::sendPacket = ticks > lag_value;
 	}
 
 	ticks++;
+    lagDuration--;
 }
