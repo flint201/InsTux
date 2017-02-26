@@ -2,7 +2,7 @@
 
 static int ticks = 0;
 int ticksMax = 16;
-int lag_value = 6;
+int lag_value = 5;
 
 namespace FakeLag
 {

@@ -5,11 +5,6 @@
 
 void ESP::Paint()
 {
-    if (!Util::KeyDown(XK_Caps_Lock))
-    {
-		Draw::Text(20, 20, "InsTux", 0, Color(255, 255, 255, 255));
-        return;
-    }
 
 	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
     if (!localplayer)
@@ -19,6 +14,16 @@ void ESP::Paint()
 
     TeamID myteam = localplayer->GetTeam();
     //Vector eyePos = localplayer->GetEyePosition();
+
+    std::stringstream ss;
+    ss << "HP: " << localplayer->GetHealth();
+    Draw::Text(10, 20, ss.str().c_str(), 0, Color(50, 255, 50, 255));
+
+    if (!Util::KeyDown(XK_Caps_Lock))
+    {
+		Draw::Text(10, 5, "InsTux", 0, Color(255, 255, 255, 255));
+        return;
+    }
 
 	for (int i = 0; i < engine->GetMaxClients(); i++)
 	{

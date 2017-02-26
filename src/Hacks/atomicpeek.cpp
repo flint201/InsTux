@@ -3,7 +3,7 @@
 #include "hacks.h"
 #include <vector>
 
-float dt = 3;
+float dt = 2;
 
 void AtomicPeek::CreateMove(CUserCmd* cmd)
 {
