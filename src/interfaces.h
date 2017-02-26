@@ -23,20 +23,25 @@ extern IVModelRender* modelRender;
 extern IMaterialSystem* material;
 extern IVModelInfo* modelInfo;
 
+extern ISurface* surface;
+extern IEngineVGui* engineVGui;
+
 extern VMT* materialVMT;
 extern VMT* modelRenderVMT;
 extern VMT* clientModeVMT;
 extern VMT* clientVMT;
 
+extern VMT* surfaceVMT;
+extern VMT* engineVGuiVMT;
+
 extern InitKeyValuesFn InitKeyValues;
 extern LoadFromBufferFn LoadFromBuffer;
 
-extern ISurface* surface;
+extern IVDebugOverlay* debugOverlay;
 
 extern bool* bSendPacket;
 /*
 extern IVPanel* panel;
-extern IVDebugOverlay* debugOverlay;
 extern IInputSystem* inputSystem;
 extern IInputInternal* inputInternal;
 extern CGlobalVars* globalVars;
@@ -51,7 +56,6 @@ extern CGlowObjectManager* glowManager;
 extern ILauncherMgr* launcherMgr;
 extern C_CSPlayerResource** csPlayerResource;
 extern C_CSGameRules** csGameRules;
-extern IEngineVGui* engineVGui;
 extern IEngineSound* sound;
 extern ILocalize* localize;
 extern ICommandLine* commandline;
@@ -62,9 +66,7 @@ extern VMT* panelVMT;
 extern VMT* gameEventsVMT;
 extern VMT* viewRenderVMT;
 extern VMT* inputInternalVMT;
-extern VMT* surfaceVMT;
 extern VMT* launcherMgrVMT;
-extern VMT* engineVGuiVMT;
 extern VMT* soundVMT;
 
 extern LineGoesThroughSmokeFn LineGoesThroughSmoke;

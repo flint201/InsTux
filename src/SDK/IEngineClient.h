@@ -5,7 +5,6 @@ class IEngineClient
 public:
 	typedef struct player_info_s
 	{
-		int64_t __pad0;
 		union {
 			int64_t xuid;
 			struct {
@@ -87,7 +86,7 @@ public:
 	bool IsTakingScreenshot()
 	{
 		typedef bool (* oIsTakingScreenshot)(void*);
-		return getvfunc<oIsTakingScreenshot>(this, 91)(this);
+		return getvfunc<oIsTakingScreenshot>(this, 92)(this);
 	}
 
 	void ExecuteClientCmd(const char* szCmdString)

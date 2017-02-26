@@ -24,7 +24,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 	float bestFov = 10;
     const static float forceSelectFov = 1;
 
-	for (int i = 1; i < engine->GetMaxClients(); i++)
+	for (int i = 0; i < engine->GetMaxClients(); i++)
 	{
 		C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
 		if (!player

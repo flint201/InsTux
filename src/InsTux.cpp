@@ -28,6 +28,9 @@ int __attribute__((constructor)) instux_init()
     clientModeVMT->HookVM((void*) Hooks::CreateMove, CREATE_MOVE_IDX);
     clientModeVMT->ApplyVMT();
 
+    engineVGuiVMT->HookVM((void*) Hooks::Paint, 15);
+    engineVGuiVMT->ApplyVMT();
+
     NetVarManager::DumpNetvars();
     Offsets::GetOffsets();
 
@@ -45,4 +48,5 @@ void __attribute__((destructor)) instux_shutdown()
 
     modelRenderVMT->ReleaseVMT();
     clientModeVMT->ReleaseVMT();
+    engineVGuiVMT->ReleaseVMT();
 }

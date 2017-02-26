@@ -12,14 +12,15 @@ VMT* clientModeVMT = nullptr;
 
 VMT* clientVMT = nullptr;
 VMT* materialVMT = nullptr;
+
+VMT* surfaceVMT = nullptr;
+VMT* engineVGuiVMT = nullptr;
 /*
 VMT* panelVMT = nullptr;
 VMT* gameEventsVMT = nullptr;
 VMT* viewRenderVMT = nullptr;
 VMT* inputInternalVMT = nullptr;
-VMT* surfaceVMT = nullptr;
 VMT* launcherMgrVMT = nullptr;
-VMT* engineVGuiVMT = nullptr;
 VMT* soundVMT = nullptr;
 */
 
@@ -42,7 +43,7 @@ FinishDrawingFn FinishDrawing;
 
 GetLocalClientFn GetLocalClient;
 
-LineGoesThroughSmokeFn LineGoesThroughSmoke;
+//LineGoesThroughSmokeFn LineGoesThroughSmoke;
 InitKeyValuesFn InitKeyValues;
 LoadFromBufferFn LoadFromBuffer;
 
@@ -109,15 +110,15 @@ uintptr_t GetLibraryBase(const char* library) {
 void Hooker::InitializeVMHooks()
 {
 	modelRenderVMT = new VMT(modelRender);
+	surfaceVMT = new VMT(surface);
+	engineVGuiVMT = new VMT(engineVGui);
 
     /*
 	panelVMT = new VMT(panel);
 	gameEventsVMT = new VMT(gameEvents);
 	viewRenderVMT = new VMT(viewRender);
 	inputInternalVMT = new VMT(inputInternal);
-	surfaceVMT = new VMT(surface);
 	launcherMgrVMT = new VMT(launcherMgr);
-	engineVGuiVMT = new VMT(engineVGui);
 	soundVMT = new VMT(sound);
     */
 }
