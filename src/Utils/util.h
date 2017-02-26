@@ -2,7 +2,7 @@
 
 #include <string>
 #include <sys/mman.h>
-#include <zconf.h>
+//#include <zconf.h>
 #include <vector>
 #include <map>
 #include <algorithm>

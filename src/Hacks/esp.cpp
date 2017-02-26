@@ -42,7 +42,7 @@ void ESP::Paint()
         // draw name
         Vector vPlayerOrigin;
         debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
-		Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 10), playerInfo.name, esp_font, Color(255, 255, 255, 255));
+		Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 10), playerInfo.name, 0, Color(255, 255, 255, 255));
     }
 
 }

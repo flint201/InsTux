@@ -121,6 +121,7 @@ void Draw::Text(int x, int y, const char* text, HFont font, Color col)
 	surface->DrawSetTextPos(x, y);
     if (font != 0)
 	    surface->DrawSetTextFont(font);
+
 	surface->DrawSetTextColor(col);
 	surface->DrawPrintText(wc.c_str(), wcslen(wc.c_str()));
 }

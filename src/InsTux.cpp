@@ -4,6 +4,7 @@
 #include "logger.h"
 #include "Utils/netvarmanager.h"
 #include "Utils/mousesim.h"
+#include "fonts.h"
 
 // Called on library load
 int __attribute__((constructor)) instux_init()
@@ -35,6 +36,8 @@ int __attribute__((constructor)) instux_init()
     Offsets::GetOffsets();
 
     MouseSim::mouseInit();
+
+    Fonts::SetupFonts();
 
     Msg("++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++\n");
 
