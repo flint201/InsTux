@@ -32,6 +32,7 @@ namespace Util
 	std::wstring StringToWstring(std::string str);
 
     bool KeyDown(KeySym keySym);
+    bool MouseButtonDown(KeySym keySym);
     void MoveMouse(int x, int y);
 
 	long GetEpochTime();

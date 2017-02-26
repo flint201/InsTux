@@ -143,6 +143,7 @@ long GetDT(long min = 10, long max = 200)
 
 void Aimbot::CreateMove(CUserCmd* cmd)
 {
+    bool aimKeyDown = Util::KeyDown(XK_Shift_L);
 	QAngle angle = cmd->viewangles;// + cmd->aimdirection;
 	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
 
@@ -159,7 +160,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 	Bone bone = Bone::SPINE_3;
     Vector aimPoint;
     QAngle angSilent = cmd->viewangles;
-	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, Util::KeyDown(XK_Shift_L), angSilent);
+	C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, aimKeyDown, angSilent);
 	if (player)
 	{
 		Vector eyePos = localplayer->GetEyePosition();
@@ -170,7 +171,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 	Math::NormalizeAngles(angle);
 	Math::ClampAngles(angle);
 
-    if (Util::KeyDown(XK_Shift_L))
+    if (aimKeyDown)
     {
         if (angle != cmd->viewangles)
         {

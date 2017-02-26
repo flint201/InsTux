@@ -2,7 +2,7 @@
 
 static int ticks = 0;
 int ticksMax = 16;
-int lag_value = 5;
+int lag_value = 12;
 
 namespace FakeLag
 {
@@ -44,5 +44,6 @@ void FakeLag::CreateMove(CUserCmd* cmd)
 	}
 
 	ticks++;
-    lagDuration--;
+    if (lagDuration > 0)
+        lagDuration--;
 }

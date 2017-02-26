@@ -127,3 +127,20 @@ bool Util::KeyDown(KeySym keySym)
     int keyCode = (int)XKeysymToKeycode(display, keySym);
     return keyState[keyCode/8] & (0x1 << keyCode%8);
 }
+
+bool Util::MouseButtonDown(KeySym keySym)
+{
+    static Display *display = XOpenDisplay(NULL);
+    Window root_return, child_return;
+    int root_x_return, root_y_return;
+    int win_x_return, win_y_return;
+    unsigned int mask_return = 0;
+    XQueryPointer(display, DefaultRootWindow(display),
+            &root_return, &child_return,
+            &root_x_return, &root_y_return,
+            &win_x_return, &win_y_return,
+            &mask_return);
+    if (mask_return != 0)
+        Log << (unsigned) mask_return << endl;
+    return mask_return & keySym;
+}
