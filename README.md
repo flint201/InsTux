@@ -14,44 +14,45 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 
 # Installation
 
-0. 
-```bash
-sudo apt-get install cmake g++ gdb git libsdl2-dev zlib1g-dev
-```
+0. install some basic dependencies
+    ```
+    sudo apt-get install cmake g++ gdb git libsdl2-dev zlib1g-dev
+    ```
+
 1. make sure your `g++` version is at least 6.0. Here is AimTux's tutorial page for updating g++
-[How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
+    [How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
 
 2. clone the repository and cd to its root directory
-```bash
-git clone https://github.com/flint201/InsTux
-cd InsTux
-```
-3. generate the Makefile
-```bash
-cmake .
-```
-4. to compile
-```bash
-make
-```
+    ```
+    git clone https://github.com/flint201/InsTux
+    cd InsTux
+    ```
+
+3. generate the Makefile 
+    ```
+    cmake .
+    ```
+
+4. compile 
+    ```
+    make
+    ```
 
 At this point if you see a file called `libInsTux.so` in you directory you have succeessfully compiled the hack.
 To use, start the game and wait until it reaches main menu, then run `./load` in the repo directory.
-```bash
+```
 Insurgency PID: 12229
 
 [New LWP 12230]
 ...
-[New LWP 12249]
-warning: Could not load shared library symbols for bin/launcher.so.
-Do you need "set solib-search-path" or "set sysroot"?
-[Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 0xf77cdc89 in __kernel_vsyscall ()
 $1 = (void *) 0x40d6eb70
 $2 = 0x0
 ```
+
 If the last line of the output shows `$2 = 0x0` like this it means the hack has successfully loaded. You should also see the following output in your game console.
+
 ```
 ++++ InsTux starting...
 ++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++
