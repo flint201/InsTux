@@ -13,7 +13,7 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 [![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
 
 # Installation
-(example commands here  assumes Ubuntu/Debian distro)
+(example commands here are for Ubuntu/Debian)
 
 0. install some basic dependencies
     ```
