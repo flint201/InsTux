@@ -9,6 +9,9 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 
 - Natural auto-aim activated when Shift is pressed
 
+- Skeleton + Name ESP activated when Caps Lock is pressed
+    ![esp](https://i.imgur.com/hPxWI2e.jpg)
+
 # Demo video
 [![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
 
