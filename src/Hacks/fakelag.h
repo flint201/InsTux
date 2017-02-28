@@ -9,5 +9,5 @@ namespace FakeLag {
     extern bool enable;
     extern int lagDuration;
     void Lag(int dur);
-	void CreateMove(CUserCmd* cmd);
+    void CreateMove(CUserCmd* cmd);
 };

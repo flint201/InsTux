@@ -6,5 +6,5 @@
 #include "../Utils/util.h"
 
 namespace AtomicPeek {
-	void CreateMove(CUserCmd* cmd);
+    void CreateMove(CUserCmd* cmd);
 };

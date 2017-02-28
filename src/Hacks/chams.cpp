@@ -15,8 +15,8 @@ IMaterial* materialHidden;
 
 bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const ModelRenderInfo_t &pInfo, matrix3x4_t* pCustomBoneToWorld)
 {
-	if (!pInfo.pModel)
-		return false;
+    if (!pInfo.pModel)
+        return false;
 
     static int counter = 0;
     static TeamID myteam;
@@ -27,8 +27,8 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     }
     counter++;
 
-	std::string modelName = modelInfo->GetModelName(pInfo.pModel);
-	if (modelName.find("/characters") == std::string::npos)
+    std::string modelName = modelInfo->GetModelName(pInfo.pModel);
+    if (modelName.find("/characters") == std::string::npos)
         return false;
     
     static bool materialInitialized = false;

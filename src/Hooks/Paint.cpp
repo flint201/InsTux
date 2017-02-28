@@ -6,18 +6,18 @@ extern FinishDrawingFn FinishDrawing;
 
 void Hooks::Paint(void* thisptr, PaintMode_t mode)
 {
-	engineVGuiVMT->GetOriginalMethod<PaintFn>(15)(thisptr, mode);
+    engineVGuiVMT->GetOriginalMethod<PaintFn>(15)(thisptr, mode);
 
-	if (engine->IsTakingScreenshot())
-		return;
+    if (engine->IsTakingScreenshot())
+        return;
 
-	if (mode & PAINT_UIPANELS)
-	{
+    if (mode & PAINT_UIPANELS)
+    {
         //Log << "        Hook::Paint PAINT_UIPANELS" << endl;
-		ESP::Paint();
+        ESP::Paint();
         /*
-		StartDrawing(surface);
-		FinishDrawing(surface);
+        StartDrawing(surface);
+        FinishDrawing(surface);
         */
-	}
+    }
 }

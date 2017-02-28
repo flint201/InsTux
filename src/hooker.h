@@ -80,41 +80,41 @@
 
 struct dlinfo_t
 {
-	const char* library = nullptr;
-	uintptr_t address = 0;
-	size_t size = 0;
+    const char* library = nullptr;
+    uintptr_t address = 0;
+    size_t size = 0;
 };
 
 namespace Hooker
 {
-	bool GetLibraryInformation(const char* library, uintptr_t* address, size_t* size);
-	void InitializeVMHooks();
-	void FindInitKeyValues();
-	void FindLoadFromBuffer();
-	void FindIClientMode();
+    bool GetLibraryInformation(const char* library, uintptr_t* address, size_t* size);
+    void InitializeVMHooks();
+    void FindInitKeyValues();
+    void FindLoadFromBuffer();
+    void FindIClientMode();
     void FindSendPacket();
     /*
-	bool HookRecvProp(const char* className, const char* propertyName, std::unique_ptr<RecvPropHook>& recvPropHook);
-	void FindGlobalVars();
-	void FindCInput();
-	void FindCGameServer();
-	void FindGlowManager();
-	void FindPlayerResource();
-	void FindGameRules();
-	void FindRankReveal();
-	void FindSendClanTag();
-	void FindViewRender();
-	void FindSendPacket();
-	void FindPrediction();
-	void FindIsReadyCallback();
-	void FindSurfaceDrawing();
-	void FindGetLocalClient();
-	void FindLineGoesThroughSmoke();
-	void FindGetCSWpnData();
-	void FindCrosshairWeaponTypeCheck();
-	void FindCamThinkSvCheatsCheck();
-	void HookSwapWindow();
-	void HookPollEvent();
-	void FindSDLInput();
+    bool HookRecvProp(const char* className, const char* propertyName, std::unique_ptr<RecvPropHook>& recvPropHook);
+    void FindGlobalVars();
+    void FindCInput();
+    void FindCGameServer();
+    void FindGlowManager();
+    void FindPlayerResource();
+    void FindGameRules();
+    void FindRankReveal();
+    void FindSendClanTag();
+    void FindViewRender();
+    void FindSendPacket();
+    void FindPrediction();
+    void FindIsReadyCallback();
+    void FindSurfaceDrawing();
+    void FindGetLocalClient();
+    void FindLineGoesThroughSmoke();
+    void FindGetCSWpnData();
+    void FindCrosshairWeaponTypeCheck();
+    void FindCamThinkSvCheatsCheck();
+    void HookSwapWindow();
+    void HookPollEvent();
+    void FindSDLInput();
     */
 }

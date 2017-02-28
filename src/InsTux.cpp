@@ -11,8 +11,8 @@ int __attribute__((constructor)) instux_init()
 {
     InitLogger();
 
-	Interfaces::FindInterfaces();
-	Interfaces::DumpInterfaces();
+    Interfaces::FindInterfaces();
+    Interfaces::DumpInterfaces();
 
     Msg("++++ InsTux starting... \n");
 
@@ -41,7 +41,7 @@ int __attribute__((constructor)) instux_init()
 
     Msg("++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++\n");
 
-	return 0;
+    return 0;
 }
 
 // Called on library unload

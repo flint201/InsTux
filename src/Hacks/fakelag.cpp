@@ -23,27 +23,27 @@ void FakeLag::CreateMove(CUserCmd* cmd)
         return;
     }
 
-	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
-	if (!localplayer || !localplayer->GetAlive())
-		return;
+    C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
+    if (!localplayer || !localplayer->GetAlive())
+        return;
 
-	if (cmd->buttons & IN_ATTACK)
-	{
-		CreateMove::sendPacket = true;
-		return;
-	}
+    if (cmd->buttons & IN_ATTACK)
+    {
+        CreateMove::sendPacket = true;
+        return;
+    }
 
-	if (ticks >= ticksMax)
-	{
-		CreateMove::sendPacket = true;
-		ticks = 0;
-	}
-	else
-	{
-		CreateMove::sendPacket = ticks > lag_value;
-	}
+    if (ticks >= ticksMax)
+    {
+        CreateMove::sendPacket = true;
+        ticks = 0;
+    }
+    else
+    {
+        CreateMove::sendPacket = ticks > lag_value;
+    }
 
-	ticks++;
+    ticks++;
     if (lagDuration > 0)
         lagDuration--;
 }

@@ -7,11 +7,11 @@ float dt = 2;
 
 void AtomicPeek::CreateMove(CUserCmd* cmd)
 {
-	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
+    C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
 
-	if (!localplayer || !localplayer->GetAlive())
+    if (!localplayer || !localplayer->GetAlive())
     {
-		return;
+        return;
     }
 
     Vector displacement = localplayer->GetVelocity() * dt;
@@ -31,16 +31,16 @@ void AtomicPeek::CreateMove(CUserCmd* cmd)
         myBonePos.push_back(vecBone);
     }
 
-	for (int i = 1; i < engine->GetMaxClients(); i++)
-	{
-		C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
-		if (!player
-			|| player == localplayer
+    for (int i = 1; i < engine->GetMaxClients(); i++)
+    {
+        C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
+        if (!player
+            || player == localplayer
             || player->GetTeam() == localplayer->GetTeam()
-			|| player->GetDormant()
-			|| !player->GetAlive())
+            || player->GetDormant()
+            || !player->GetAlive())
         {
-			continue;
+            continue;
         }
 
         Vector playerEyePos = player->GetEyePosition();

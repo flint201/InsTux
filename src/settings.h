@@ -18,13 +18,13 @@
 
 namespace Settings
 {
-	namespace Aimbot
-	{
+    namespace Aimbot
+    {
         extern float k;
     }
 
-	void LoadDefaultsOrSave(std::string path);
-	void LoadConfig(std::string path);
-	void LoadSettings();
-	void DeleteConfig(std::string path);
+    void LoadDefaultsOrSave(std::string path);
+    void LoadConfig(std::string path);
+    void LoadSettings();
+    void DeleteConfig(std::string path);
 }

@@ -9,5 +9,5 @@ namespace Aimbot
 {
     extern int targetIdx;
     extern Vector lastAimPoint;
-	void CreateMove(CUserCmd* cmd);
+    void CreateMove(CUserCmd* cmd);
 }

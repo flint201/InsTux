@@ -14,10 +14,10 @@ bool DoesDirectoryExist(const char* path);
 
 struct Config
 {
-	std::string name;
-	std::string path;
+    std::string name;
+    std::string path;
 
-	Config(const char* name, const char* path);
+    Config(const char* name, const char* path);
 };
 
 std::vector<Config> GetConfigs(const char* directory);
