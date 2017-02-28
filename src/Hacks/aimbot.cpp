@@ -168,6 +168,14 @@ void Aimbot::CreateMove(CUserCmd* cmd)
     if (player)
     {
         Vector eyePos = localplayer->GetEyePosition();
+
+        static matrix3x4_t myBoneMatrix[NUM_BONE];
+        localplayer->SetupBones(myBoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
+        matrix3x4_t myBoneHead = myBoneMatrix[(int)Bone::HEAD];
+        Vector vecMyBoneHead = Vector(myBoneHead[0][3], myBoneHead[1][3], myBoneHead[2][3]);
+        if (Math::GetDistance(vecMyBoneHead, eyePos) > 12)
+            eyePos = vecMyBoneHead;
+
         angle = Math::CalcAngle(eyePos, aimPoint);
         lastAimPoint = aimPoint;
     }

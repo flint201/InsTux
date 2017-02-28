@@ -3,23 +3,36 @@
 #include "esp.h"
 #include "hacks.h"
 
+std::string dbgMsg;
+
+// Helper function for drawing info such as local player health and ammo count.
+void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
+{
+    C_BaseCombatWeapon* activeWeapon = (C_BaseCombatWeapon*) entityList->GetClientEntityFromHandle(localplayer->GetActiveWeapon());
+    int ammoInMag = 0;
+    if (activeWeapon)
+        ammoInMag = activeWeapon->GetAmmo();
+
+    std::stringstream ss;
+    ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
+
+    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0, Color(66, 180, 255, 255));
+    Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
+}
 void ESP::Paint()
 {
-
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
     if (!localplayer)
     {
         return;
     }
 
+    int sWidth, sHeight;
+    engine->GetScreenSize(sWidth, sHeight);
+
     TeamID myteam = localplayer->GetTeam();
-    //Vector eyePos = localplayer->GetEyePosition();
 
-    std::stringstream ss;
-    ss << "HP: " << localplayer->GetHealth();
-    Draw::Text(10, 20, ss.str().c_str(), 0, Color(50, 255, 50, 255));
-
-    //if (!Util::KeyDown(XK_Caps_Lock))
+    DrawInfo(localplayer, sWidth, sHeight);
 
     if(!inputSystem->IsButtonDown(ButtonCode_t::KEY_CAPSLOCK))
     {

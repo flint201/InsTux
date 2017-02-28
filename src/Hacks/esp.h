@@ -10,6 +10,7 @@
 //#include "../settings.h"
 namespace ESP
 {
+    extern std::string dbgMsg;
     void Paint();
     void DrawSkeleton(C_BasePlayer* player);
     /*
