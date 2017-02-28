@@ -19,13 +19,15 @@ void ESP::Paint()
     ss << "HP: " << localplayer->GetHealth();
     Draw::Text(10, 20, ss.str().c_str(), 0, Color(50, 255, 50, 255));
 
-    if (!Util::KeyDown(XK_Caps_Lock))
+    //if (!Util::KeyDown(XK_Caps_Lock))
+
+    if(!inputSystem->IsButtonDown(ButtonCode_t::KEY_CAPSLOCK))
     {
 		Draw::Text(10, 5, "InsTux", 0, Color(255, 255, 255, 255));
         return;
     }
 
-	for (int i = 0; i < engine->GetMaxClients(); i++)
+	for (int i = 0; i <= engine->GetMaxClients(); i++)
 	{
 		C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
 		if (!player

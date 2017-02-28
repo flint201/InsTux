@@ -40,9 +40,9 @@ ISurface* surface = nullptr;
 IEngineVGui* engineVGui = nullptr;
 
 IVDebugOverlay* debugOverlay = nullptr;
+IInputSystem* inputSystem = nullptr;
 /*
 IVPanel* panel = nullptr;
-IInputSystem* inputSystem = nullptr;
 IInputInternal* inputInternal = nullptr;
 CGlobalVars* globalVars = nullptr;
 CEffects* effects = nullptr;
@@ -116,9 +116,11 @@ void Interfaces::FindInterfaces()
 
 	debugOverlay = GetInterface<IVDebugOverlay>("./bin/engine.so", "VDebugOverlay");
     checknull(debugOverlay, "debugOverlay");
+
+	inputSystem = GetInterface<IInputSystem>("./bin/inputsystem.so", "InputSystemVersion");
+    checknull(inputSystem, "inputSystem");
     /*
 	panel = GetInterface<IVPanel>("./bin/linux64/vgui2_client.so", "VGUI_Panel");
-	inputSystem = GetInterface<IInputSystem>("./bin/linux64/inputsystem_client.so", "InputSystemVersion");
 	inputInternal = GetInterface<IInputInternal>("./bin/linux64/vgui2_client.so", "VGUI_InputInternal");
 	effects = GetInterface<CEffects>("./bin/linux64/engine_client.so", "VEngineEffects");
 	gameEvents = GetInterface<IGameEventManager2>("./bin/linux64/engine_client.so", "GAMEEVENTSMANAGER002", true);

@@ -4,8 +4,11 @@
 #include "../Utils/mousesim.h"
 #include <math.h>
 #include "hacks.h"
+#include "../settings.h"
 
 #define NUM_BONE 128
+
+float Settings::Aimbot::k = 2;
 
 float silentFov = 4;
 
@@ -24,7 +27,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 	float bestFov = 10;
     const static float forceSelectFov = 1;
 
-	for (int i = 0; i < engine->GetMaxClients(); i++)
+	for (int i = 0; i <= engine->GetMaxClients(); i++)
 	{
 		C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
 		if (!player
@@ -144,7 +147,8 @@ long GetDT(long min = 10, long max = 200)
 void Aimbot::CreateMove(CUserCmd* cmd)
 {
     bool aimKeyDown = Util::KeyDown(XK_Shift_L);
-	QAngle angle = cmd->viewangles;// + cmd->aimdirection;
+
+	QAngle angle = cmd->viewangles;
 	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
 
 	if (!localplayer || !localplayer->GetAlive())

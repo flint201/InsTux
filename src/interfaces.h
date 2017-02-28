@@ -38,11 +38,11 @@ extern InitKeyValuesFn InitKeyValues;
 extern LoadFromBufferFn LoadFromBuffer;
 
 extern IVDebugOverlay* debugOverlay;
+extern IInputSystem* inputSystem;
 
 extern bool* bSendPacket;
 /*
 extern IVPanel* panel;
-extern IInputSystem* inputSystem;
 extern IInputInternal* inputInternal;
 extern CGlobalVars* globalVars;
 extern CEffects* effects;
@@ -81,7 +81,7 @@ extern uintptr_t* swapWindowJumpAddress;
 
 extern uintptr_t oPollEvent;
 extern uintptr_t* polleventJumpAddress;
-//*/
+*/
 
 namespace Interfaces
 {

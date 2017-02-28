@@ -1,7 +1,6 @@
 #include "util_sdk.h"
 #include "../logger.h"
 
-/*
 char Util::GetButtonString(ButtonCode_t key)
 {
 	switch (key)
@@ -57,7 +56,6 @@ ButtonCode_t Util::GetButtonCode(std::string buttonName)
 
 	return ButtonCode_t::BUTTON_CODE_INVALID;
 }
-*/
 
 IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool ignorez, bool nofog, bool model, bool nocull, bool halflambert)
 {

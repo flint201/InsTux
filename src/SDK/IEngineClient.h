@@ -86,7 +86,7 @@ public:
 	bool IsTakingScreenshot()
 	{
 		typedef bool (* oIsTakingScreenshot)(void*);
-		return getvfunc<oIsTakingScreenshot>(this, 92)(this);
+		return getvfunc<oIsTakingScreenshot>(this, 91)(this);
 	}
 
 	void ExecuteClientCmd(const char* szCmdString)
