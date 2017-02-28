@@ -1,6 +1,6 @@
 # InsTux
 
-This is InsTux, a hack for Insurgency on Linux. It is currently a work in progress.
+This is InsTux, a hack for Insurgency on Linux.
 
 # Features
 
