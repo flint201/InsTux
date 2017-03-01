@@ -161,6 +161,8 @@ long GetDT(long min = 10, long max = 200)
 
 void Aimbot::CreateMove(CUserCmd* cmd)
 {
+    MouseSim::update(cmd);
+
     bool aimKeyDown = inputSystem->IsButtonDown(ButtonCode_t::KEY_LSHIFT);
 
     QAngle angle = cmd->viewangles;

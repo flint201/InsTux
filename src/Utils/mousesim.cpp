@@ -96,9 +96,6 @@ long MouseSim::getDT()
     long msNow = spec.tv_sec*1000 + spec.tv_nsec/1.0e6;
     long dt = msNow - lasttime;
 
-    if (dt > 10)
-        dt = 4;
-
     lasttime = msNow;
     return dt;
 }
@@ -127,10 +124,11 @@ void MouseSim::sim(QAngle deltaAngle)
     static PID pidX(kp, ki, kd);
     static PID pidY(kp, ki, kd);
 
-    if (dt > 50)
+    if (dt > 30)
     {
         pidX.clear();
         pidY.clear();
+        dt = 30;
     }
 
     dx = pidX.step(dx);
@@ -140,13 +138,7 @@ void MouseSim::sim(QAngle deltaAngle)
     dx = dx<lim ? dx : lim;
     dy = dy<lim ? dy : lim;
 
-    /*
-    float lim = limit(normVec, dt);
-    lim = lim < normVec/sensitivity() ? lim : normVec/sensitivity();
-
-    dx *= k * lim / normVec;
-    dy *= k * lim / normVec;
-    */
+    Log << lim << endl;
 
     if (dx > 10 || dy > 10)
     {

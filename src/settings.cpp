@@ -86,8 +86,9 @@ void LoadUIColor(Json::Value &config, ImColor color)
 void Settings::LoadDefaultsOrSave(std::string path)
 {
     Json::Value settings;
+    // inflate settings with currently loaded config 
+    
     Json::StyledWriter styledWriter;
-
     std::ofstream(path) << styledWriter.write(settings);
 }
 
