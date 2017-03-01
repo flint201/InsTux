@@ -12,11 +12,11 @@
 
 namespace MouseSim
 {
-    float k = 2.5; // correction constant for aim sensitivity
+    float k = 30; // correction constant for aim sensitivity, bigger number = smoother, smaller = faster.
 
-    int thresh = 512; // halving threshhold for the accumulative pixel/degree
-    float degree = 300; // total number of degree moved, accumulative
-    int pixel = thresh; // total number of pixels moved, accumulative
+    int thresh = 10000; // halving threshhold for the accumulative pixel/degree
+    float degree = 1; // total number of degree moved, accumulative
+    int pixel = 30; // total number of pixels moved, accumulative
 
     float omega = 2; // angular velocity of noise vector in rad/second
     float theta = 1.5; // angle of noise vector in rad
@@ -64,7 +64,7 @@ void MouseSim::mouseDestroy()
 
 float MouseSim::sensitivity()
 {
-    return degree / pixel;
+    return degree / pixel * k;
 }
 
 void MouseSim::noise(float error, long dt, float& nx, float& ny)
@@ -114,7 +114,7 @@ void MouseSim::sim(QAngle deltaAngle)
     long dt = getDT();
 
     // pid for both x and y
-    static const float ku = 8; // 8
+    static const float ku = 7; // 8
     static const float tu = 0.10; // 0.22
 
     static const float kp = 0.6 * ku;
@@ -124,21 +124,19 @@ void MouseSim::sim(QAngle deltaAngle)
     static PID pidX(kp, ki, kd);
     static PID pidY(kp, ki, kd);
 
-    if (dt > 30)
+    if (dt > 15)
     {
         pidX.clear();
         pidY.clear();
-        dt = 30;
+        dt = 5;
     }
 
     dx = pidX.step(dx);
     dy = pidY.step(dy);
 
-    float lim = limit(normVec, dt) + 10;
+    float lim = limit(normVec, dt) + 6;
     dx = dx<lim ? dx : lim;
     dy = dy<lim ? dy : lim;
-
-    Log << lim << endl;
 
     if (dx > 10 || dy > 10)
     {
@@ -170,8 +168,14 @@ void MouseSim::sim(QAngle deltaAngle)
 
 void MouseSim::update(CUserCmd* cmd)
 {
-    degree += abs(cmd->viewangles.y);
-    pixel += abs(cmd->mousedx);
+    static float lastX = cmd->viewangles.x;
+    if (cmd->mousedy == 0)
+        return;
+
+    degree += abs(cmd->viewangles.x - lastX);
+    lastX = cmd->viewangles.x;
+    pixel += abs(cmd->mousedy);
+
     if (pixel > thresh)
     {
         pixel /= 2;
