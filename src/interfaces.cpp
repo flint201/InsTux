@@ -66,11 +66,13 @@ char cwd[1024];
 
 void checknull(void* ptr, std::string varname)
 {
+    /*
     if (ptr == nullptr)
         Log << "- nullptr " << varname << std::endl;
     else
         //std::ofstream(std::string(cwd) + "/instux.log", std::ofstream::app) << "+ " << varname << " = " << (unsigned) ptr << std::endl;
         Log << "+ " << varname << " = " << hex((unsigned)ptr) << std::endl;
+    */
 }
 
 void Interfaces::FindInterfaces()

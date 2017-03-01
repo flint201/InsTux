@@ -59,7 +59,7 @@ ButtonCode_t Util::GetButtonCode(std::string buttonName)
 
 IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool ignorez, bool nofog, bool model, bool nocull, bool halflambert)
 {
-    Log << "    + Util::CreateMaterial" << std::endl;
+    //Log << "    + Util::CreateMaterial" << std::endl;
 
     std::stringstream materialData;
     materialData << "\"" + type + "\"\n"
@@ -74,13 +74,13 @@ IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool igno
 
     std::string materialName = "mymat_" + std::to_string(RandomInt(10, 100000));
     KeyValues* keyValues = new KeyValues(materialName.c_str());
-    Log << "    + after new KeyValues" << std::endl;
+    //Log << "    + after new KeyValues" << std::endl;
 
     InitKeyValues(keyValues, type.c_str());
-    Log << "    + after InitKeyValues" << std::endl;
+    //Log << "    + after InitKeyValues" << std::endl;
 
     LoadFromBuffer(keyValues, materialName.c_str(), materialData.str().c_str(), nullptr, NULL, nullptr);
-    Log << "    + after LoadFromBuffer" << std::endl;
+    //Log << "    + after LoadFromBuffer" << std::endl;
 
     return material->CreateMaterial(materialName.c_str(), keyValues);
 }

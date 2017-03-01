@@ -34,7 +34,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     static bool materialInitialized = false;
     if (!materialInitialized) {
         modelInfo->GetModelMaterials(pInfo.pModel, 1, &materialHidden);
-        Log << " -- got material name:" << materialHidden->GetName() << " texture group:" << materialHidden->GetTextureGroupName() << std::endl;
+        //Log << " -- got material name:" << materialHidden->GetName() << " texture group:" << materialHidden->GetTextureGroupName() << std::endl;
         std::string materialName = materialHidden->GetName();
         if (materialName.find("models/player/attachments/ins_attachments_color") != std::string::npos)
             materialInitialized = true;

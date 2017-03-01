@@ -78,7 +78,7 @@ bool Hooker::GetLibraryInformation(const char* library, uintptr_t* address, size
         return true;
     }
 
-    Log << "    -- Failed to GetLibraryInformation for " << library << std::endl;
+    //Log << "    -- Failed to GetLibraryInformation for " << library << std::endl;
     return false;
 }
 
@@ -103,7 +103,7 @@ uintptr_t GetLibraryBase(const char* library) {
             return current.address;
     }
 
-    Log << "    -- Failed to GetLibraryBase for " << library << std::endl;
+    //Log << "    -- Failed to GetLibraryBase for " << library << std::endl;
     return 0;
 }
 
@@ -127,22 +127,22 @@ void Hooker::FindInitKeyValues()
 {
     //uintptr_t func_addr = PatternFinder::FindPatternInModule("bin/client.so", (unsigned char*) INITKEYVALUES_SIGNATURE, INITKEYVALUES_MASK);
     unsigned func_addr = GetLibraryBase("bin/client.so");
-    Log << "++ client.so base = " << hex((unsigned)func_addr) << std::endl;
+    //Log << "++ client.so base = " << hex((unsigned)func_addr) << std::endl;
 
     func_addr = (unsigned)func_addr + (unsigned) 0x949420;
     InitKeyValues = reinterpret_cast<InitKeyValuesFn>(func_addr);
-    Log << "+ InitKeyValues = " << hex0((unsigned)InitKeyValues) << std::endl;
+    //Log << "+ InitKeyValues = " << hex0((unsigned)InitKeyValues) << std::endl;
 }
 
 void Hooker::FindLoadFromBuffer()
 {
     //uintptr_t func_addr = PatternFinder::FindPatternInModule("bin/client.so", (unsigned char*) LOADFROMBUFFER_SIGNATURE, LOADFROMBUFFER_MASK);
     unsigned func_addr = GetLibraryBase("bin/client.so");
-    Log << "++ client.so base = " << hex((unsigned)func_addr) << std::endl;
+    //Log << "++ client.so base = " << hex((unsigned)func_addr) << std::endl;
     func_addr = (unsigned)func_addr + (unsigned) 0x94E840;
 
     LoadFromBuffer = reinterpret_cast<LoadFromBufferFn>(func_addr);
-    Log << "+ LoadFromBuffer = " << hex0((unsigned)LoadFromBuffer) << std::endl;
+    //Log << "+ LoadFromBuffer = " << hex0((unsigned)LoadFromBuffer) << std::endl;
 }
 
 void Hooker::FindIClientMode()
@@ -153,7 +153,7 @@ void Hooker::FindIClientMode()
     GetClientModeFn GetClientMode = reinterpret_cast<GetClientModeFn> (GetAbsoluteAddress(func_ptr, 0, 4));
 
     clientMode = GetClientMode();
-    Log << "* GetClientMode returned " << hex0((unsigned)clientMode) << std::endl;
+    //Log << "* GetClientMode returned " << hex0((unsigned)clientMode) << std::endl;
 
     clientModeVMT = new VMT(clientMode);
 }
@@ -162,12 +162,12 @@ void Hooker::FindSendPacket()
 {
     uintptr_t bool_address = PatternFinder::FindPatternInModule("engine.so", (unsigned char*) BSENDPACKET_SIGNATURE, BSENDPACKET_MASK) + strlen(BSENDPACKET_MASK);
 
-    Log << "  bool_address = " << hex0(bool_address) << endl;
+    //Log << "  bool_address = " << hex0(bool_address) << endl;
 
     bSendPacket = reinterpret_cast<bool*>(bool_address);
 
     Util::ProtectAddr(bSendPacket, PROT_READ | PROT_WRITE | PROT_EXEC);
-    Log << "  bool value = " << *bSendPacket << endl;
+    //Log << "  bool value = " << *bSendPacket << endl;
 }
 
 /*

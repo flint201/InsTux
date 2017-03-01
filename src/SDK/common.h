@@ -33,7 +33,7 @@ interface* GetInterface(const char* filename, const char* version, bool exact = 
     void* library = dlopen(filename, RTLD_NOLOAD | RTLD_NOW);
 
     if (!library) {
-        Log << "    -- " << filename << " dlopen failed." << std::endl;
+        //Log << "    -- " << filename << " dlopen failed." << std::endl;
         return nullptr;
     }
 
@@ -41,7 +41,7 @@ interface* GetInterface(const char* filename, const char* version, bool exact = 
 
     if (!interfaces_sym)
     {
-        Log << "    -- " << filename << " dlsym s_pInterfaceRegs failed." << std::endl;
+        //Log << "    -- " << filename << " dlsym s_pInterfaceRegs failed." << std::endl;
         dlclose(library);
         return nullptr;
     }
@@ -66,7 +66,7 @@ interface* GetInterface(const char* filename, const char* version, bool exact = 
         }
     }
 
-    Log << "    -- " << filename << " Cannot find interface." << std::endl;
+    //Log << "    -- " << filename << " Cannot find interface." << std::endl;
     return nullptr;
 }
 

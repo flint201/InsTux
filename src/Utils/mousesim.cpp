@@ -20,7 +20,7 @@ namespace MouseSim
 
     float omega = 2; // angular velocity of noise vector in rad/second
     float theta = 1.5; // angle of noise vector in rad
-    float noiseCoeff = 0.618;//1/0.618; // magnitude of noise vector measured in times of norm of error
+    float noiseCoeff = 1.72; //0.618;//1/0.618; // magnitude of noise vector measured in times of norm of error
 
     int fd; // file descriptor to the mouse device
 }
@@ -31,15 +31,16 @@ void MouseSim::mouseInit()
     if(fd < 0)
         fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
     
-    if(fd < 0)
-        Log << "error: open \"/dev/input/uinput\" and \"/dev/uinput\"." << endl;
+    //if(fd < 0)
+    //    Log << "error: open \"/dev/input/uinput\" and \"/dev/uinput\"." << endl;
 
     if(ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0 ||
             ioctl(fd, UI_SET_KEYBIT, BTN_LEFT) < 0 ||
             ioctl(fd, UI_SET_EVBIT, EV_REL) < 0 ||
             ioctl(fd, UI_SET_RELBIT, REL_X) < 0 ||
             ioctl(fd, UI_SET_RELBIT, REL_Y) < 0)
-        Log << "error: ioctl." << endl;
+        return;
+        //Log << "error: ioctl." << endl;
 
     struct uinput_user_dev uidev;
     memset(&uidev, 0, sizeof(uidev));
@@ -49,11 +50,15 @@ void MouseSim::mouseInit()
     uidev.id.product = 0x1;
     uidev.id.version = 1;
 
+    write(fd, &uidev, sizeof(uidev));
+    ioctl(fd, UI_DEV_CREATE);
+    /*
     if(write(fd, &uidev, sizeof(uidev)) < 0)
         Log << "error: write to uinput fd." << endl;
 
     if(ioctl(fd, UI_DEV_CREATE) < 0)
         Log << "error: ioctl failed to create device." << endl;
+    */
 }
 
 void MouseSim::mouseDestroy()
@@ -153,17 +158,20 @@ void MouseSim::sim(QAngle deltaAngle)
     ev.value = (int) round(dx);
 
     if(write(fd, &ev, sizeof(struct input_event)) < 0)
-        Log << "error: write input_event" << endl;
+        return;
+        //Log << "error: write input_event" << endl;
 
     ev.code = REL_Y;
     ev.value = (int) round(dy);
     if(write(fd, &ev, sizeof(struct input_event)) < 0)
-        Log << "error: write input_event" << endl;
+        return;
+        //Log << "error: write input_event" << endl;
 
     memset(&ev, 0, sizeof(struct input_event));
     ev.type = EV_SYN;
     if(write(fd, &ev, sizeof(struct input_event)) < 0)
-        Log << "error: write input_event" << endl;
+        return;
+        //Log << "error: write input_event" << endl;
 }
 
 void MouseSim::update(CUserCmd* cmd)
