@@ -1,6 +1,6 @@
 # InsTux
 
-This is InsTux, a hack for Insurgency on Linux. It is currently a work in progress.
+This is InsTux, a hack for Insurgency on Linux.
 
 # Features
 
@@ -12,8 +12,12 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 - Skeleton + Name ESP activated when Caps Lock is pressed
     ![esp](https://i.imgur.com/hPxWI2e.jpg)
 
+- Health & Ammo count display
+
 # Demo video
 [![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
+
+[![InsTuxDemo2](https://img.youtube.com/vi/xVMxNxhYlzw/0.jpg)](https://www.youtube.com/watch?v=xVMxNxhYlzw)
 
 # Installation
 (example commands here are for Ubuntu/Debian)
@@ -25,7 +29,8 @@ This is InsTux, a hack for Insurgency on Linux. It is currently a work in progre
 
 1. make sure your `g++` version is at least 6.0. Here is AimTux's tutorial page for updating g++
     [How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
-
+    You will also need to install the corresponding g++ multilib
+    
 2. clone the repository and cd to its root directory
     ```
     git clone https://github.com/flint201/InsTux
@@ -61,6 +66,9 @@ If the last line of the output shows `$2 = 0x0` like this it means the hack has 
 ++++ InsTux starting...
 ++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++
 ```
+
+# Updating
+This project is undergoing active development, run `./update` in your repo directory to get the latest version.
 
 # Disclaimer
 This project is for education purpose ONLY. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
