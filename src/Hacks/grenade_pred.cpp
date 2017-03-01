@@ -2,15 +2,38 @@
 #include "../Utils/draw.h"
 #include "../logger.h"
 #include <math.h>
+#include <sys/time.h>
+
+timeval getTime()
+{
+    struct timeval tm;
+    gettimeofday(&tm, NULL);
+    return tm;
+}
+
+double difftimeval(timeval start, timeval end)
+{
+    return (double)(end.tv_sec - start.tv_sec) + (double)(end.tv_usec - start.tv_usec) / 1000000.0;
+}
 
 GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, Vector eyePos, QAngle viewAngle, Vector playerVel)
     : weapon(weapon), localplayer(localplayer), eyePos(eyePos), viewAngle(viewAngle), playerVel(playerVel)
 {
+    static bool pinPulled = false;
+    static timeval timePinPull;
+    static C_BaseCombatWeapon* lastWeapon = nullptr;
+
     gravity = 800.0;
     elasticity = 0.15;
 
     if (!weapon)
         return;
+    
+    if (lastWeapon != weapon)
+    {
+        pinPulled = false;
+        lastWeapon = weapon;
+    }
 
     std::string name(weapon->GetName());
 
@@ -18,7 +41,20 @@ GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, 
         name.find("weapon_m67") != std::string::npos)
     {
         throwPower = 1100.0;
-        fuse_time = 4.0;
+
+        if (!pinPulled && ((GrenadeThrownBase*)weapon)->IsPinPulled())
+        {
+            pinPulled = true;
+            timePinPull = getTime();
+        }
+        
+        fuse_time = 5.0;
+        if (pinPulled)
+            fuse_time -= difftimeval(timePinPull, getTime());
+
+        Log << "    time " << difftimeval(timePinPull, getTime()) << endl;
+
+        isLauncher = false;
     }
     else if (name.find("weapon_gp25") != std::string::npos ||
             name.find("weapon_m203") != std::string::npos)
@@ -48,7 +84,7 @@ void Dampen(Vector& vec)
 
 void GrenadePred::Paint()
 {
-    if (path.size() < 2)
+    if (path.size() < 10)
     {
         return;
     }
@@ -56,7 +92,7 @@ void GrenadePred::Paint()
     Vector prevPoint;
     debugOverlay->ScreenPosition(path[0], prevPoint);
 
-    for (unsigned i = 1; i < path.size(); i++)
+    for (unsigned i = 9; i < path.size(); i++)
     {
         Vector currPoint;
         if(debugOverlay->ScreenPosition(path[i], currPoint))
@@ -92,12 +128,12 @@ void GrenadePred::DrawCross(Vector anchor, Vector normal)
     base1 *= sqrt(distance);
     base2 *= sqrt(distance);
 
-    /*
-    Vector topLeft = anchor - base1 + base2;
-    Vector topRight = anchor + base1 + base2;
-    Vector botRight = anchor + base1 - base2;
-    Vector botLeft = anchor - base1 - base2;
-    */
+    if(!isLauncher)
+    {
+        base1 *= 0.2;
+        base2 *= 0.2;
+    }
+
     Vector left = anchor - base2;
     Vector right = anchor + base2;
     Vector top = anchor + base1;

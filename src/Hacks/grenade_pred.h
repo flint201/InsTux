@@ -8,18 +8,19 @@
 class GrenadePred
 {
 public:
+    C_BaseCombatWeapon* weapon;
+
     GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, Vector eyePos, QAngle viewAngle, Vector playerVel);
     void Predict();
 
 private:
-    C_BaseCombatWeapon* weapon;
     C_BasePlayer* localplayer;
     Vector eyePos;
     QAngle viewAngle;
     Vector playerVel;
 
     float throwPower;
-    float fuse_time;
+    double fuse_time;
 
     float gravity;
     float elasticity;
