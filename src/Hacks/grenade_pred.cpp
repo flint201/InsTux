@@ -90,7 +90,7 @@ void GrenadePred::Paint()
     }
 
     Vector prevPoint;
-    debugOverlay->ScreenPosition(path[0], prevPoint);
+    debugOverlay->ScreenPosition(path[9], prevPoint);
 
     for (unsigned i = 9; i < path.size(); i++)
     {
