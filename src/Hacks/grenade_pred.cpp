@@ -52,8 +52,6 @@ GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, 
         if (pinPulled)
             fuse_time -= difftimeval(timePinPull, getTime());
 
-        Log << "    time " << difftimeval(timePinPull, getTime()) << endl;
-
         isLauncher = false;
     }
     else if (name.find("weapon_gp25") != std::string::npos ||
@@ -84,15 +82,15 @@ void Dampen(Vector& vec)
 
 void GrenadePred::Paint()
 {
-    if (path.size() < 10)
+    if (path.size() < 6)
     {
         return;
     }
 
     Vector prevPoint;
-    debugOverlay->ScreenPosition(path[9], prevPoint);
+    debugOverlay->ScreenPosition(path[4], prevPoint);
 
-    for (unsigned i = 9; i < path.size(); i++)
+    for (unsigned i = 5; i < path.size(); i++)
     {
         Vector currPoint;
         if(debugOverlay->ScreenPosition(path[i], currPoint))
