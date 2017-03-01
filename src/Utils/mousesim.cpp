@@ -12,7 +12,7 @@
 
 namespace MouseSim
 {
-    float k = 30; // correction constant for aim sensitivity, bigger number = smoother, smaller = faster.
+    float k = 50; // correction constant for aim sensitivity, bigger number = smoother, smaller = faster.
 
     int thresh = 10000; // halving threshhold for the accumulative pixel/degree
     float degree = 1; // total number of degree moved, accumulative

@@ -10,7 +10,7 @@
 
 float Settings::Aimbot::k = 2;
 
-float silentFov = 2;
+float silentFov = 4;
 
 namespace Aimbot
 {
