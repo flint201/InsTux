@@ -85,7 +85,7 @@ IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool igno
     return material->CreateMaterial(materialName.c_str(), keyValues);
 }
 
-bool Util::Ray(C_BasePlayer* localplayer, Vector vecStart, Vector vecEnd)
+bool Util::Ray(C_BasePlayer* localplayer, C_BasePlayer* player, int idx, Vector vecStart, Vector vecEnd)
 {
     Ray_t ray;
     ray.Init(vecStart, vecEnd);
@@ -97,5 +97,6 @@ bool Util::Ray(C_BasePlayer* localplayer, Vector vecStart, Vector vecEnd)
     trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
 
     return (unsigned)tr.m_pEntityHit & 0x8 && (int)tr.hitgroup > 0;
+    //return (int)tr.m_pEntityHit != 0 && tr.fraction > 0.95 && (int)tr.hitgroup != 0;
 }
 

@@ -143,18 +143,16 @@ struct COffsets
 
     struct
     {
-        std::ptrdiff_t m_bStartedArming;
-    } DT_WeaponC4;
+        std::ptrdiff_t m_bRedraw;
+        std::ptrdiff_t m_bPinPulled;
+        std::ptrdiff_t m_fThrowTime;
+    } DT_INSGrenadeBase;
 
     struct
     {
-        std::ptrdiff_t m_bRedraw;
-        std::ptrdiff_t m_bIsHeldByPlayer;
-        std::ptrdiff_t m_bPinPulled;
-        std::ptrdiff_t m_fThrowTime;
-        std::ptrdiff_t m_bLoopingSoundPlaying;
-        std::ptrdiff_t m_flThrowStrength;
-    } DT_BaseCSGrenade;
+        std::ptrdiff_t m_vecInitialVelocity;
+        std::ptrdiff_t m_vecVelocity;
+    } DT_GrenadeThrownBase;
 
     struct
     {

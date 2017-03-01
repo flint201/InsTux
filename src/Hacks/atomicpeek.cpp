@@ -46,7 +46,7 @@ void AtomicPeek::CreateMove(CUserCmd* cmd)
         Vector playerEyePos = player->GetEyePosition();
         for (Vector bonePos : myBonePos)
         {
-            if (Util::Ray(player, playerEyePos, bonePos))
+            if (Util::Ray(player, localplayer, 0, playerEyePos, bonePos))
             {
                 FakeLag::Lag(32);
                 return;

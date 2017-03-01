@@ -143,6 +143,13 @@ public:
 
     // A version that simply accepts a ray (can work as a traceline or tracehull)
     virtual void TraceRay(const Ray_t &ray, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace) = 0;
+    /*
+    void TraceRay(const Ray_t &ray, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace)
+    {
+        typedef void (* oTraceRay)(void*, const Ray_t &ray, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace);
+        return getvfunc<oTraceRay>(this, 1)(this, ray, fMask, pTraceFilter, pTrace);
+    }
+    //*/
 
     // A version that sets up the leaf and entity lists and allows you to pass those in for collision.
     virtual void SetupLeafAndEntityListRay(const Ray_t &ray, ITraceListData *pTraceData) = 0;

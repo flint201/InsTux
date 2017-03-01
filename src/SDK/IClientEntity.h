@@ -1,7 +1,6 @@
 #pragma once
 
 #include "vector.h"
-
 extern uintptr_t* GetCSWpnData_address;
 
 enum MoveType_t
@@ -162,6 +161,13 @@ public:
     {
         return (bool*)((uintptr_t)this + offsets.DT_BaseEntity.m_bSpotted);
     }
+
+    char* GetClassname()
+    {
+        typedef char* (* oGetClassname)(void*);
+        return getvfunc<oGetClassname>(this, 195)(this);
+    }
+
 };
 
 /* generic game classes */
@@ -531,6 +537,12 @@ public:
         return *(float*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_flNextPrimaryAttack);
     }
 
+    char* GetName()
+    {
+        typedef char* (* oGetName)(void*);
+        return getvfunc<oGetName>(this, 402)(this);
+    }
+
     bool GetInReload()
     {
         return *(bool*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_bInReload);
@@ -541,6 +553,23 @@ public:
         return *(float*)((uintptr_t)this + offsets.DT_WeaponCSBase.m_fAccuracyPenalty);
     }
 
+    bool IsGrenade()
+    {
+        char* weaponName = this->GetName();
+        /*
+        char* grenadeNames[] = {"weapon_f1"};
+        for (char* grenadeName : grendeNames)
+        {
+        */
+        if (strcmp(weaponName, "weapon_f1")==0)
+            return true;
+
+        if (strcmp(weaponName, "weapon_gp25_he")==0)
+            return true;
+
+        return false;
+    }
+
     CCSWeaponInfo* GetCSWpnData()
     {
         typedef CCSWeaponInfo* (* oGetCSWpnData) (void*);
@@ -548,44 +577,29 @@ public:
     }
 };
 
-class C_WeaponC4 : C_BaseCombatWeapon
+class GrenadeThrownBase: C_BaseEntity
 {
-public:
-    bool GetStartedArming()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_WeaponC4.m_bStartedArming);
-    }
-};
+    public:
 
-class C_Chicken : C_BaseEntity
-{
-public:
-    bool* GetShouldGlow()
+    unsigned GetOffset()
     {
-        return (bool*)((uintptr_t)this + offsets.DT_DynamicProp.m_bShouldGlow);
+        return (unsigned)offsets.DT_INSGrenadeBase.m_fThrowTime;
     }
-};
-
-class C_BaseCSGrenade : C_BaseCombatWeapon
-{
-public:
-    bool IsHeldByPlayer()
+    bool IsPinPulled()
     {
-        return *(bool*)((uintptr_t)this + offsets.DT_BaseCSGrenade.m_bIsHeldByPlayer);
-    }
-
-    bool GetPinPulled()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_BaseCSGrenade.m_bPinPulled);
+        return *(bool*)((uintptr_t)this + offsets.DT_INSGrenadeBase.m_bPinPulled);
     }
 
     float GetThrowTime()
     {
-        return *(float*)((uintptr_t)this + offsets.DT_BaseCSGrenade.m_fThrowTime);
+        return *(float*)((uintptr_t)this + offsets.DT_INSGrenadeBase.m_fThrowTime);
     }
 
-    float GetThrowStrength()
-    {
-        return *(float*)((uintptr_t)this + offsets.DT_BaseCSGrenade.m_flThrowStrength);
+    Vector GetVecInitialVelocity() {
+        return *(Vector*)((uintptr_t)this + offsets.DT_GrenadeThrownBase.m_vecInitialVelocity);
+    }
+
+    Vector GetVecVelocity() {
+        return *(Vector*)((uintptr_t)this + offsets.DT_GrenadeThrownBase.m_vecVelocity);
     }
 };
