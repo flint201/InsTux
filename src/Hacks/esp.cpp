@@ -16,7 +16,7 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
         ammoInMag = activeWeapon->GetAmmo();
 
     std::stringstream ss;
-    ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag << "   " << localplayer->IsScoped();
+    ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
 
     Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0, Color(66, 180, 255, 255));
     Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
@@ -46,8 +46,8 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     Vector vImpactScr;
     debugOverlay->ScreenPosition(vImpact, vImpactScr);
 
-    Draw::Line(vImpactScr.x-3, vImpactScr.y, vImpactScr.x+2, vImpactScr.y, Color(30, 250, 30, 255));
-    Draw::Line(vImpactScr.x, vImpactScr.y-3, vImpactScr.x, vImpactScr.y+2, Color(30, 250, 30, 255));
+    Draw::Line(vImpactScr.x-3, vImpactScr.y, vImpactScr.x+2, vImpactScr.y, Color(255, 156, 35, 255));
+    Draw::Line(vImpactScr.x, vImpactScr.y-3, vImpactScr.x, vImpactScr.y+2, Color(255, 156, 35, 255));
 }
 
 

@@ -11,7 +11,7 @@
 float Settings::Aimbot::k = 2;
 
 float silentFov = 5;
-float silentHipFov = 30;
+float silentHipFov = 35;
 float forceSelectFov = 1;
 
 namespace Aimbot
@@ -209,10 +209,10 @@ void Aimbot::CreateMove(CUserCmd* cmd)
             QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
             MouseSim::sim(dAngle);
         }
-    }
 
-    if (angSilent != cmd->muzzleangle)
-    {
-        cmd->muzzleangle = angSilent;
+        if (angSilent != cmd->muzzleangle)
+        {
+            cmd->muzzleangle = angSilent;
+        }
     }
 }
