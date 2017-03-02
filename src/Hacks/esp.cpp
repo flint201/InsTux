@@ -16,7 +16,7 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
         ammoInMag = activeWeapon->GetAmmo();
 
     std::stringstream ss;
-    ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
+    ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag << "   " << localplayer->IsScoped();
 
     Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0, Color(66, 180, 255, 255));
     Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
@@ -24,6 +24,30 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     // draw crosshairs
     Draw::Line(sWidth/2-4, sHeight/2, sWidth/2+3, sHeight/2, Color(255, 20, 20, 255));
     Draw::Line(sWidth/2, sHeight/2-4, sWidth/2, sHeight/2+3, Color(255, 20, 20, 255));
+
+    // draw bullet impact point
+    Math::NormalizeAngles(CreateMove::muzzleangle);
+
+    Vector vMuzzleDir;
+    Math::AngleVectors(CreateMove::muzzleangle, vMuzzleDir);
+    
+    Vector vecSrc = CreateMove::muzzlepos;
+    Vector vecDst = CreateMove::muzzlepos + vMuzzleDir * 500;
+
+    Ray_t ray;
+    ray.Init(vecSrc, vecDst);
+    CTraceFilter traceFilter;
+    traceFilter.pSkip = localplayer;
+
+    trace_t tr;
+    trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+
+    Vector vImpact = tr.endpos;
+    Vector vImpactScr;
+    debugOverlay->ScreenPosition(vImpact, vImpactScr);
+
+    Draw::Line(vImpactScr.x-3, vImpactScr.y, vImpactScr.x+2, vImpactScr.y, Color(30, 250, 30, 255));
+    Draw::Line(vImpactScr.x, vImpactScr.y-3, vImpactScr.x, vImpactScr.y+2, Color(30, 250, 30, 255));
 }
 
 

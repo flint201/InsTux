@@ -267,6 +267,9 @@ struct CUserCmd
     bool hasbeenpredicted;
     QAngle headangles;
     Vector headoffset;
+    QAngle unknown;
+    QAngle muzzleangle;
+    Vector muzzlepos;
 };
 
 class IInputSystem : public IAppSystem

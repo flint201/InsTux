@@ -350,6 +350,13 @@ public:
     {
         return (QAngle*)((uintptr_t)this + offsets.DT_BasePlayer.deadflag + 0x4);
     }
+
+    unsigned GetINSFlags()
+    {
+        //uintptr_t shared = *((uintptr_t*)((uintptr_t)this + offsets.DT_INSPlayer.m_Shared));
+        //return *((unsigned*)(shared + offsets.DT_INSPlayerShared.m_iPlayerFlags));
+        return *((unsigned*)((uintptr_t)this + offsets.DT_INSPlayerShared.m_iPlayerFlags));
+    }
 };
 
 class C_PlantedC4 : public C_BaseEntity
@@ -580,11 +587,6 @@ public:
 class GrenadeThrownBase: C_BaseEntity
 {
     public:
-
-    unsigned GetOffset()
-    {
-        return (unsigned)offsets.DT_INSGrenadeBase.m_fThrowTime;
-    }
     bool IsPinPulled()
     {
         return *(bool*)((uintptr_t)this + offsets.DT_INSGrenadeBase.m_bPinPulled);

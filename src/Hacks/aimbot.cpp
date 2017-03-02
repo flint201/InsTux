@@ -10,7 +10,9 @@
 
 float Settings::Aimbot::k = 2;
 
-float silentFov = 4;
+float silentFov = 5;
+float silentHipFov = 30;
+float forceSelectFov = 1;
 
 namespace Aimbot
 {
@@ -26,7 +28,6 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 
     C_BasePlayer* closestEntity = NULL;
     float bestFov = 10;
-    const static float forceSelectFov = 1;
 
     for (int i = 0; i <= engine->GetMaxClients(); i++)
     {
@@ -64,7 +65,8 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
-            if (Math::GetFov(cmd->viewangles, angHead) < silentFov)
+            if (Math::GetFov(cmd->viewangles, angHead) < silentFov ||
+                (Math::GetFov(cmd->muzzleangle, angHead) < silentHipFov && Math::GetFov(cmd->viewangles, cmd->muzzleangle) > 5))
             {
                 angSilent = angHead;
             }
@@ -149,7 +151,7 @@ long GetMS()
 }
 
 
-long GetDT(long min = 10, long max = 200)
+long GetDT(long min = 5, long max = 20)
 {
     static long ms = GetMS();
     long dt = GetMS() - ms;
@@ -180,7 +182,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     Bone bone = Bone::SPINE_3;
     Vector aimPoint;
-    QAngle angSilent = cmd->viewangles;
+    QAngle angSilent = cmd->muzzleangle;
     C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, aimKeyDown, angSilent);
     if (player)
     {
@@ -207,10 +209,10 @@ void Aimbot::CreateMove(CUserCmd* cmd)
             QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
             MouseSim::sim(dAngle);
         }
+    }
 
-        if (angSilent != cmd->viewangles)
-        {
-            cmd->viewangles = angSilent;
-        }
+    if (angSilent != cmd->muzzleangle)
+    {
+        cmd->muzzleangle = angSilent;
     }
 }

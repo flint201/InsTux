@@ -99,6 +99,10 @@ void Offsets::GetOffsets()
     offsets.DT_CSPlayer.m_flFlashMaxAlpha = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_flFlashMaxAlpha");
     offsets.DT_CSPlayer.m_flLowerBodyYawTarget = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_flLowerBodyYawTarget");
 
+    offsets.DT_INSPlayer.m_Shared = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_Shared");
+
+    offsets.DT_INSPlayerShared.m_iPlayerFlags= NetVarManager::GetOffset(tables, "DT_INSPlayerShared", "m_iPlayerFlags");
+
     offsets.DT_BaseAttributableItem.m_iItemDefinitionIndex = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
     offsets.DT_BaseAttributableItem.m_iItemIDHigh = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemIDHigh");
     offsets.DT_BaseAttributableItem.m_iAccountID = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iAccountID");

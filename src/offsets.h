@@ -118,6 +118,23 @@ struct COffsets
 
     struct
     {
+        std::ptrdiff_t m_Shared;
+    } DT_INSPlayer;
+
+    struct
+    {
+		std::ptrdiff_t m_iPlayerFlags;
+        /*
+		std::ptrdiff_t m_nPlayerSpecialRole;
+		std::ptrdiff_t m_iLeanType;
+		std::ptrdiff_t m_iDesiredLeanType;
+		std::ptrdiff_t m_flLean;
+		std::ptrdiff_t m_IronsightTransitionTimer;
+        */
+    } DT_INSPlayerShared;
+
+    struct
+    {
         std::ptrdiff_t m_iItemDefinitionIndex;
         std::ptrdiff_t m_iItemIDHigh;
         std::ptrdiff_t m_iAccountID;
