@@ -72,7 +72,7 @@ If the last line of the output shows `$2 = 0x0` like this it means the hack has 
 This project is undergoing active development, run `./update` in your repo directory to get the latest version.
 
 # Disclaimer
-This project is for education purpose ONLY. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
+This project is for education purpose only. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
 
 # Credits
 Special thanks to contributors of project AimTux for open source such an awesome project, I learned a lot from their code.
