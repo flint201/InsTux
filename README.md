@@ -14,7 +14,7 @@ This is InsTux, a feature-packed multihack for Insurgency on Linux.
 
 ![esp](https://i.imgur.com/hPxWI2e.jpg)
 
-# Demo video
+# Demo videos (outdated, don't show the new features such as grenade prediction and hip fire silent aim)
 
 [![InsTuxDemo2](https://img.youtube.com/vi/xVMxNxhYlzw/0.jpg)](https://www.youtube.com/watch?v=xVMxNxhYlzw)
 
