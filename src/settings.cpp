@@ -86,14 +86,19 @@ void LoadUIColor(Json::Value &config, ImColor color)
 void Settings::LoadDefaultsOrSave(std::string path)
 {
     Json::Value settings;
-    // inflate settings with currently loaded config 
+    // inflate settings with default values
+	//settings["UI"]["Fonts"]["ESP"]["family"] = Settings::UI::Fonts::ESP::family;
+    settings["Aimbot"]["k"] = Settings::Aimbot::k;
     
     Json::StyledWriter styledWriter;
     std::ofstream(path) << styledWriter.write(settings);
 }
 
-void Settings::LoadConfig(std::string path)
+void Settings::LoadConfig()
 {
+    pstring path = getenv("HOME");
+    path << "/.instux.cfg";
+
     if (!std::ifstream(path).good())
     {
         Settings::LoadDefaultsOrSave(path);
@@ -107,52 +112,3 @@ void Settings::LoadConfig(std::string path)
     GetVal(settings["Aimbot"]["k"], &Settings::Aimbot::k);
 }
 
-void Settings::LoadSettings()
-{
-    pstring directory = getenv("HOME");
-    directory << "/.config";
-
-    if (!DoesDirectoryExist(directory.c_str()))
-        mkdir(directory.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-
-    directory << "/InsTux/";
-
-    if (!DoesDirectoryExist(directory.c_str()))
-        mkdir(directory.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-}
-
-void remove_directory(const char* path)
-{
-    DIR* dir;
-    dirent* pdir;
-
-    dir = opendir(path);
-
-    while ((pdir = readdir(dir)))
-    {
-        if (strcmp(pdir->d_name, ".") == 0 || strcmp(pdir->d_name, "..") == 0)
-            continue;
-
-        if (pdir->d_type == DT_DIR)
-        {
-            pstring _dir;
-            _dir << path << "/" << pdir->d_name;
-
-            remove_directory(_dir.c_str());
-        }
-        else if (pdir->d_type == DT_REG)
-        {
-            pstring file;
-            file << path << "/" << pdir->d_name;
-
-            unlink(file.c_str());
-        }
-    }
-
-    rmdir(path);
-}
-
-void Settings::DeleteConfig(std::string path)
-{
-    remove_directory(path.c_str());
-}
