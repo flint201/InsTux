@@ -22,7 +22,7 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
 
     // draw reload warning if needed
-    if (activeWeapon && ammoInMag < 10)
+    if (activeWeapon && ammoInMag < 10 && localplayer->GetAlive())
     {
         std::stringstream ssLowAmmo;
         ssLowAmmo << "LOW AMMO " << ammoInMag;

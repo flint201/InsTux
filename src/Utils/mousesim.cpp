@@ -102,6 +102,10 @@ long MouseSim::getDT()
     long dt = msNow - lasttime;
 
     lasttime = msNow;
+
+    if (dt < 0)
+        return 5;
+
     return dt;
 }
 
