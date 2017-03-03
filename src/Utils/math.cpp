@@ -108,6 +108,26 @@ float Math::GetDistance(const Vector& source, const Vector& destination)
     );
 }
 
+float Math::Norm(const Vector& vec)
+{
+    return sqrtf(
+        powf(vec.x, 2.0f) +
+        powf(vec.y, 2.0f) +
+        powf(vec.z, 2.0f)
+    );
+}
+
+Vector Math::ScaleVectorTo(const Vector& vec, float norm)
+{
+    float oldNorm = sqrtf(
+        powf(vec.x, 2.0f) +
+        powf(vec.y, 2.0f) +
+        powf(vec.z, 2.0f)
+    );
+    float sf = norm / oldNorm;
+    return Vector(vec.x * sf, vec.y * sf, vec.z * sf);
+}
+
 void Math::VectorAngles(const Vector& forward, QAngle &angles)
 {
     if (forward[1] == 0.0f && forward[0] == 0.0f)

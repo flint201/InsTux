@@ -10,8 +10,8 @@
 
 float Settings::Aimbot::k = 2;
 
-float silentFov = 5;
-float silentHipFov = 35;
+float silentFov = 4;
+float silentHipFov = 40;
 float forceSelectFov = 1;
 
 namespace Aimbot
@@ -21,7 +21,7 @@ namespace Aimbot
 }
 
 
-C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint, bool locked, QAngle& angSilent)
+C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& bestBone, Vector& aimPoint, bool locked, QAngle& angSilent, QAngle& angSilentHip)
 {
     TeamID myteam = localplayer->GetTeam();
     Vector eyePos = localplayer->GetEyePosition();
@@ -48,29 +48,35 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
             continue;
         }
 
+        Vector vecEyePos = player->GetEyePosition();
+        QAngle angToEnemyEye = Math::CalcAngle(eyePos, vecEyePos);
+        float fov = Math::GetFov(cmd->viewangles, angToEnemyEye);
 
-        Vector vecCenterMass = player->GetEyePosition();
-        float fov = Math::GetFov(cmd->viewangles, Math::CalcAngle(eyePos, vecCenterMass));
-
-        if (fov > bestFov)
+        if (fov > silentHipFov)
             continue;
 
         Bone targetBones[] = { Bone::SPINE_3, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
         static matrix3x4_t BoneMatrix[NUM_BONE];
         player->SetupBones(BoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
 
-        // for silent aim targeting
         matrix3x4_t boneHead = BoneMatrix[(int)Bone::HEAD];
         Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3]);
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
-            if (Math::GetFov(cmd->viewangles, angHead) < silentFov ||
-                (Math::GetFov(cmd->muzzleangle, angHead) < silentHipFov && Math::GetFov(cmd->viewangles, cmd->muzzleangle) > 5))
+            if (Math::GetFov(cmd->viewangles, angHead) < silentFov)
             {
                 angSilent = angHead;
             }
+
+            if (Math::GetFov(cmd->viewangles, angHead) < silentHipFov && Math::GetFov(cmd->viewangles, cmd->muzzleangle) > 5)
+            {
+                angSilentHip = angHead;
+            }
         }
+
+        if (fov > bestFov)
+            continue;
 
         // find best bone for legit aim
         bool found = false;
@@ -182,8 +188,9 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     Bone bone = Bone::SPINE_3;
     Vector aimPoint;
-    QAngle angSilent = cmd->muzzleangle;
-    C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, aimKeyDown, angSilent);
+    QAngle angSilent = cmd->viewangles;
+    QAngle angSilentHip = cmd->muzzleangle;
+    C_BasePlayer* player = GetClosestPlayer(cmd, localplayer, bone, aimPoint, aimKeyDown, angSilent, angSilentHip);
     if (player)
     {
         Vector eyePos = localplayer->GetEyePosition();
@@ -210,9 +217,15 @@ void Aimbot::CreateMove(CUserCmd* cmd)
             MouseSim::sim(dAngle);
         }
 
-        if (angSilent != cmd->muzzleangle)
+        if (angSilent != cmd->viewangles)
         {
-            cmd->muzzleangle = angSilent;
+            cmd->viewangles = angSilent - *localplayer->GetAimPunchAngle() * 2.0;
+            cmd->muzzleangle = angSilent - *localplayer->GetAimPunchAngle() * 2.0;
         }
+    }
+
+    if (angSilentHip != cmd->muzzleangle)
+    {
+        cmd->muzzleangle = angSilentHip;
     }
 }

@@ -678,8 +678,6 @@ const std::map<ItemDefinitionIndex, DefItem_t> ItemDefinitionIndexMap = {
 #define CONTENTS_LADDER            0x20000000
 #define CONTENTS_HITBOX            0x40000000    // use accurate hitboxes on trace
 
-#define MASK_SHOT    (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTER|CONTENTS_WINDOW|CONTENTS_DEBRIS|CONTENTS_HITBOX)
-
 // These are given to FindMaterial to reference the texture groups that show up on the
 #define TEXTURE_GROUP_LIGHTMAP                        "Lightmaps"
 #define TEXTURE_GROUP_WORLD                            "World textures"
@@ -712,8 +710,6 @@ const std::map<ItemDefinitionIndex, DefItem_t> ItemDefinitionIndexMap = {
 
 #define MAXSTUDIOBONES 128
 #define BONE_USED_BY_HITBOX 0x100
-
-#define MASK_SHOT    (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTER|CONTENTS_WINDOW|CONTENTS_DEBRIS|CONTENTS_HITBOX)
 
 // NOTE: These are stored in a short in the engine now.  Don't use more than 16 bits
 #define SURF_LIGHT        0x0001        // value will hold the light strength
@@ -760,7 +756,9 @@ const std::map<ItemDefinitionIndex, DefItem_t> ItemDefinitionIndexMap = {
 // everything that blocks line of sight for players, but with monsters added.
 #define MASK_VISIBLE_AND_NPCS        (MASK_OPAQUE_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE)
 // bullets see these as solid
-#define MASK_SHOT                    (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTER|CONTENTS_WINDOW|CONTENTS_DEBRIS|CONTENTS_HITBOX)
+//#define MASK_SHOT                    (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTER|CONTENTS_WINDOW|CONTENTS_DEBRIS|CONTENTS_HITBOX)
+#define MASK_SHOT                    (CONTENTS_SOLID|CONTENTS_HITBOX)
+
 // bullets see these as solid, except monsters (world+brush only)
 #define MASK_SHOT_BRUSHONLY            (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_WINDOW|CONTENTS_DEBRIS)
 // non-raycasted weapons see this as solid (includes grates)

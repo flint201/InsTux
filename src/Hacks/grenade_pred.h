@@ -15,8 +15,8 @@ public:
 
 private:
     C_BasePlayer* localplayer;
-    Vector eyePos;
-    QAngle viewAngle;
+    Vector muzzlePos;
+    QAngle muzzleAngle;
     Vector playerVel;
 
     float throwPower;

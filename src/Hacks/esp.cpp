@@ -21,6 +21,14 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0, Color(66, 180, 255, 255));
     Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
 
+    // draw reload warning if needed
+    if (activeWeapon && ammoInMag < 10)
+    {
+        std::stringstream ssLowAmmo;
+        ssLowAmmo << "LOW AMMO " << ammoInMag;
+        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), 0, Color(255, 30, 30, 255));
+    }
+
     // draw crosshairs
     Draw::Line(sWidth/2-4, sHeight/2, sWidth/2+3, sHeight/2, Color(255, 20, 20, 255));
     Draw::Line(sWidth/2, sHeight/2-4, sWidth/2, sHeight/2+3, Color(255, 20, 20, 255));
@@ -54,12 +62,7 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
 void PredictGrenade(C_BasePlayer* localplayer)
 {
     C_BaseCombatWeapon* activeWeapon = (C_BaseCombatWeapon*) entityList->GetClientEntityFromHandle(localplayer->GetActiveWeapon());
-    Vector eyePos = localplayer->GetEyePosition();
-
-    QAngle viewAngles;
-    engine->GetViewAngles(viewAngles);
-
-    GrenadePred gp(activeWeapon, localplayer, eyePos, viewAngles, localplayer->GetVelocity());
+    GrenadePred gp(activeWeapon, localplayer, CreateMove::muzzlepos, CreateMove::muzzleangle, localplayer->GetVelocity());
     gp.Predict();
 }
 

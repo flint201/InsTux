@@ -7,7 +7,10 @@ const MaterialVarFlags_t hidden_MaterialVarFlags = (MaterialVarFlags_t) (
         );
 
 const MaterialVarFlags_t brightFlags = (MaterialVarFlags_t) (
+        //MATERIAL_VAR_ADDITIVE |
+        //MATERIAL_VAR_VERTEXCOLOR |
         MATERIAL_VAR_HALFLAMBERT |
+        MATERIAL_VAR_NOCULL |
         MATERIAL_VAR_NOFOG
         );
 

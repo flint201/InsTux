@@ -16,8 +16,8 @@ double difftimeval(timeval start, timeval end)
     return (double)(end.tv_sec - start.tv_sec) + (double)(end.tv_usec - start.tv_usec) / 1000000.0;
 }
 
-GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, Vector eyePos, QAngle viewAngle, Vector playerVel)
-    : weapon(weapon), localplayer(localplayer), eyePos(eyePos), viewAngle(viewAngle), playerVel(playerVel)
+GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, Vector muzzlePos, QAngle muzzleAngle, Vector playerVel)
+    : weapon(weapon), localplayer(localplayer), muzzlePos(muzzlePos), muzzleAngle(muzzleAngle), playerVel(playerVel)
 {
     static bool pinPulled = false;
     static timeval timePinPull;
@@ -109,7 +109,8 @@ void GrenadePred::Paint()
 
 void GrenadePred::DrawCross(Vector anchor, Vector normal)
 {
-    Vector eye2Anchor = anchor - eyePos;
+    Vector eye2Anchor = anchor - muzzlePos;
+    eye2Anchor.z = 0;
     Vector base1 = eye2Anchor - normal * eye2Anchor.Dot(normal);
 
     base1.NormalizeInPlace();
@@ -122,7 +123,7 @@ void GrenadePred::DrawCross(Vector anchor, Vector normal)
 
     base2.NormalizeInPlace();
 
-    float distance = Math::GetDistance(eyePos, anchor);
+    float distance = Math::GetDistance(muzzlePos, anchor);
     base1 *= sqrt(distance);
     base2 *= sqrt(distance);
 
@@ -160,9 +161,8 @@ void GrenadePred::Predict()
     int logstep = (int)(0.05 / dt);
 
     Vector vForward(0, 0, 0);
-    Math::AngleVectors(viewAngle, vForward);
-    Vector vecSrc = eyePos + vForward * 10.0;
-    vecSrc.z += 12;
+    Math::AngleVectors(muzzleAngle, vForward);
+    Vector vecSrc = muzzlePos + vForward * 10.0;
 
     Vector vecDst = vecSrc + vForward * 12.0;
     
@@ -175,7 +175,7 @@ void GrenadePred::Predict()
     for (int i = 0; i < (int)(fuse_time / dt); i++)
     {
         if (i % logstep == 0 &&
-                (!isLauncher || Math::GetDistance(eyePos, vecSrc) > 435))
+                (!isLauncher || Math::GetDistance(muzzlePos, vecSrc) > 435))
             path.push_back(vecSrc);
 
         if(Step(vecSrc, vForward, dt) && isLauncher)
@@ -193,7 +193,7 @@ void GrenadePred::TraceHull(Vector& vecSrc, Vector& vecDst, trace_t& tr)
     CTraceFilter traceFilter;
     traceFilter.pSkip = localplayer;
     
-    trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+    trace->TraceRay(ray, MASK_SHOT_HULL, &traceFilter, &tr);
 }
 
 bool GrenadePred::Step(Vector& vecSrc, Vector& vForward, float dt)
@@ -209,14 +209,15 @@ bool GrenadePred::Step(Vector& vecSrc, Vector& vForward, float dt)
     {
         bCollision = true;
 
-        Vector forceFromSurface = tr.plane.normal * vForward.Dot(tr.plane.normal);
-        vForward -= forceFromSurface; // lose all velocity against normal of surface
-        vForward *= 0.6; // lose some velocity due to friction
-        vForward -= forceFromSurface * elasticity; // regain a portion of it from the surface
+        Vector forceFromSurface = tr.plane.normal * vForward.Dot(tr.plane.normal) * -1.0;
+        vForward += forceFromSurface; // lose all velocity against normal of surface
+        vForward *= 0.5; // lose some velocity due to friction
 
         Dampen(vForward);
 
-        if (!isLauncher || Math::GetDistance(eyePos, vecSrc) > 435)
+        vForward += forceFromSurface * elasticity; // regain a portion of it from the surface
+
+        if (!isLauncher || Math::GetDistance(muzzlePos, vecSrc) > 435)
             DrawCross(vecSrc, tr.plane.normal);
     }
     else
