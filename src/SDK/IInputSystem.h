@@ -296,7 +296,7 @@ public:
     const char* ButtonCodeToString(ButtonCode_t code)
     {
         typedef const char* (* oButtonCodeToString)(void*, ButtonCode_t);
-        return getvfunc<oButtonCodeToString>(this, 49)(this, code);
+        return getvfunc<oButtonCodeToString>(this, 39)(this, code);
     }
 
     ButtonCode_t VirtualKeyToButtonCode(int nVirtualKey)

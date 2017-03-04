@@ -6,7 +6,7 @@
 
 using std::endl;
 
-//extern std::ofstream Log;
+extern std::ofstream Log;
 
 void InitLogger();
 std::string hex(unsigned input);

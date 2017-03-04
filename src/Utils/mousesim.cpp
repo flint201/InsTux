@@ -9,11 +9,10 @@
 #include <math.h>
 
 #include "pid.h"
+#include "../settings.h"
 
 namespace MouseSim
 {
-    float k = 50; // correction constant for aim sensitivity, bigger number = smoother, smaller = faster.
-
     int thresh = 10000; // halving threshhold for the accumulative pixel/degree
     float degree = 1; // total number of degree moved, accumulative
     int pixel = 30; // total number of pixels moved, accumulative
@@ -69,7 +68,7 @@ void MouseSim::mouseDestroy()
 
 float MouseSim::sensitivity()
 {
-    return degree / pixel * k;
+    return degree / pixel * 50 / Settings::Aimbot::sensitivity;
 }
 
 void MouseSim::noise(float error, long dt, float& nx, float& ny)
@@ -123,12 +122,12 @@ void MouseSim::sim(QAngle deltaAngle)
     long dt = getDT();
 
     // pid for both x and y
-    static const float ku = 7; // 8
-    static const float tu = 0.10; // 0.22
+    static const float ku = Settings::Aimbot::ku;//7; // 8
+    static const float tu = Settings::Aimbot::tu;//0.10; // 0.22
 
-    static const float kp = 0.6 * ku;
+    static const float kp = 0.618 * ku;
     static const float ki = 1.2 * ku / tu;
-    static const float kd = 3 / 40 * ku * tu;
+    static const float kd = 3.0 / 40 * ku * tu;
 
     static PID pidX(kp, ki, kd);
     static PID pidY(kp, ki, kd);

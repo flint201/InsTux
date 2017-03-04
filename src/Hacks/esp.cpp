@@ -4,6 +4,7 @@
 #include "hacks.h"
 
 #include "grenade_pred.h"
+#include "../settings.h"
 
 std::string dbgMsg;
 
@@ -70,10 +71,8 @@ void PredictGrenade(C_BasePlayer* localplayer)
 void ESP::Paint()
 {
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
-    if (!localplayer)
-    {
+    if (!localplayer || !Settings::ESP::enable)
         return;
-    }
 
     PredictGrenade(localplayer);
 
@@ -84,7 +83,7 @@ void ESP::Paint()
 
     DrawInfo(localplayer, sWidth, sHeight);
 
-    if(!inputSystem->IsButtonDown(ButtonCode_t::KEY_CAPSLOCK))
+    if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
         Draw::Text(10, 5, "InsTux", 0, Color(255, 255, 255, 255));
         return;
@@ -107,12 +106,16 @@ void ESP::Paint()
             continue;
 
         // draw skeleton
-        DrawSkeleton(player);
+        if (Settings::ESP::show_bone)
+            DrawSkeleton(player);
 
         // draw name
-        Vector vPlayerOrigin;
-        debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
-        Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 10), playerInfo.name, 0, Color(255, 255, 255, 255));
+        if (Settings::ESP::show_name)
+        {
+            Vector vPlayerOrigin;
+            debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
+            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 10), playerInfo.name, 0, Color(255, 255, 255, 255));
+        }
     }
 
 }

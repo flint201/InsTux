@@ -18,7 +18,20 @@ namespace Settings
 {
     namespace Aimbot
     {
-        extern float k;
+        extern bool enable;
+        extern ButtonCode_t key;
+        extern float sensitivity;
+        extern float fov;
+        extern float tu;
+        extern float ku;
+    }
+
+    namespace ESP
+    {
+        extern bool enable;
+        extern ButtonCode_t key;
+        extern bool show_bone;
+        extern bool show_name;
     }
 
     void LoadDefaultsOrSave(std::string path);

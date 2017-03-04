@@ -5,8 +5,6 @@
 
 namespace MouseSim
 {
-    extern float k; // correction constant for aim sensitivity
-
     extern int thresh; // halving threshhold for the accumulative pixel / degree
     extern float degree; // total number of degree moved, accumulative
     extern int pixel; // total number of pixels moved, accumulative

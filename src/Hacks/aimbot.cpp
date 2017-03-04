@@ -8,8 +8,6 @@
 
 #define NUM_BONE 128
 
-float Settings::Aimbot::k = 2;
-
 float silentFov = 4;
 float silentHipFov = 40;
 float forceSelectFov = 1;
@@ -169,9 +167,12 @@ long GetDT(long min = 5, long max = 20)
 
 void Aimbot::CreateMove(CUserCmd* cmd)
 {
+    if (!Settings::Aimbot::enable)
+        return;
+
     MouseSim::update(cmd);
 
-    bool aimKeyDown = inputSystem->IsButtonDown(ButtonCode_t::KEY_LSHIFT);
+    bool aimKeyDown = inputSystem->IsButtonDown(Settings::Aimbot::key);//ButtonCode_t::KEY_LSHIFT);
 
     QAngle angle = cmd->viewangles;
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
