@@ -7,8 +7,15 @@ float dt = 2;
 
 void AtomicPeek::CreateMove(CUserCmd* cmd)
 {
-    C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
+    if (!Settings::FakeLag::automatic)
+    {
+        if (FakeLag::enable)
+            FakeLag::Lag(32);
 
+        return;
+    }
+
+    C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
     if (!localplayer || !localplayer->GetAlive())
     {
         return;
@@ -16,13 +23,11 @@ void AtomicPeek::CreateMove(CUserCmd* cmd)
 
     Vector displacement = localplayer->GetVelocity() * dt;
 
-
     static matrix3x4_t BoneMatrix[128];
     localplayer->SetupBones(BoneMatrix, 128, BONE_USED_BY_HITBOX, 0);
 
     Bone targetBones[] = { Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R };
     std::vector<Vector> myBonePos;
-
     for (Bone b : targetBones)
     {
         matrix3x4_t currBone = BoneMatrix[(int)b];

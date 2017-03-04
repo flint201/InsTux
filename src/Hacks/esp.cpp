@@ -25,6 +25,9 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     Draw::Text(10, 50, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
     Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
 
+    if (FakeLag::enable)
+        Draw::Text(10, 70, "Lag", font_foundation, Color(255, 30, 30, 255));
+
     // draw reload warning if needed
     if (activeWeapon && ammoInMag < 10 && ammoInMag >= 0 && localplayer->GetAlive())
     {

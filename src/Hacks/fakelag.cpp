@@ -2,7 +2,6 @@
 
 static int ticks = 0;
 int ticksMax = 16;
-int lag_value = 12;
 
 namespace FakeLag
 {
@@ -17,6 +16,20 @@ void FakeLag::Lag(int dur)
 
 void FakeLag::CreateMove(CUserCmd* cmd)
 {
+    static bool buttonPressed = false;
+    if (inputSystem->IsButtonDown(Settings::FakeLag::key))
+    {
+        if (!buttonPressed)
+            enable = !enable;
+
+        buttonPressed = true;
+    }
+    else
+    {
+        buttonPressed = false;
+    }
+
+
     if (!enable || lagDuration == 0)
     {
         ticks = 0;
@@ -40,7 +53,7 @@ void FakeLag::CreateMove(CUserCmd* cmd)
     }
     else
     {
-        CreateMove::sendPacket = ticks > lag_value;
+        CreateMove::sendPacket = ticks > Settings::FakeLag::value;
     }
 
     ticks++;

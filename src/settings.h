@@ -49,6 +49,13 @@ namespace Settings
         extern float alpha;
     }
 
+    namespace FakeLag
+    {
+        extern ButtonCode_t key;
+        extern bool automatic;
+        extern int value;
+    }
+
     void LoadDefaultsOrSave(std::string path);
     void LoadConfig();
 }

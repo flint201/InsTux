@@ -1,5 +1,4 @@
 #include "aimbot.h"
-//#include "autowall.h"
 #include "../interfaces.h"
 #include "../Utils/mousesim.h"
 #include <math.h>

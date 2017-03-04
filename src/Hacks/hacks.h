@@ -6,3 +6,4 @@
 #include "radar.h"
 #include "atomicpeek.h"
 #include "noflash.h"
+#include "../settings.h"

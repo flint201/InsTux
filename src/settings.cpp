@@ -21,6 +21,10 @@ Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
 
 float Settings::NoFlash::alpha = 80;
 
+ButtonCode_t Settings::FakeLag::key = ButtonCode_t::KEY_BACKSLASH;
+bool Settings::FakeLag::automatic = true;
+int Settings::FakeLag::value = 12;
+
 void GetVal(Json::Value &config, int* setting)
 {
     if (config.isNull())
@@ -138,6 +142,10 @@ void Settings::LoadDefaultsOrSave(std::string path)
     LoadColor(settings["Radar"]["color_hostile"], Settings::Radar::color_hostile);
 
     settings["NoFlash"]["alpha"] = Settings::NoFlash::alpha;
+
+    settings["FakeLag"]["key"] = Util::GetButtonName(Settings::FakeLag::key);
+    settings["FakeLag"]["automatic"] = Settings::FakeLag::automatic;
+    settings["FakeLag"]["value"] = Settings::FakeLag::value;
     
     Json::StyledWriter styledWriter;
     std::ofstream(path) << styledWriter.write(settings);
@@ -178,4 +186,8 @@ void Settings::LoadConfig()
     GetVal(settings["Radar"]["color_hostile"], &Settings::Radar::color_hostile);
 
     GetVal(settings["NoFlash"]["alpha"], &Settings::NoFlash::alpha);
+
+    GetButtonCode(settings["FakeLag"]["key"], &Settings::FakeLag::key);
+    GetVal(settings["FakeLag"]["automatic"], &Settings::FakeLag::automatic);
+    GetVal(settings["FakeLag"]["value"], &Settings::FakeLag::value);
 }
