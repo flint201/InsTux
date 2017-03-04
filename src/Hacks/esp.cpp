@@ -8,6 +8,9 @@
 
 std::string dbgMsg;
 
+HFont esp_name_font = 0xe5;
+HFont font_foundation = 0x110;
+
 // Helper function for drawing info such as local player health and ammo count.
 void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
 {
@@ -19,15 +22,15 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     std::stringstream ss;
     ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
 
-    Draw::Text(10, 50, ss.str().c_str(), 0x110, Color(66, 180, 255, 255));
-    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0x110, Color(66, 180, 255, 255));
+    Draw::Text(10, 50, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
+    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
 
     // draw reload warning if needed
     if (activeWeapon && ammoInMag < 10 && ammoInMag >= 0 && localplayer->GetAlive())
     {
         std::stringstream ssLowAmmo;
         ssLowAmmo << "LOW AMMO  " << ammoInMag;
-        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), 0x110, Color(255, 30, 30, 255));
+        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), font_foundation, Color(255, 30, 30, 255));
     }
 
     // draw crosshairs
@@ -83,7 +86,7 @@ void ESP::Paint()
 
     if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
-        Draw::Text(10, 5, "InsTux", 0x110, Color(255, 255, 255, 255));
+        Draw::Text(10, 5, "InsTux", font_foundation, Color(255, 255, 255, 255));
         return;
     }
 
@@ -112,7 +115,7 @@ void ESP::Paint()
         {
             Vector vPlayerOrigin;
             debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
-            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, 0xe5, Color(255, 255, 255, 255));
+            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, esp_name_font, Color(255, 255, 255, 255));
         }
     }
 
