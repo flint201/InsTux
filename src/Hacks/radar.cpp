@@ -76,7 +76,7 @@ void Radar::Paint()
             color = Settings::Radar::color_hostile;
 
         Vector2D circleCenter(pixelX, pixelY);
-        Draw::Circle(circleCenter, 8, radius, color);
+        Draw::Circle(circleCenter, 16, radius, color);
 
         float playerFacing = player->GetEyeAngles()->y;
         Vector vecPlayerFacing;

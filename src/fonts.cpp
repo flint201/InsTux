@@ -1,9 +1,8 @@
 #include "fonts.h"
 
-HFont esp_font = 0;
+HFont esp_font;
 
 void Fonts::SetupFonts()
 {
-    esp_font = Draw::CreateFont("Tahoma", 11, (int) FontFlags::FONTFLAG_DROPSHADOW);
-    //Log << "    CreateFont returned " << esp_font << endl;
+    esp_font = Draw::CreateFont("FoundationSans-Bold", 20, (int) FontFlags::FONTFLAG_DROPSHADOW);
 }

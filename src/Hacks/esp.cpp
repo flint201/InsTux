@@ -19,15 +19,15 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     std::stringstream ss;
     ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
 
-    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0, Color(66, 180, 255, 255));
-    Draw::Text(10, 50, ss.str().c_str(), 0, Color(66, 180, 255, 255));
+    Draw::Text(10, 50, ss.str().c_str(), 0x110, Color(66, 180, 255, 255));
+    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), 0x110, Color(66, 180, 255, 255));
 
     // draw reload warning if needed
-    if (activeWeapon && ammoInMag < 10 && localplayer->GetAlive())
+    if (activeWeapon && ammoInMag < 10 && ammoInMag >= 0 && localplayer->GetAlive())
     {
         std::stringstream ssLowAmmo;
-        ssLowAmmo << "LOW AMMO " << ammoInMag;
-        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), 0, Color(255, 30, 30, 255));
+        ssLowAmmo << "LOW AMMO  " << ammoInMag;
+        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), 0x110, Color(255, 30, 30, 255));
     }
 
     // draw crosshairs
@@ -66,8 +66,6 @@ void PredictGrenade(C_BasePlayer* localplayer)
     GrenadePred gp(activeWeapon, localplayer, CreateMove::muzzlepos, CreateMove::muzzleangle, localplayer->GetVelocity());
     gp.Predict();
 }
-
-
 void ESP::Paint()
 {
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
@@ -85,7 +83,7 @@ void ESP::Paint()
 
     if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
-        Draw::Text(10, 5, "InsTux", 0, Color(255, 255, 255, 255));
+        Draw::Text(10, 5, "InsTux", 0x110, Color(255, 255, 255, 255));
         return;
     }
 
@@ -114,7 +112,7 @@ void ESP::Paint()
         {
             Vector vPlayerOrigin;
             debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
-            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, 0, Color(255, 255, 255, 255));
+            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, 0xe5, Color(255, 255, 255, 255));
         }
     }
 

@@ -41,7 +41,7 @@ int __attribute__((constructor)) instux_init()
 
     Settings::LoadConfig();
     
-    Msg("++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++\n");
+    Msg("++++ InsTux loading complete! ++++\n");
     return 0;
 }
 
