@@ -1,23 +1,24 @@
 # InsTux
 
-This is InsTux, a hack for Insurgency on Linux.
+This is InsTux, a feature-packed multihack for Insurgency on Linux.
 
 # Features
 
 - XQZ Cham
-    ![cham](http://i.imgur.com/oJ7cZaS.png)
-
-- Natural auto-aim activated when Shift is pressed
-
+- Natural Aimbot activated by holding Shift. It provides smooth and accurate aiming, with smart target bone selection
+- Hip fire silent aim
+- Hip fire bullet impact marker
 - Skeleton + Name ESP activated when Caps Lock is pressed
-    ![esp](https://i.imgur.com/hPxWI2e.jpg)
+- Health & Ammo counter, low ammo warning
+- Grenade prediction line for both grenade launchers and hand grenades
 
-- Health & Ammo count display
+![esp](https://i.imgur.com/hPxWI2e.jpg)
 
-# Demo video
-[![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
+# Demo videos (outdated, don't show the new features such as grenade prediction and hip fire silent aim)
 
 [![InsTuxDemo2](https://img.youtube.com/vi/xVMxNxhYlzw/0.jpg)](https://www.youtube.com/watch?v=xVMxNxhYlzw)
+
+[![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
 
 # Installation
 (example commands here are for Ubuntu/Debian)
@@ -71,7 +72,7 @@ If the last line of the output shows `$2 = 0x0` like this it means the hack has 
 This project is undergoing active development, run `./update` in your repo directory to get the latest version.
 
 # Disclaimer
-This project is for education purpose ONLY. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
+This project is for education purpose only. And the code will be provided as-is, the author does not assume any responsibility for damage of any kind cause by the use of this software.
 
 # Credits
 Special thanks to contributors of project AimTux for open source such an awesome project, I learned a lot from their code.
