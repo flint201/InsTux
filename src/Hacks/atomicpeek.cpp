@@ -37,7 +37,7 @@ void AtomicPeek::CreateMove(CUserCmd* cmd)
         if (!player
             || player == localplayer
             || player->GetTeam() == localplayer->GetTeam()
-            || player->GetDormant()
+            || player->IsDormant()
             || !player->GetAlive())
         {
             continue;

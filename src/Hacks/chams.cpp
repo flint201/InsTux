@@ -48,7 +48,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
 
     C_BasePlayer* entity = (C_BasePlayer*) entityList->GetClientEntity(pInfo.entity_index);
     
-    if (!entity || entity->GetDormant() || !entity->GetAlive() || entity->GetTeam() == myteam)
+    if (!entity || entity->IsDormant() || !entity->GetAlive() || entity->GetTeam() == myteam)
     {
         materialHidden->ColorModulate(0.2, 0.2, 0.2);
         modelRender->ForcedMaterialOverride(materialHidden);

@@ -83,15 +83,14 @@ public:
         return getvfunc<oPreDataUpdate>(this, 6)(this, updateType);
     }
 
+    /*
     bool GetDormant()
     {
-        /*
-        typedef bool (* oGetDormant)(void*);
-        return getvfunc<oGetDormant>(this, 9)(this);
-        */
+        //typedef bool (* oGetDormant)(void*);
+        //return getvfunc<oGetDormant>(this, 79)(this);
         return (bool) *((bool*)this + 0xE1);
     }
-
+    */
     int GetIndex()
     {
         typedef int (* oGetIndex)(void*);
@@ -166,6 +165,12 @@ public:
     {
         typedef char* (* oGetClassname)(void*);
         return getvfunc<oGetClassname>(this, 195)(this);
+    }
+
+    bool IsDormant()
+    {
+        typedef bool (* oIsDormant)(void*);
+        return getvfunc<oIsDormant>(this, 79)(this);
     }
 
 };

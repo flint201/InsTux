@@ -96,7 +96,7 @@ void ESP::Paint()
         if (!player
             || player == localplayer
             || player->GetTeam() == myteam
-            || player->GetDormant()
+            || player->IsDormant()
             || !player->GetAlive())
         {
             continue;

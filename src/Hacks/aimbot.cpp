@@ -33,7 +33,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         if (!player
             || player == localplayer
             || player->GetTeam() == myteam
-            || player->GetDormant()
+            || player->IsDormant()
             || !player->GetAlive())
         {
             continue;

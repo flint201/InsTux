@@ -49,7 +49,7 @@ void Radar::Paint()
     {
         C_BasePlayer* player = (C_BasePlayer*) entityList->GetClientEntity(i);
         if (!player ||
-            player->GetDormant() ||
+            player->IsDormant() ||
             !player->GetAlive() ||
             player==localplayer)
         {
