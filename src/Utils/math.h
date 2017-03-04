@@ -4,8 +4,18 @@
 
 namespace Math {
     void inline SinCos(float radians, float *sine, float *cosine);
+    void inline SinCos(float radians, float *sine, float *cosine)
+    {
+        register double __cosr, __sinr;
+        __asm ("fsincos" : "=t" (__cosr), "=u" (__sinr) : "0" (radians));
+
+        *sine = __sinr;
+        *cosine = __cosr;
+    }
+
     void AngleVectors(const QAngle &angles, Vector &forward);
     void NormalizeAngles(QAngle& angle);
+    Vector ProjectTo_2D(const Vector& vPositiveY, const Vector& vec);
     void ClampAngles(QAngle& angle);
     QAngle DeltaAngles(const QAngle& start, const QAngle& end);
     void CorrectMovement(QAngle vOldAngles, CUserCmd* pCmd, float fOldForward, float fOldSidemove);

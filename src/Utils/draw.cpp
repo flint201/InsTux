@@ -1,5 +1,5 @@
 #include "draw.h"
-/*
+
 void Draw::Circle(Vector2D position, float points, float radius, Color color)
 {
     float step = (float)M_PI * 2.0f / points;
@@ -12,6 +12,7 @@ void Draw::Circle(Vector2D position, float points, float radius, Color color)
     }
 }
 
+
 void Draw::FilledCircle(Vector2D position, float points, float radius, Color color)
 {
     std::vector<Vertex_t> vertices;
@@ -23,6 +24,7 @@ void Draw::FilledCircle(Vector2D position, float points, float radius, Color col
     Draw::TexturedPolygon((int) points, vertices.data(), color);
 }
 
+/*
 void Draw::Circle3D(Vector position, float points, float radius, Color color)
 {
     float step = (float)M_PI * 2.0f / points;
@@ -40,8 +42,8 @@ void Draw::Circle3D(Vector position, float points, float radius, Color color)
         Draw::Line(Vector2D(start2d.x, start2d.y), Vector2D(end2d.x, end2d.y), color);
     }
 }
-
 */
+
 void Draw::FilledRectangle(int x0, int y0, int x1, int y1, Color col)
 {
     surface->DrawSetColor(col);

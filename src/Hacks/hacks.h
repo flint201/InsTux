@@ -3,4 +3,5 @@
 #include "aimbot.h"
 #include "fakelag.h"
 #include "esp.h"
+#include "radar.h"
 #include "atomicpeek.h"

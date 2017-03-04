@@ -119,6 +119,9 @@ struct COffsets
     struct
     {
         std::ptrdiff_t m_Shared;
+        std::ptrdiff_t m_angEyeAngles[2];
+        std::ptrdiff_t m_flFlashDuration;
+        std::ptrdiff_t m_flFlashMaxAlpha;
     } DT_INSPlayer;
 
     struct

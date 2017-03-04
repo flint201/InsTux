@@ -95,11 +95,13 @@ void Offsets::GetOffsets()
     offsets.DT_CSPlayer.m_bIsRescuing = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_bIsRescuing");
     offsets.DT_CSPlayer.m_bHasHelmet = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_bHasHelmet");
     offsets.DT_CSPlayer.m_bHasDefuser = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_bHasDefuser");
-    offsets.DT_CSPlayer.m_flFlashDuration = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_flFlashDuration");
-    offsets.DT_CSPlayer.m_flFlashMaxAlpha = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_flFlashMaxAlpha");
     offsets.DT_CSPlayer.m_flLowerBodyYawTarget = NetVarManager::GetOffset(tables, "DT_CSPlayer", "m_flLowerBodyYawTarget");
 
     offsets.DT_INSPlayer.m_Shared = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_Shared");
+    offsets.DT_INSPlayer.m_angEyeAngles[0] = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_angEyeAngles[0]");
+    offsets.DT_INSPlayer.m_angEyeAngles[1] = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_angEyeAngles[1]");
+    offsets.DT_INSPlayer.m_flFlashDuration = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashDuration");
+    offsets.DT_INSPlayer.m_flFlashMaxAlpha = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashMaxAlpha");
 
     offsets.DT_INSPlayerShared.m_iPlayerFlags= NetVarManager::GetOffset(tables, "DT_INSPlayerShared", "m_iPlayerFlags");
 

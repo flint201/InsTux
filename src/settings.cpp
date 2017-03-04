@@ -12,6 +12,13 @@ ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;
 bool Settings::ESP::show_bone = true;
 bool Settings::ESP::show_name = true;
 
+bool Settings::Radar::enable = true;
+int Settings::Radar::size = 100;
+float Settings::Radar::range = 2000;
+float Settings::Radar::dot_radius = 4;
+Color Settings::Radar::color_friendly = Color(50, 255, 50, 180);
+Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
+
 void GetVal(Json::Value &config, int* setting)
 {
     if (config.isNull())
@@ -96,15 +103,13 @@ void GetButtonCode(Json::Value &config, enum ButtonCode_t* setting)
     GetOrdinal<enum ButtonCode_t, Util::GetButtonCode>(config, setting);
 }
 
-/*
-void LoadUIColor(Json::Value &config, ImColor color)
+void LoadColor(Json::Value &config, Color color)
 {
-    config["r"] = color.Value.x;
-    config["g"] = color.Value.y;
-    config["b"] = color.Value.z;
-    config["a"] = color.Value.w;
+    config["r"] = color.r;
+    config["g"] = color.g;
+    config["b"] = color.b;
+    config["a"] = color.a;
 }
-*/
 
 void Settings::LoadDefaultsOrSave(std::string path)
 {
@@ -122,6 +127,13 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["ESP"]["key"] = Util::GetButtonName(Settings::ESP::key);
     settings["ESP"]["show_bone"] = Settings::ESP::show_bone;
     settings["ESP"]["show_name"] = Settings::ESP::show_name;
+
+    settings["Radar"]["enable"] = Settings::Radar::enable;
+    settings["Radar"]["size"] = Settings::Radar::size;
+    settings["Radar"]["range"] = Settings::Radar::range;
+    settings["Radar"]["dot_radius"] = Settings::Radar::dot_radius;
+    LoadColor(settings["Radar"]["color_friendly"], Settings::Radar::color_friendly);
+    LoadColor(settings["Radar"]["color_hostile"], Settings::Radar::color_hostile);
     
     Json::StyledWriter styledWriter;
     std::ofstream(path) << styledWriter.write(settings);
@@ -153,4 +165,11 @@ void Settings::LoadConfig()
     GetButtonCode(settings["ESP"]["key"], &Settings::ESP::key);
     GetVal(settings["ESP"]["show_bone"], &Settings::ESP::show_bone);
     GetVal(settings["ESP"]["show_name"], &Settings::ESP::show_name);
+
+    GetVal(settings["Radar"]["enable"], &Settings::Radar::enable);
+    GetVal(settings["Radar"]["size"], &Settings::Radar::size);
+    GetVal(settings["Radar"]["range"], &Settings::Radar::range);
+    GetVal(settings["Radar"]["dot_radius"], &Settings::Radar::dot_radius);
+    GetVal(settings["Radar"]["color_friendly"], &Settings::Radar::color_friendly);
+    GetVal(settings["Radar"]["color_hostile"], &Settings::Radar::color_hostile);
 }

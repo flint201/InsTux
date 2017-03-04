@@ -234,14 +234,24 @@ public:
         return (const char*)((uintptr_t)this + offsets.DT_BasePlayer.m_szLastPlaceName);
     }
 
+    QAngle* GetEyeAngles()
+    {
+        return (QAngle*)((uintptr_t)this + offsets.DT_INSPlayer.m_angEyeAngles[0]);
+    }
+
+    float GetFlashDuration()
+    {
+        return *(float*)((uintptr_t)this + offsets.DT_INSPlayer.m_flFlashDuration);
+    }
+
+    float* GetFlashMaxAlpha()
+    {
+        return (float*)((uintptr_t)this + offsets.DT_INSPlayer.m_flFlashMaxAlpha);
+    }
+    /*
     int GetShotsFired()
     {
         return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_iShotsFired);
-    }
-
-    QAngle* GetEyeAngles()
-    {
-        return (QAngle*)((uintptr_t)this + offsets.DT_CSPlayer.m_angEyeAngles[0]);
     }
 
     int GetMoney()
@@ -308,6 +318,7 @@ public:
     {
         return (float*)((uintptr_t)this + offsets.DT_CSPlayer.m_flLowerBodyYawTarget);
     }
+    */
 
     void* GetActiveWeapon()
     {

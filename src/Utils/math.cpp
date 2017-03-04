@@ -1,14 +1,5 @@
 #include "math.h"
 
-void inline Math::SinCos(float radians, float *sine, float *cosine)
-{
-    register double __cosr, __sinr;
-    __asm ("fsincos" : "=t" (__cosr), "=u" (__sinr) : "0" (radians));
-
-    *sine = __sinr;
-    *cosine = __cosr;
-}
-
 void Math::AngleVectors(const QAngle &angles, Vector& forward)
 {
     Assert(s_bMathlibInitialized);
@@ -37,6 +28,19 @@ void Math::NormalizeAngles(QAngle& angle)
 
     while (angle.y < -180.f)
         angle.y += 360.f;
+}
+
+Vector Math::ProjectTo_2D(const Vector& vPositiveY, const Vector& vec)
+{
+    Vector normalized = vPositiveY;
+
+    Vector v = vec;
+    v.z = 0;
+
+    float y = normalized.Dot(v);
+    float x = Norm(v - normalized * y);
+
+    return Vector(x, y, 0);
 }
 
 void Math::ClampAngles(QAngle& angle)

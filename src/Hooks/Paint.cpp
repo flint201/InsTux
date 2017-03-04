@@ -15,6 +15,7 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
     {
         //Log << "        Hook::Paint PAINT_UIPANELS" << endl;
         ESP::Paint();
+        Radar::Paint();
         /*
         StartDrawing(surface);
         FinishDrawing(surface);

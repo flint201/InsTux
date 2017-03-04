@@ -34,6 +34,16 @@ namespace Settings
         extern bool show_name;
     }
 
+    namespace Radar
+    {
+        extern bool enable;
+        extern int size;
+        extern float range;
+        extern float dot_radius;
+        extern Color color_friendly;
+        extern Color color_hostile;
+    }
+
     void LoadDefaultsOrSave(std::string path);
     void LoadConfig();
 }
