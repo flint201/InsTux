@@ -19,6 +19,8 @@ float Settings::Radar::dot_radius = 4;
 Color Settings::Radar::color_friendly = Color(50, 255, 50, 180);
 Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
 
+float Settings::NoFlash::alpha = 80;
+
 void GetVal(Json::Value &config, int* setting)
 {
     if (config.isNull())
@@ -134,6 +136,8 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["Radar"]["dot_radius"] = Settings::Radar::dot_radius;
     LoadColor(settings["Radar"]["color_friendly"], Settings::Radar::color_friendly);
     LoadColor(settings["Radar"]["color_hostile"], Settings::Radar::color_hostile);
+
+    settings["NoFlash"]["alpha"] = Settings::NoFlash::alpha;
     
     Json::StyledWriter styledWriter;
     std::ofstream(path) << styledWriter.write(settings);
@@ -172,4 +176,6 @@ void Settings::LoadConfig()
     GetVal(settings["Radar"]["dot_radius"], &Settings::Radar::dot_radius);
     GetVal(settings["Radar"]["color_friendly"], &Settings::Radar::color_friendly);
     GetVal(settings["Radar"]["color_hostile"], &Settings::Radar::color_hostile);
+
+    GetVal(settings["NoFlash"]["alpha"], &Settings::NoFlash::alpha);
 }

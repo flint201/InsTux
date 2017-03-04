@@ -83,14 +83,6 @@ public:
         return getvfunc<oPreDataUpdate>(this, 6)(this, updateType);
     }
 
-    /*
-    bool GetDormant()
-    {
-        //typedef bool (* oGetDormant)(void*);
-        //return getvfunc<oGetDormant>(this, 79)(this);
-        return (bool) *((bool*)this + 0xE1);
-    }
-    */
     int GetIndex()
     {
         typedef int (* oGetIndex)(void*);
@@ -253,77 +245,6 @@ public:
     {
         return (float*)((uintptr_t)this + offsets.DT_INSPlayer.m_flFlashMaxAlpha);
     }
-    /*
-    int GetShotsFired()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_iShotsFired);
-    }
-
-    int GetMoney()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_iAccount);
-    }
-
-    int GetHits()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_totalHitsOnServer);
-    }
-
-    int GetArmor()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_ArmorValue);
-    }
-
-    int HasDefuser()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_bHasDefuser);
-    }
-
-    bool IsDefusing()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_CSPlayer.m_bIsDefusing);
-    }
-
-    bool IsGrabbingHostage()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_CSPlayer.m_bIsGrabbingHostage);
-    }
-
-    bool IsScoped()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_CSPlayer.m_bIsScoped);
-    }
-
-    bool GetImmune()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_CSPlayer.m_bGunGameImmunity);
-    }
-
-    bool IsRescuing()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_CSPlayer.m_bIsRescuing);
-    }
-
-    int HasHelmet()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_CSPlayer.m_bHasHelmet);
-    }
-
-    float GetFlashDuration()
-    {
-        return *(float*)((uintptr_t)this + offsets.DT_CSPlayer.m_flFlashDuration);
-    }
-
-    float* GetFlashMaxAlpha()
-    {
-        return (float*)((uintptr_t)this + offsets.DT_CSPlayer.m_flFlashMaxAlpha);
-    }
-
-    float* GetLowerBodyYawTarget()
-    {
-        return (float*)((uintptr_t)this + offsets.DT_CSPlayer.m_flLowerBodyYawTarget);
-    }
-    */
 
     void* GetActiveWeapon()
     {
@@ -375,84 +296,6 @@ public:
     }
 };
 
-class C_PlantedC4 : public C_BaseEntity
-{
-public:
-    bool IsBombTicking()
-    {
-        return (bool)((uintptr_t)this + offsets.DT_PlantedC4.m_bBombTicking);
-    }
-
-    float GetBombTime()
-    {
-        return *(float*)((uintptr_t)this + offsets.DT_PlantedC4.m_flC4Blow);
-    }
-
-    bool IsBombDefused()
-    {
-        return *(bool*)((uintptr_t)this + offsets.DT_PlantedC4.m_bBombDefused);
-    }
-
-    int GetBombDefuser()
-    {
-        return *(int*)((uintptr_t)this + offsets.DT_PlantedC4.m_hBombDefuser);
-    }
-};
-
-class C_BaseAttributableItem : public C_BaseEntity
-{
-public:
-    ItemDefinitionIndex* GetItemDefinitionIndex()
-    {
-        return (ItemDefinitionIndex*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_iItemDefinitionIndex);
-    }
-
-    int* GetItemIDHigh()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_iItemIDHigh);
-    }
-
-    int* GetEntityQuality()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_iEntityQuality);
-    }
-
-    char* GetCustomName()
-    {
-        return (char*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_szCustomName);
-    }
-
-    int* GetFallbackPaintKit()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_nFallbackPaintKit);
-    }
-
-    int* GetFallbackSeed()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_nFallbackSeed);
-    }
-
-    float* GetFallbackWear()
-    {
-        return (float*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_flFallbackWear);
-    }
-
-    int* GetFallbackStatTrak()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_nFallbackStatTrak);
-    }
-
-    int* GetAccountID()
-    {
-        return (int*)((uintptr_t)this + offsets.DT_BaseAttributableItem.m_iAccountID);
-    }
-
-    float GetInaccuracy()
-    {
-        typedef float (* oGetInaccuracy)(void*);
-        return getvfunc<oGetInaccuracy>(this, 552)(this);
-    }
-};
 
 class C_BaseViewModel: public C_BaseEntity
 {
@@ -468,81 +311,8 @@ public:
     }
 };
 
-class FileWeaponInfo_t
-{
-public:
-    FileWeaponInfo_t();
 
-    // Each game can override this to get whatever values it wants from the script.
-    virtual void Parse(KeyValues *pKeyValuesData, const char *szWeaponName);
-
-    bool bParsedScript;
-    bool bLoadedHudElements;
-
-    char szClassName[80];
-    char szPrintName[80];
-};
-
-class CCSWeaponInfo : public FileWeaponInfo_t
-{
-public:
-    CSWeaponType GetWeaponType()
-    {
-        return *(CSWeaponType*)((uintptr_t)this + 0x814);
-    }
-
-    bool IsFullAuto()
-    {
-        return *(bool*)((uintptr_t)this + 0x820);
-    }
-
-    float GetWeaponArmorRatio()
-    {
-        return *(float*)((uintptr_t)this + 0x82C);
-    }
-
-    float GetMaxPlayerSpeed()
-    {
-        return *(float*)((uintptr_t)this + 0x830);
-    }
-
-    float GetMaxPlayerSpeedAlt()
-    {
-        return *(float*)((uintptr_t)this + 0x834);
-    }
-
-    float GetPenetration()
-    {
-        return *(float*)((uintptr_t)this + 0x840);
-    }
-
-    int GetDamage()
-    {
-        return *(int*)((uintptr_t)this + 0x844);
-    }
-
-    float GetRange()
-    {
-        return *(float*)((uintptr_t)this + 0x848);
-    }
-
-    float GetRangeModifier()
-    {
-        return *(float*)((uintptr_t)this + 0x84C);
-    }
-
-    float GetSpread()
-    {
-        return *(float*)((uintptr_t)this + 0x9FC);
-    }
-
-    int GetZoomLevels()
-    {
-        return *(int*)((uintptr_t)this + 0xE88);
-    }
-};
-
-class C_BaseCombatWeapon: public C_BaseAttributableItem
+class C_BaseCombatWeapon: public C_BaseEntity
 {
 public:
     int GetOwner()
@@ -591,12 +361,6 @@ public:
             return true;
 
         return false;
-    }
-
-    CCSWeaponInfo* GetCSWpnData()
-    {
-        typedef CCSWeaponInfo* (* oGetCSWpnData) (void*);
-        return reinterpret_cast<oGetCSWpnData>(GetCSWpnData_address)(this);
     }
 };
 

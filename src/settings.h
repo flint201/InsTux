@@ -44,6 +44,11 @@ namespace Settings
         extern Color color_hostile;
     }
 
+    namespace NoFlash
+    {
+        extern float alpha;
+    }
+
     void LoadDefaultsOrSave(std::string path);
     void LoadConfig();
 }

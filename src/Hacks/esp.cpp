@@ -69,6 +69,8 @@ void PredictGrenade(C_BasePlayer* localplayer)
     GrenadePred gp(activeWeapon, localplayer, CreateMove::muzzlepos, CreateMove::muzzleangle, localplayer->GetVelocity());
     gp.Predict();
 }
+
+
 void ESP::Paint()
 {
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
