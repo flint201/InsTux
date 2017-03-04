@@ -288,11 +288,19 @@ public:
         return (QAngle*)((uintptr_t)this + offsets.DT_BasePlayer.deadflag + 0x4);
     }
 
-    unsigned GetINSFlags()
+    unsigned* GetINSFlags()
     {
-        //uintptr_t shared = *((uintptr_t*)((uintptr_t)this + offsets.DT_INSPlayer.m_Shared));
-        //return *((unsigned*)(shared + offsets.DT_INSPlayerShared.m_iPlayerFlags));
-        return *((unsigned*)((uintptr_t)this + offsets.DT_INSPlayerShared.m_iPlayerFlags));
+        return (unsigned*)((uintptr_t)this + offsets.DT_INSPlayerShared.m_iPlayerFlags);
+    }
+
+    bool IsScoped()
+    {
+        return (bool) (*(GetINSFlags()) & 1);
+    }
+
+    bool IsSprinting()
+    {
+        return (bool) (*(GetINSFlags()) & 4);
     }
 };
 

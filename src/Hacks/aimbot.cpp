@@ -68,7 +68,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
             }
 
             if (Math::GetFov(cmd->viewangles, angHead) < silentHipFov &&
-                    (locked || Math::GetFov(cmd->viewangles, cmd->muzzleangle) > 4))
+                    (locked || !localplayer->IsScoped()))
             {
                 angSilentHip = angHead;
             }

@@ -103,7 +103,7 @@ void Offsets::GetOffsets()
     offsets.DT_INSPlayer.m_flFlashDuration = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashDuration");
     offsets.DT_INSPlayer.m_flFlashMaxAlpha = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashMaxAlpha");
 
-    offsets.DT_INSPlayerShared.m_iPlayerFlags= NetVarManager::GetOffset(tables, "DT_INSPlayerShared", "m_iPlayerFlags");
+    offsets.DT_INSPlayerShared.m_iPlayerFlags = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iPlayerFlags");
 
     offsets.DT_BaseAttributableItem.m_iItemDefinitionIndex = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
     offsets.DT_BaseAttributableItem.m_iItemIDHigh = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemIDHigh");
@@ -130,8 +130,8 @@ void Offsets::GetOffsets()
     offsets.DT_INSGrenadeBase.m_bPinPulled = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_bPinPulled");
     offsets.DT_INSGrenadeBase.m_fThrowTime = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_fThrowTime");
 
-    offsets.DT_GrenadeThrownBase.m_vecInitialVelocity = NetVarManager::GetOffset(tables, "DT_GrenadeThrownBase", "m_vecInitialVelocity");
-    offsets.DT_GrenadeThrownBase.m_vecVelocity = NetVarManager::GetOffset(tables, "DT_GrenadeThrownBase", "m_vecVelocity");
+    offsets.DT_GrenadeThrownBase.m_vecInitialVelocity = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_vecInitialVelocity");
+    offsets.DT_GrenadeThrownBase.m_vecVelocity = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_vecVelocity");
 
 
     offsets.DT_DynamicProp.m_bShouldGlow = NetVarManager::GetOffset(tables, "DT_DynamicProp", "m_bShouldGlow");
