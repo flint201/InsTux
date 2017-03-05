@@ -89,10 +89,11 @@ void ESP::Paint()
 
     DrawInfo(localplayer, sWidth, sHeight);
 
+    bool keyDown = true;
     if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
         Draw::Text(10, 5, "InsTux", font_foundation, Color(255, 255, 255, 255));
-        return;
+        keyDown = false;
     }
 
     for (int i = 0; i <= engine->GetMaxClients(); i++)
@@ -112,15 +113,43 @@ void ESP::Paint()
             continue;
 
         // draw skeleton
-        if (Settings::ESP::show_bone)
+        if (Settings::ESP::show_bone && keyDown)
             DrawSkeleton(player);
 
         // draw name
-        if (Settings::ESP::show_name)
+        if (Settings::ESP::show_name && keyDown)
         {
             Vector vPlayerOrigin;
-            debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin);
-            Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, esp_name_font, Color(255, 255, 255, 255));
+            if (debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin) == 0)
+                Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, esp_name_font, Color(255, 255, 255, 255));
+        }
+
+        // draw behind
+        if (Settings::ESP::draw_behind)
+        {
+            QAngle angViewAngle;
+            engine->GetViewAngles(angViewAngle);
+
+            Vector vecView;
+            Math::AngleVectors(angViewAngle, vecView);
+
+            Vector vecEnemy = player->GetVecOrigin() - localplayer->GetVecOrigin();
+            float dotProd = vecEnemy.Dot(vecView);
+            if (dotProd < -1)
+            {
+                if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
+                {
+                    Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
+                    Vector enemyScreenPos;
+                    if (debugOverlay->ScreenPosition(mirrorEnemyPos, enemyScreenPos) == 0)
+                    {
+                        int HBox = 1000 * 12 * 4 / Math::GetDistance(mirrorEnemyPos, localplayer->GetVecOrigin());
+                        int WBox = 400 * 12 * 4 / Math::GetDistance(mirrorEnemyPos, localplayer->GetVecOrigin());
+                        Draw::Rectangle(enemyScreenPos.x - WBox/2.0, enemyScreenPos.y - HBox, enemyScreenPos.x + WBox/2.0, enemyScreenPos.y, Color(255, 30, 30, 255));
+                        Draw::Line(sWidth/2.0, sHeight, enemyScreenPos.x, enemyScreenPos.y, Color(255, 30, 30, 255));
+                    }
+                }
+            }
         }
     }
 

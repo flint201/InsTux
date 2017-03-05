@@ -7,8 +7,6 @@
 
 #define NUM_BONE 128
 
-float silentFov = 4;
-float silentHipFov = 40;
 float forceSelectFov = 1;
 
 namespace Aimbot
@@ -49,7 +47,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         QAngle angToEnemyEye = Math::CalcAngle(eyePos, vecEyePos);
         float fov = Math::GetFov(cmd->viewangles, angToEnemyEye);
 
-        if (fov > silentHipFov)
+        if (fov > Settings::Aimbot::silent_fov_hip)
             continue;
 
         Bone targetBones[] = { Bone::SPINE_3, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
@@ -61,12 +59,12 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
-            if (Math::GetFov(cmd->viewangles, angHead) < silentFov)
+            if (Math::GetFov(cmd->viewangles, angHead) < Settings::Aimbot::silent_fov)
             {
                 angSilent = angHead;
             }
 
-            if (Math::GetFov(cmd->viewangles, angHead) < silentHipFov &&
+            if (Math::GetFov(cmd->viewangles, angHead) < Settings::Aimbot::silent_fov_hip &&
                     (locked || !localplayer->IsScoped()))
             {
                 angSilentHip = angHead;

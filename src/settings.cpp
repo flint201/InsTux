@@ -7,10 +7,14 @@ float Settings::Aimbot::ku = 7;
 float Settings::Aimbot::tu = 0.23;
 float Settings::Aimbot::fov = 10.0;
 
+float Settings::Aimbot::silent_fov = 4.0;
+float Settings::Aimbot::silent_fov_hip = 60;
+
 bool Settings::ESP::enable = true;
 ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;
 bool Settings::ESP::show_bone = true;
 bool Settings::ESP::show_name = true;
+bool Settings::ESP::draw_behind = true;
 
 bool Settings::Radar::enable = true;
 int Settings::Radar::size = 100;
@@ -129,10 +133,14 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["Aimbot"]["tu"] = Settings::Aimbot::tu;
     settings["Aimbot"]["ku"] = Settings::Aimbot::ku;
 
+    settings["Aimbot"]["silent_fov"] = Settings::Aimbot::silent_fov;
+    settings["Aimbot"]["silent_fov_hip"] = Settings::Aimbot::silent_fov_hip;
+
     settings["ESP"]["enable"] = Settings::ESP::enable;
     settings["ESP"]["key"] = Util::GetButtonName(Settings::ESP::key);
     settings["ESP"]["show_bone"] = Settings::ESP::show_bone;
     settings["ESP"]["show_name"] = Settings::ESP::show_name;
+    settings["ESP"]["draw_behind"] = Settings::ESP::draw_behind;
 
     settings["Radar"]["enable"] = Settings::Radar::enable;
     settings["Radar"]["size"] = Settings::Radar::size;
@@ -173,10 +181,14 @@ void Settings::LoadConfig()
     GetVal(settings["Aimbot"]["tu"], &Settings::Aimbot::tu);
     GetVal(settings["Aimbot"]["ku"], &Settings::Aimbot::ku);
 
+    GetVal(settings["Aimbot"]["silent_fov"], &Settings::Aimbot::silent_fov);
+    GetVal(settings["Aimbot"]["silent_fov_hip"], &Settings::Aimbot::silent_fov_hip);
+
     GetVal(settings["ESP"]["enable"], &Settings::ESP::enable);
     GetButtonCode(settings["ESP"]["key"], &Settings::ESP::key);
     GetVal(settings["ESP"]["show_bone"], &Settings::ESP::show_bone);
     GetVal(settings["ESP"]["show_name"], &Settings::ESP::show_name);
+    GetVal(settings["ESP"]["draw_behind"], &Settings::ESP::draw_behind);
 
     GetVal(settings["Radar"]["enable"], &Settings::Radar::enable);
     GetVal(settings["Radar"]["size"], &Settings::Radar::size);

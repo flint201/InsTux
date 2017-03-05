@@ -24,6 +24,9 @@ namespace Settings
         extern float fov;
         extern float tu;
         extern float ku;
+
+        extern float silent_fov;
+        extern float silent_fov_hip;
     }
 
     namespace ESP
@@ -32,6 +35,7 @@ namespace Settings
         extern ButtonCode_t key;
         extern bool show_bone;
         extern bool show_name;
+        extern bool draw_behind;
     }
 
     namespace Radar
