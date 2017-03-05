@@ -3,22 +3,8 @@
 This is InsTux, a feature-packed multihack for Insurgency on Linux.
 
 # Features
-
-- XQZ Cham
-- Natural Aimbot activated by holding Shift. It provides smooth and accurate aiming, with smart target bone selection
-- Hip fire silent aim
-- Hip fire bullet impact marker
-- Skeleton + Name ESP activated when Caps Lock is pressed
-- Health & Ammo counter, low ammo warning
-- Grenade prediction line for both grenade launchers and hand grenades
-
-![esp](https://i.imgur.com/hPxWI2e.jpg)
-
-# Demo videos (outdated, don't show the new features such as grenade prediction and hip fire silent aim)
-
-[![InsTuxDemo2](https://img.youtube.com/vi/xVMxNxhYlzw/0.jpg)](https://www.youtube.com/watch?v=xVMxNxhYlzw)
-
-[![InsTuxDemo](https://img.youtube.com/vi/uiFVcyZs4WQ/0.jpg)](https://www.youtube.com/watch?v=uiFVcyZs4WQ)
+See post on UnknownCheats.me:
+[InsTux hack for Insurgency on Linux](https://www.unknowncheats.me/forum/insurgency/204814-instux-trainer-insurgency-linux-windows.html)
 
 # Installation
 (example commands here are for Ubuntu/Debian)
@@ -67,6 +53,9 @@ If the last line of the output shows `$2 = 0x0` like this it means the hack has 
 ++++ InsTux starting...
 ++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++
 ```
+
+# Config
+After running the hack, a config file will be generated in your home directory `~/.instux.cfg`, you can edit the file to change the settings. You will need to reload the hack in order for the changes to take effect. If you wish to restore the default config, simply delete or rename `~/.instux.cfg`, and it will be generated for you. You may have to re-generate the config file after updating, since the items in the config file may change.
 
 # Updating
 This project is undergoing active development, run `./update` in your repo directory to get the latest version.
