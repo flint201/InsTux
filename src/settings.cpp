@@ -7,7 +7,7 @@ float Settings::Aimbot::ku = 7;
 float Settings::Aimbot::tu = 0.23;
 float Settings::Aimbot::fov = 10.0;
 
-float Settings::Aimbot::silent_fov = 4.0;
+float Settings::Aimbot::silent_fov = 2.0;
 float Settings::Aimbot::silent_fov_hip = 60;
 
 bool Settings::ESP::enable = true;

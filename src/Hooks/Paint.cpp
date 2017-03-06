@@ -7,43 +7,13 @@ extern FinishDrawingFn FinishDrawing;
 std::vector<const char*> nodraw_materials = {
     "particles/ins_smoke_v2",
     "particles/ins_thick_smoke",
-    "particles/ins_smoke_grenade",
+    "particles/ins_thin_smoke",
     "particles/ins_loopsmoke",
-    "particle/smoke1/smoke1"
-    "particle/smoke1/smoke1",
+    "particles/ins_loopsmoke_thin",
+    "particles/smoke_grenade",
 
-    "particles/particle_glow_04_additive_noz"
-    "particles/particle_glow_05"
-    "particles/particle_glow_05_additive_noz_minmaxsize"
-    "particles/particle_glow_05_additive_noz_minsize"
-    "particles/particle_ring_wave_10_add_noz"
-    "effects/softglow_translucent",
-    "effects/yellowflare_noz",
-    "particles/particle_flare_001"
-    "particles/particle_flare_001_nodepth_noz_alpha",
-    "particles/particle_flare_001_nodepth_noz_minsize",
-    "particles/particle_flare_001_nodepth_noz_nearfade",
-    "particles/particle_flare_001_nodepth_noz_ob",
-    "particles/particle_flare_001_nodepth_noz",
-    "particles/particle_flare_002_noz",
-    "particles/particle_flare_006_noz",
-    "particles/particle_flare_007b_noz",
-    "particles/particle_flare_009_nodepth_noz_minmax",
-    "particles/particle_glow_04_additive_noz",
-    "particles/particle_glow_05_add_15ob_noz",
-    "particles/particle_glow_05_additive_noz_minmaxsize",
-    "particles/particle_glow_05_additive_noz_minsize",
-    "particles/particle_meleeblur_noz",
-    "particles/particle_modulate_01_noz_nodepth",
-    "particles/particle_modulate_01_noz"
-    "particles/particle_muzzleflash2_noz",
-    "particles/particle_ring_wave_10_add_noz",
-    "particles/particle_sphere_additive_noz_15ob",
-    "sprites/glow1",
-    "sprites/glow01",
-    "sprites/glow02",
-    "sprites/glow04",
-    "sprites/glow04_noz"
+    "particle/smoke1/smoke1",
+    "particle/smoke_multi1/smoke_01"
 };
 
 void Hooks::Paint(void* thisptr, PaintMode_t mode)
