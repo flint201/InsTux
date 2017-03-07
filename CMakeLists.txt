@@ -31,7 +31,7 @@ set(CMAKE_BUILD_TYPE Debug)
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
 
 add_library(InsTux SHARED ${SOURCE_FILES})
-set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32 -static" LINK_FLAGS "-m32")
 
 #target_link_libraries(InsTux SDL2 GL dl)
 target_link_libraries(InsTux dl)
