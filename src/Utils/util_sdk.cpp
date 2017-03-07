@@ -97,6 +97,6 @@ bool Util::Ray(C_BasePlayer* localplayer, C_BasePlayer* player, int idx, Vector 
     trace_t tr;
     trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
 
-    return tr.fraction > 0.995;
+    return tr.fraction > 0.998;
 }
 
