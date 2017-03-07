@@ -101,7 +101,7 @@ class CTraceFilter : public ITraceFilter
 public:
     bool ShouldHitEntity(C_BaseEntity* pEntityHandle, int contentsMask)
     {
-        return pEntityHandle != pSkip;
+        return pEntityHandle != pSkip && pEntityHandle != pSkip2;
     }
 
     virtual TraceType_t GetTraceType() const
@@ -110,6 +110,7 @@ public:
     }
 
     void* pSkip;
+    void* pSkip2;
 };
 
 class IEntityEnumerator

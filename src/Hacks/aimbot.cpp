@@ -96,15 +96,17 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
             break;
         }
 
-        if (!found && fov < forceSelectFov)
+        matrix3x4_t currBone = BoneMatrix[(int)Bone::NECK];
+        Vector headTop = Vector(currBone[0][3], currBone[1][3], currBone[2][3])
+            + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 5;
+        
+        if (!found && (fov < forceSelectFov || Util::Ray(localplayer, player, i, eyePos, headTop)))
         {
             Aimbot::targetIdx = i;
             closestEntity = player;
             bestFov = fov;
             bestBone = Bone::NECK;
-            matrix3x4_t currBone = BoneMatrix[(int)bestBone];
-            aimPoint = Vector(currBone[0][3], currBone[1][3], currBone[2][3])
-                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 4;
+            aimPoint = headTop;
         }
     }
 
