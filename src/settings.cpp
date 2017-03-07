@@ -2,12 +2,12 @@
 
 bool Settings::Aimbot::enable = true;
 ButtonCode_t Settings::Aimbot::key = ButtonCode_t::KEY_LSHIFT;
-float Settings::Aimbot::sensitivity = 1;
-float Settings::Aimbot::ku = 7;
-float Settings::Aimbot::tu = 0.23;
+float Settings::Aimbot::sensitivity = 1.1;
+float Settings::Aimbot::ku = 9;
+float Settings::Aimbot::tu = 0.1;
 float Settings::Aimbot::fov = 10.0;
 
-float Settings::Aimbot::silent_fov = 2.0;
+float Settings::Aimbot::silent_fov = 1.5;
 float Settings::Aimbot::silent_fov_hip = 60;
 
 bool Settings::ESP::enable = true;

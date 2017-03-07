@@ -39,7 +39,7 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
             C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
             if (localplayer)
             {
-                IMaterial* mat = material->FindMaterial(nodraw_materials[counter], TEXTURE_GROUP_OTHER);
+                IMaterial* mat = material->FindMaterial(nodraw_materials[counter], TEXTURE_GROUP_PARTICLE);
                 if (mat)
                     mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
             }

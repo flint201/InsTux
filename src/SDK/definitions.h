@@ -423,18 +423,6 @@ enum class EClassIds : int
     SporeTrail
 };
 
-/*
-enum class Bone : int
-{
-    INVALID = -1,
-
-    PELVIS = 1,
-    SPINE_LO = 2,
-    SPINE_UP = 3,
-    NECK = 4,
-    HEAD = 52,
-};
-*/
 enum class Bone : int
 {
     INVALID = -1,

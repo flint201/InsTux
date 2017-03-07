@@ -38,7 +38,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 
         if (locked
                 && i != Aimbot::targetIdx
-                && Math::GetDistance(Aimbot::lastAimPoint, player->GetEyePosition()) > 12*10) // 12 feet
+                && Math::GetDistance(Aimbot::lastAimPoint, player->GetEyePosition()) > 12*15)
         {
             continue;
         }
@@ -50,12 +50,13 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         if (fov > Settings::Aimbot::silent_fov_hip)
             continue;
 
-        Bone targetBones[] = { Bone::SPINE_3, Bone::HEAD, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
+        Bone targetBones[] = { Bone::SPINE_2, Bone::NECK, Bone::PELVIS, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
         static matrix3x4_t BoneMatrix[NUM_BONE];
         player->SetupBones(BoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
 
-        matrix3x4_t boneHead = BoneMatrix[(int)Bone::HEAD];
-        Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3]);
+        matrix3x4_t boneHead = BoneMatrix[(int)Bone::NECK];
+        Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3])
+                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 4;
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
@@ -80,40 +81,6 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         {
             matrix3x4_t currBone = BoneMatrix[(int)b];
             Vector vecBone = Vector(currBone[0][3], currBone[1][3], currBone[2][3]);
-            
-            /*
-            Vector vecEnd = vecBone;
-            Ray_t ray;
-            ray.Init(localplayer->GetEyePosition(), vecEnd);
-
-            CTraceFilter traceFilter;
-            traceFilter.pSkip = localplayer;
-
-            trace_t tr;
-            trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
-
-            Log << "    ---- trace vec end, bone = " << vecEnd.x << " " << vecEnd.y << " " << vecEnd.z << " " << (int)b << endl;
-            Log << "    player = " << (unsigned) player << endl;
-            Log << "    playerIdx = " << (unsigned) i << endl;
-            Log << "    tr.fraction = " << tr.fraction << endl;
-            Log << "    tr.contents = " << tr.contents << endl;
-            Log << "    tr.dispFlags = " << tr.dispFlags << endl;
-            Log << "    tr.allsolid = " << tr.allsolid << endl;
-            Log << "    tr.startsolid = " << tr.startsolid << endl;
-            Log << "    tr.fractionleftsolid = " << tr.fractionleftsolid << endl;
-            Log << "      tr.surface.name = " << (unsigned)tr.surface.name << endl;
-            Log << "      tr.surface.surfaceProps = " << tr.surface.surfaceProps << endl;
-            Log << "      tr.surface.flags = " << tr.surface.flags << endl;
-            Log << "    tr.hitgroup = " << (unsigned) tr.hitgroup <<  endl;
-            Log << "    tr.physicsbone = " << (unsigned) tr.physicsbone <<  endl;
-            Log << "    tr.worldSurfaceIndex = " << (unsigned) tr.worldSurfaceIndex <<  endl;
-            Log << "    tr.m_pEntityHit = " << (unsigned) tr.m_pEntityHit <<  endl;
-            Log << "    tr.hitbox = " << (unsigned) tr.hitbox <<  endl;
-            for (int i = -16; i < 8; i++)
-            {
-                Log << "  " << *(unsigned*)((uintptr_t)(&tr.m_pEntityHit) + i) << endl;
-            }
-            //*/
 
             if (!Util::Ray(localplayer, player, i, eyePos, vecBone))
             {
@@ -134,9 +101,10 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
             Aimbot::targetIdx = i;
             closestEntity = player;
             bestFov = fov;
-            bestBone = Bone::HEAD;
+            bestBone = Bone::NECK;
             matrix3x4_t currBone = BoneMatrix[(int)bestBone];
-            aimPoint = Vector(currBone[0][3], currBone[1][3], currBone[2][3]);
+            aimPoint = Vector(currBone[0][3], currBone[1][3], currBone[2][3])
+                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 4;
         }
     }
 
@@ -170,7 +138,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     MouseSim::update(cmd);
 
-    bool aimKeyDown = inputSystem->IsButtonDown(Settings::Aimbot::key);//ButtonCode_t::KEY_LSHIFT);
+    bool aimKeyDown = inputSystem->IsButtonDown(Settings::Aimbot::key);
 
     QAngle angle = cmd->viewangles;
     C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
@@ -196,7 +164,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
         static matrix3x4_t myBoneMatrix[NUM_BONE];
         localplayer->SetupBones(myBoneMatrix, NUM_BONE, BONE_USED_BY_HITBOX, 0);
-        matrix3x4_t myBoneHead = myBoneMatrix[(int)Bone::HEAD];
+        matrix3x4_t myBoneHead = myBoneMatrix[(int)Bone::NECK];
         Vector vecMyBoneHead = Vector(myBoneHead[0][3], myBoneHead[1][3], myBoneHead[2][3]);
         if (Math::GetDistance(vecMyBoneHead, eyePos) > 12)
             eyePos = vecMyBoneHead;

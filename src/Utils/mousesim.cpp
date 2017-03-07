@@ -116,8 +116,10 @@ void MouseSim::sim(QAngle deltaAngle)
 
     float normVec = norm(dx, dy);
 
-    if (normVec < sensitivity() / 2.0)
+    /*
+    if (normVec < 0.5)
         return;
+    */
     
     long dt = getDT();
 
@@ -125,7 +127,7 @@ void MouseSim::sim(QAngle deltaAngle)
     static const float ku = Settings::Aimbot::ku;//7; // 8
     static const float tu = Settings::Aimbot::tu;//0.10; // 0.22
 
-    static const float kp = 0.618 * ku;
+    static const float kp = 0.6 * ku;
     static const float ki = 1.2 * ku / tu;
     static const float kd = 3.0 / 40 * ku * tu;
 
@@ -142,11 +144,14 @@ void MouseSim::sim(QAngle deltaAngle)
     dx = pidX.step(dx);
     dy = pidY.step(dy);
 
-    float lim = limit(normVec, dt) + 6;
+    float lim = limit(normVec, dt) + 5;
     dx = dx<lim ? dx : lim;
     dy = dy<lim ? dy : lim;
 
-    if (dx > 10 || dy > 10)
+    dx = dx>-lim ? dx : -lim;
+    dy = dy>-lim ? dy : -lim;
+
+    if (dx > 20 || dy > 20)
     {
         float nx, ny;
         noise(lim, dt, nx, ny);
