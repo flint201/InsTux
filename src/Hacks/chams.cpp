@@ -39,15 +39,15 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     
     static bool materialInitialized = false;
     if (!materialInitialized) {
-        ///*
+        /*
         modelInfo->GetModelMaterials(pInfo.pModel, 1, &materialWhite);
         std::string materialName = materialWhite->GetName();
         if (materialName.find("models/player/attachments/ins_attachments_color") != std::string::npos)
             materialInitialized = true;
         //*/
 
-        //materialWhite = material->FindMaterial("mat_white", TEXTURE_GROUP_MODEL);
-        //materialInitialized = true;
+        materialWhite = material->FindMaterial("effects/flashbang_white", TEXTURE_GROUP_MODEL);
+        materialInitialized = true;
         //Log << " ** FindMaterial returned " << materialWhite << std::endl;
     }
 
@@ -55,25 +55,29 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     
     if (!entity || entity->IsDormant() || !entity->GetAlive() || entity->GetTeam() == myteam)
     {
-        materialWhite->ColorModulate(0.1, 0.1, 0.1);
-        modelRender->ForcedMaterialOverride(materialWhite);
+        //materialWhite->ColorModulate(0.1, 0.1, 0.1);
+        //modelRender->ForcedMaterialOverride(materialWhite);
+        modelRender->ForcedMaterialOverride(NULL);
         return false;
     }
 
     // draw hidden
     materialWhite->SetMaterialVarFlag(hidden_MaterialVarFlags, true);
     materialWhite->SetMaterialVarFlag(brightFlags, true);
-    //Color colorHid = Settings::Cham::color_hidden;
-    //materialWhite->ColorModulate((float)colorHid.r/255, (float)colorHid.g/255, (float)colorHid.b/255);
-    materialWhite->ColorModulate(255, 0, 0);
+    materialWhite->SetMaterialVarFlag(MATERIAL_VAR_ADDITIVE, false);
+
+    materialWhite->AlphaModulate(255);
+    Color colorHid = Settings::Cham::color_hidden;
+    materialWhite->ColorModulate((float)colorHid.r/255, (float)colorHid.g/255, (float)colorHid.b/255);
+    //materialWhite->ColorModulate(255, 0, 0);
     modelRender->ForcedMaterialOverride(materialWhite);
     modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
 
     // draw visible
     materialWhite->SetMaterialVarFlag(hidden_MaterialVarFlags, false);
-    //Color colorVis = Settings::Cham::color_visible;
-    //materialWhite->ColorModulate((float)colorVis.r/255, (float)colorVis.g/255, (float)colorVis.b/255);
-    materialWhite->ColorModulate(0, 255, 0);
+    Color colorVis = Settings::Cham::color_visible;
+    materialWhite->ColorModulate((float)colorVis.r/255, (float)colorVis.g/255, (float)colorVis.b/255);
+    //materialWhite->ColorModulate(0, 255, 0);
     modelRender->ForcedMaterialOverride(materialWhite);
     modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
 
