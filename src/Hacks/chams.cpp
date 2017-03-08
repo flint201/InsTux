@@ -65,7 +65,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     //materialWhite->SetMaterialVarFlag(brightFlags, true);
     //Color colorHid = Settings::Cham::color_hidden;
     //materialWhite->ColorModulate((float)colorHid.r/255, (float)colorHid.g/255, (float)colorHid.b/255);
-    materialWhite->ColorModulate(0, 255, 0);
+    materialWhite->ColorModulate(255, 0, 0);
     modelRender->ForcedMaterialOverride(materialWhite);
     modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
 
@@ -73,7 +73,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     materialWhite->SetMaterialVarFlag(hidden_MaterialVarFlags, false);
     //Color colorVis = Settings::Cham::color_visible;
     //materialWhite->ColorModulate((float)colorVis.r/255, (float)colorVis.g/255, (float)colorVis.b/255);
-    materialWhite->ColorModulate(255, 0, 0);
+    materialWhite->ColorModulate(0, 255, 0);
     modelRender->ForcedMaterialOverride(materialWhite);
     modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
 
