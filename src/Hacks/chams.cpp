@@ -47,6 +47,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
         */
 
         materialWhite = material->FindMaterial("mat_white", TEXTURE_GROUP_MODEL);
+        materialInitialized = true;
         //Log << " ** FindMaterial returned " << materialWhite << std::endl;
     }
 
