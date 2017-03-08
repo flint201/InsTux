@@ -62,7 +62,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
 
     // draw hidden
     materialWhite->SetMaterialVarFlag(hidden_MaterialVarFlags, true);
-    //materialWhite->SetMaterialVarFlag(brightFlags, true);
+    materialWhite->SetMaterialVarFlag(brightFlags, true);
     //Color colorHid = Settings::Cham::color_hidden;
     //materialWhite->ColorModulate((float)colorHid.r/255, (float)colorHid.g/255, (float)colorHid.b/255);
     materialWhite->ColorModulate(255, 0, 0);
