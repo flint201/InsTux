@@ -10,6 +10,11 @@ float Settings::Aimbot::fov = 10.0;
 float Settings::Aimbot::silent_fov = 1.5;
 float Settings::Aimbot::silent_fov_hip = 60;
 
+bool Settings::Cham::only_on_key_down = false;
+ButtonCode_t Settings::Cham::key = KEY_CAPSLOCK;
+Color Settings::Cham::color_visible = Color(255, 80, 0, 255);
+Color Settings::Cham::color_hidden = Color(45, 138, 255, 255);
+
 bool Settings::ESP::enable = true;
 ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;
 bool Settings::ESP::show_bone = true;
@@ -136,6 +141,11 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["Aimbot"]["silent_fov"] = Settings::Aimbot::silent_fov;
     settings["Aimbot"]["silent_fov_hip"] = Settings::Aimbot::silent_fov_hip;
 
+    settings["Cham"]["only_on_key_down"] = Settings::Cham::only_on_key_down;
+    settings["Cham"]["key"] = Util::GetButtonName(Settings::Cham::key);
+    LoadColor(settings["Cham"]["color_visible"], Settings::Cham::color_visible);
+    LoadColor(settings["Cham"]["color_hidden"], Settings::Cham::color_hidden);
+
     settings["ESP"]["enable"] = Settings::ESP::enable;
     settings["ESP"]["key"] = Util::GetButtonName(Settings::ESP::key);
     settings["ESP"]["show_bone"] = Settings::ESP::show_bone;
@@ -183,6 +193,11 @@ void Settings::LoadConfig()
 
     GetVal(settings["Aimbot"]["silent_fov"], &Settings::Aimbot::silent_fov);
     GetVal(settings["Aimbot"]["silent_fov_hip"], &Settings::Aimbot::silent_fov_hip);
+
+    GetVal(settings["Cham"]["only_on_key_down"], &Settings::Cham::only_on_key_down);
+    GetButtonCode(settings["Cham"]["key"], &Settings::Cham::key);
+    GetVal(settings["Cham"]["color_visible"], &Settings::Cham::color_visible);
+    GetVal(settings["Cham"]["color_hidden"], &Settings::Cham::color_hidden);
 
     GetVal(settings["ESP"]["enable"], &Settings::ESP::enable);
     GetButtonCode(settings["ESP"]["key"], &Settings::ESP::key);

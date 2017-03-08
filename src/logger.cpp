@@ -4,12 +4,10 @@ std::ofstream Log;
 
 void InitLogger()
 {
-    //*
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
     Log.open(std::string(cwd) + "/instux.log", std::ofstream::app);
     Log << "Logger::InitLogger" << std::endl;
-    //*/
 }
 
 std::string hex(unsigned input)

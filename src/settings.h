@@ -29,6 +29,14 @@ namespace Settings
         extern float silent_fov_hip;
     }
 
+    namespace Cham
+    {
+        extern bool only_on_key_down;
+        extern ButtonCode_t key;
+        extern Color color_visible;
+        extern Color color_hidden;
+    }
+
     namespace ESP
     {
         extern bool enable;
