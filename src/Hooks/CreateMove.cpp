@@ -16,8 +16,8 @@ bool Hooks::CreateMove(void* thisptr, float flInputSampleTime, CUserCmd* cmd)
         CreateMove::sendPacket = true;
 
         Aimbot::CreateMove(cmd);
-        AtomicPeek::CreateMove(cmd);
-        FakeLag::CreateMove(cmd);
+        //AtomicPeek::CreateMove(cmd);
+        //FakeLag::CreateMove(cmd);
         
         if (CreateMove::sendPacket)
             CreateMove::lastTickViewAngles = cmd->viewangles;

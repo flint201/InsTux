@@ -20,7 +20,7 @@ void CreateMaterialFile()
     FILE* fp = fopen("insurgency/materials/mat_white.vmt", "w+");
     if (fp)
     {
-        const char* mat_str = "UnLitGeneric\n{\n$baseTexture \"vgui/white\"\n}";
+        const char* mat_str = "\"UnLitGeneric\"\n{\n$baseTexture \"vgui/white\"\n}";
         fwrite(mat_str, 1, strlen(mat_str), fp);
         fclose(fp);
     }
@@ -31,7 +31,7 @@ int __attribute__((constructor)) instux_init()
 {
     //InitLogger();
 
-    CreateMaterialFile();
+    //CreateMaterialFile();
 
     Interfaces::FindInterfaces();
     Interfaces::DumpInterfaces();

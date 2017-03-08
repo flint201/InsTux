@@ -14,6 +14,5 @@ void Hooks::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     {
         modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
     }
-
     modelRender->ForcedMaterialOverride(NULL);
 }
