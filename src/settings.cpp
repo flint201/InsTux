@@ -12,10 +12,8 @@ float Settings::Aimbot::silent_fov_hip = 60;
 
 bool Settings::Cham::only_on_key_down = false;
 ButtonCode_t Settings::Cham::key = KEY_CAPSLOCK;
-//Color Settings::Cham::color_visible = Color(255, 120, 0, 255);
-//Color Settings::Cham::color_hidden = Color(45, 138, 255, 255);
-Color Settings::Cham::color_visible = Color(0, 70, 255, 255);
-Color Settings::Cham::color_hidden = Color(255, 120, 0, 255);
+Color Settings::Cham::color_visible = Color(0, 255, 0, 255);
+Color Settings::Cham::color_hidden = Color(255, 0, 0, 255);
 
 bool Settings::ESP::enable = true;
 ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;

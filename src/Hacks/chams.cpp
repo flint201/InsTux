@@ -81,5 +81,9 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     modelRender->ForcedMaterialOverride(materialWhite);
     modelRenderVMT->GetOriginalMethod<DrawModelExecuteFn>(DRAW_MODEL_EXECUTE_IDX)(thisptr, context, state, pInfo, pCustomBoneToWorld);
 
+    // restore the flags so we don't get a solid color when we get flashed
+    materialWhite->SetMaterialVarFlag(MATERIAL_VAR_ADDITIVE, true);
+    materialWhite->AlphaModulate(Settings::NoFlash::alpha);
+
     return true;
 }
