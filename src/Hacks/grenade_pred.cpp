@@ -38,7 +38,8 @@ GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, 
     std::string name(weapon->GetName());
 
     if (name.find("weapon_f1") != std::string::npos ||
-        name.find("weapon_m67") != std::string::npos)
+        name.find("weapon_m67") != std::string::npos ||
+        name.find("weapon_m18") != std::string::npos)
     {
         throwPower = 1100.0;
 
@@ -62,7 +63,29 @@ GrenadePred::GrenadePred(C_BaseCombatWeapon* weapon, C_BasePlayer* localplayer, 
         isLauncher = true;
         safety_time = 0.2;
     }
+    else if (name.find("weapon_m84") != std::string::npos ||
+            name.find("weapon_anm14") != std::string::npos)
+    {
+        throwPower = 1100.0;
+        if (!pinPulled && ((GrenadeThrownBase*)weapon)->IsPinPulled())
+        {
+            pinPulled = true;
+            timePinPull = getTime();
+        }
+        
+        fuse_time = 2.8;
+        if (pinPulled)
+            fuse_time -= difftimeval(timePinPull, getTime());
 
+        isLauncher = false;
+    }
+    else if (name.find("weapon_molotov") != std::string::npos)
+    {
+        throwPower = 1100.0;
+        fuse_time = 5.0;
+        isLauncher = true;
+        safety_time = 0.2;
+    }
 }
 
 
@@ -100,8 +123,6 @@ void GrenadePred::Paint()
                 Vector2D(currPoint.x, currPoint.y),
                 Color(50, 255, 50, 255));
         
-        // draw collisoin cross;
-
         prevPoint = currPoint;
     }
 }
@@ -192,6 +213,7 @@ void GrenadePred::TraceHull(Vector& vecSrc, Vector& vecDst, trace_t& tr)
 
     CTraceFilter traceFilter;
     traceFilter.pSkip = localplayer;
+    traceFilter.pSkip2 = weapon;
     
     trace->TraceRay(ray, MASK_SHOT_HULL, &traceFilter, &tr);
 }

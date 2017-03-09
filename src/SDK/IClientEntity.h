@@ -355,15 +355,14 @@ public:
     bool IsGrenade()
     {
         char* weaponName = this->GetName();
-        /*
-        char* grenadeNames[] = {"weapon_f1"};
-        for (char* grenadeName : grendeNames)
-        {
-        */
-        if (strcmp(weaponName, "weapon_f1")==0)
-            return true;
-
-        if (strcmp(weaponName, "weapon_gp25_he")==0)
+        if (strcmp(weaponName, "weapon_f1")==0 ||
+            strcmp(weaponName, "weapon_m67")==0 ||
+            strcmp(weaponName, "weapon_m18")==0 ||
+            strcmp(weaponName, "weapon_m84")==0 ||
+            strcmp(weaponName, "weapon_anm14")==0 ||
+            strcmp(weaponName, "weapon_molotov")==0 ||
+            strcmp(weaponName, "weapon_gp25_he")==0 ||
+            strcmp(weaponName, "weapon_m203")==0)
             return true;
 
         return false;

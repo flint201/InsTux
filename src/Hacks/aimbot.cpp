@@ -155,6 +155,10 @@ void Aimbot::CreateMove(CUserCmd* cmd)
         return;
     }
 
+    C_BaseCombatWeapon* activeWeapon = (C_BaseCombatWeapon*) entityList->GetClientEntityFromHandle(localplayer->GetActiveWeapon());
+    if (!activeWeapon || activeWeapon->IsGrenade())
+        return;
+
     Bone bone = Bone::SPINE_3;
     Vector aimPoint;
     QAngle angSilent = cmd->viewangles;
