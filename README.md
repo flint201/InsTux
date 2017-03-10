@@ -11,7 +11,7 @@ See post on UnknownCheats.me:
 
 0. install some basic dependencies
     ```
-    sudo apt-get install cmake g++ gdb git libsdl2-dev zlib1g-dev
+    sudo apt-get install cmake g++ gdb git zlib1g-dev
     ```
 
 1. make sure your `g++` version is at least 6.0. Here is AimTux's tutorial page for updating g++
