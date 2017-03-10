@@ -288,7 +288,7 @@ public:
 
     unsigned* GetINSFlags()
     {
-        return (unsigned*)((uintptr_t)this + offsets.DT_INSPlayerShared.m_iPlayerFlags);
+        return (unsigned*)((uintptr_t)this + offsets.DT_INSPlayer.m_iPlayerFlags);
     }
 
     bool IsScoped()
@@ -299,6 +299,21 @@ public:
     bool IsSprinting()
     {
         return (bool) (*(GetINSFlags()) & 4);
+    }
+
+    float GetSpawnTime()
+    {
+        return *((float*)((uintptr_t)this + offsets.DT_INSPlayer.m_flSpawnTime));
+    }
+
+    int GetSpecialRole()
+    {
+        return *((int*)((uintptr_t)this + offsets.DT_INSPlayer.m_nPlayerSpecialRole));
+    }
+
+    int GetLeanType()
+    {
+        return *((int*)((uintptr_t)this + offsets.DT_INSPlayer.m_iLeanType));
     }
 };
 

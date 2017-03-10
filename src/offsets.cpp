@@ -103,7 +103,10 @@ void Offsets::GetOffsets()
     offsets.DT_INSPlayer.m_flFlashDuration = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashDuration");
     offsets.DT_INSPlayer.m_flFlashMaxAlpha = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flFlashMaxAlpha");
 
-    offsets.DT_INSPlayerShared.m_iPlayerFlags = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iPlayerFlags");
+    offsets.DT_INSPlayer.m_iPlayerFlags = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iPlayerFlags");
+    offsets.DT_INSPlayer.m_nPlayerSpecialRole = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_nPlayerSpecialRole");
+    offsets.DT_INSPlayer.m_iLeanType = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iLeanType");
+    offsets.DT_INSPlayer.m_flSpawnTime = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flSpawnTime");
 
     offsets.DT_BaseAttributableItem.m_iItemDefinitionIndex = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
     offsets.DT_BaseAttributableItem.m_iItemIDHigh = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemIDHigh");

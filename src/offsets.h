@@ -122,19 +122,14 @@ struct COffsets
         std::ptrdiff_t m_angEyeAngles[2];
         std::ptrdiff_t m_flFlashDuration;
         std::ptrdiff_t m_flFlashMaxAlpha;
-    } DT_INSPlayer;
 
-    struct
-    {
 		std::ptrdiff_t m_iPlayerFlags;
-        /*
 		std::ptrdiff_t m_nPlayerSpecialRole;
 		std::ptrdiff_t m_iLeanType;
-		std::ptrdiff_t m_iDesiredLeanType;
-		std::ptrdiff_t m_flLean;
-		std::ptrdiff_t m_IronsightTransitionTimer;
-        */
-    } DT_INSPlayerShared;
+		std::ptrdiff_t m_iPlayerClass;
+
+        std::ptrdiff_t m_flSpawnTime;
+    } DT_INSPlayer;
 
     struct
     {

@@ -8,8 +8,8 @@ std::vector<const char*> nodraw_materials = {
     "particles/ins_smoke_v2",
     "particles/ins_thick_smoke",
     "particles/ins_thin_smoke",
-    "particles/ins_loopsmoke",
-    "particles/ins_loopsmoke_thin",
+    "particles/loopsmoke",
+    "particles/loopsmoke_thin",
     "particles/smoke_grenade",
 
     "particle/smoke1/smoke1",
@@ -43,11 +43,11 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
                 if (mat)
                 {
                     mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
-                    mat->AlphaModulate(50);
+                    //mat->AlphaModulate(0.5/255);
                 }
             }
         }
         counter++;
-        counter %= 1000;
+        counter %= 500;
     }
 }

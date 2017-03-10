@@ -7,7 +7,6 @@ const MaterialVarFlags_t hidden_MaterialVarFlags = (MaterialVarFlags_t) (
         );
 
 const MaterialVarFlags_t brightFlags = (MaterialVarFlags_t) (
-        //MATERIAL_VAR_ADDITIVE |
         //MATERIAL_VAR_VERTEXCOLOR |
         MATERIAL_VAR_HALFLAMBERT |
         MATERIAL_VAR_NOCULL |
@@ -31,9 +30,7 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
         C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
         myteam = localplayer->GetTeam();
     }
-    counter++;
-
-    std::string modelName = modelInfo->GetModelName(pInfo.pModel);
+    counter++; std::string modelName = modelInfo->GetModelName(pInfo.pModel);
     if (modelName.find("/characters") == std::string::npos)
         return false;
     
