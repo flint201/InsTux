@@ -184,7 +184,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     if (aimKeyDown)
     {
-        angle = angle - *localplayer->GetViewPunchAngle() * 1.9;// - *localplayer->GetAimPunchAngle() * 2.0;
+        angle = angle - *localplayer->GetViewPunchAngle() * 2.0;// - *localplayer->GetAimPunchAngle() * 2.0;
         if (angle != cmd->viewangles)
         {
             QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);

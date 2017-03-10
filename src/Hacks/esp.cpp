@@ -9,7 +9,8 @@
 std::string dbgMsg;
 
 HFont esp_name_font = 0xe5;
-HFont font_foundation = 0x110;
+HFont font_foundation18 = 0x110;
+HFont font_foundation20 = 0x112;
 
 // Helper function for drawing info such as local player health and ammo count.
 void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
@@ -22,18 +23,23 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
     std::stringstream ss;
     ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
 
-    Draw::Text(10, 50, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
-    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), font_foundation, Color(66, 180, 255, 255));
+    Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(0, 0, 0, 255));
+    Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(66, 180, 255, 255));
+
+    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), font_foundation20, Color(0, 0, 0, 255));
+    Draw::Text(sWidth - 250, sHeight - 30, ss.str().c_str(), font_foundation20, Color(66, 180, 255, 255));
 
     if (FakeLag::enable)
-        Draw::Text(10, 70, "Lag", font_foundation, Color(255, 30, 30, 255));
+        Draw::Text(10, 70, "FakeLag: On", font_foundation18, Color(255, 30, 30, 255));
+    else
+        Draw::Text(10, 70, "FakeLag: Off", font_foundation18, Color(255, 30, 30, 255));
 
     // draw reload warning if needed
     if (activeWeapon && ammoInMag < 10 && ammoInMag >= 0 && localplayer->GetAlive())
     {
         std::stringstream ssLowAmmo;
         ssLowAmmo << "LOW AMMO  " << ammoInMag;
-        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), font_foundation, Color(255, 30, 30, 255));
+        Draw::Text(sWidth/2 - 30, sHeight * 0.618, ssLowAmmo.str().c_str(), font_foundation20, Color(255, 30, 30, 255));
     }
 
     // draw crosshairs
@@ -92,7 +98,7 @@ void ESP::Paint()
     bool keyDown = true;
     if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
-        Draw::Text(10, 5, "InsTux", font_foundation, Color(255, 255, 255, 255));
+        Draw::Text(10, 5, "InsTux", font_foundation18, Color(255, 255, 255, 255));
         keyDown = false;
     }
 
