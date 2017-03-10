@@ -1,6 +1,6 @@
 # InsTux
 
-This is InsTux, a feature-packed multihack for Insurgency on Linux.
+This is InsTux, a free, feature-packed multihack for Insurgency on Linux.
 
 # Features
 See post on UnknownCheats.me:
