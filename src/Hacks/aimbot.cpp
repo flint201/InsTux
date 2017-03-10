@@ -193,8 +193,8 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
         if (angSilent != cmd->viewangles)
         {
-            cmd->viewangles = angSilent - *localplayer->GetViewPunchAngle() * 2.0;
-            cmd->muzzleangle = angSilent - *localplayer->GetAimPunchAngle() * 2.0;
+            cmd->viewangles = angSilent;
+            cmd->muzzleangle = angSilent;
         }
     }
 
