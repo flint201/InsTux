@@ -10,7 +10,7 @@ std::string dbgMsg;
 
 HFont esp_name_font = 0xe5;
 HFont font_foundation18 = 0x110;
-HFont font_foundation20 = 0x112;
+HFont font_foundation20 = 0x9e;
 
 // Helper function for drawing info such as local player health and ammo count.
 void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
