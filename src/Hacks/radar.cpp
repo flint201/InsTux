@@ -37,7 +37,7 @@ void Radar::Paint()
 
     int size = Settings::Radar::size;
     float range = Settings::Radar::range * 3 * 12;
-    float radius = 4;//Settings::Radar::dot_radius;
+    float radius = Settings::Radar::dot_radius;
 
     int anchorX = sWidth / 2 - size;
     int anchorY = 0;
