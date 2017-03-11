@@ -1,0 +1,13 @@
+#pragma once
+
+#include <SDL2/SDL.h>
+#include "../imgui/imgui.h"
+#include "imgui_impl_sdl.h"
+
+namespace GUI
+{
+    extern bool visible;
+
+    void Init();
+    void DeInit();
+}

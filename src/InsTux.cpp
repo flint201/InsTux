@@ -7,6 +7,10 @@
 #include "fonts.h"
 #include "settings.h"
 
+#ifdef USE_IMGUI
+#include "gui/itgui.h"
+#endif
+
 void CreateMaterialFile()
 {
     char dir_mat[1024];
@@ -59,6 +63,10 @@ int __attribute__((constructor)) instux_init()
     MouseSim::mouseInit();
 
     Settings::LoadConfig();
+
+#ifdef USE_IMGUI
+    GUI::Init();
+#endif
     
     Msg("++++ InsTux loading complete! ++++\n");
     return 0;
@@ -68,6 +76,10 @@ int __attribute__((constructor)) instux_init()
 void __attribute__((destructor)) instux_shutdown()
 {
     MouseSim::mouseDestroy();
+
+#ifdef USE_IMGUI
+    GUI::DeInit();
+#endif
 
     modelRenderVMT->ReleaseVMT();
     clientModeVMT->ReleaseVMT();

@@ -1,3 +1,6 @@
 [submodule "src/ImGUI"]
 	path = src/ImGUI
 	url = https://github.com/AimTuxOfficial/imgui.git
+[submodule "src/imgui"]
+	path = src/imgui
+	url = https://github.com/ocornut/imgui
