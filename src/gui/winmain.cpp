@@ -22,7 +22,7 @@ void WinMain::RenderWindow()
         for (int i = 0; i < IM_ARRAYSIZE(tabs); i++)
         {
             if (page == i)
-                ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50,200, 150);
+                ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 200, 100);
             else
                 ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 50, 50);
 
@@ -33,6 +33,7 @@ void WinMain::RenderWindow()
                 ImGui::SameLine();
         }
 
+        ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 200, 100);
         ImGui::Separator();
 
         switch (page)
