@@ -2,7 +2,7 @@
 
 This is InsTux, a free, feature-packed multihack for Insurgency on Linux.
 
-# Features
+# Features, Demos, Screenshots
 See post on UnknownCheats.me:
 [InsTux hack for Insurgency on Linux](https://www.unknowncheats.me/forum/insurgency/204814-instux-trainer-insurgency-linux-windows.html)
 
@@ -18,9 +18,9 @@ See post on UnknownCheats.me:
     [How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
     You will also need to install the corresponding g++ multilib
     
-2. clone the repository and cd to its root directory
+2. clone the repository with recursive flag and cd to its root directory
     ```
-    git clone https://github.com/flint201/InsTux
+    git clone --recursive https://github.com/flint201/InsTux
     cd InsTux
     ```
 
@@ -29,10 +29,23 @@ See post on UnknownCheats.me:
     cmake .
     ```
 
-4. compile 
+4. build
     ```
     make
     ```
+5. build with GUI (optional)
+    InsTux comes with an optional GUI support, to build the project with GUI, you will need to install libSDL2-dev package for 32-bit architecture, on Ubuntu, use the following commands:
+    ```
+    sudo dpkg --add-architecture i386
+    sudo apt-get update
+    sudo apt-get install libsdl2-dev libegl1-mesa:i386 libwayland-egl1-mesa:i386 libsdl2-2.0-0:i386 libsdl2-dev:i386
+    ```
+    After that, run
+    ```
+    cmake . -DWITH_GUI=ON
+    ```
+
+    Finally, run `make` to build.
 
 At this point if you see a file called `libInsTux.so` in you directory you have succeessfully compiled the hack.
 To use, start the game and wait until it reaches main menu, then run `./load` in the repo directory.
