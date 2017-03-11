@@ -24,7 +24,7 @@ FUNCTION (EXCLUDE_FILES_FROM_DIR_IN_LIST _InFileList _excludeDirName _verbose)
     set(SOURCE_FILES ${_InFileList} PARENT_SCOPE) # Return the SOURCE_FILES variable to the calling parent
 ENDFUNCTION (EXCLUDE_FILES_FROM_DIR_IN_LIST)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-maybe-uninitialized -Wno-unused-result -O3") #force 32bit compilation
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-maybe-uninitialized -Wno-unused-result -O3 --no-gnu-unique") #force 32bit compilation
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++ --no-gnu-unique")
 set(CMAKE_BUILD_TYPE Release)
 
@@ -37,7 +37,7 @@ if(WITH_GUI)
     EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "${CMAKE_SOURCE_DIR}/src/imgui/examples/" FALSE)
     EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "${CMAKE_SOURCE_DIR}/src/imgui/extra_fonts" FALSE)
     add_library(InsTux SHARED ${SOURCE_FILES})
-    set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 --no-gnu-unique")
+    set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32 --no-gnu-unique" LINK_FLAGS "-m32 --no-gnu-unique")
     target_link_libraries(InsTux SDL2 dl)
 else()
     message(STATUS "Generating Makefile without ImGui (to enable GUI, run 'cmake . -DWITH_GUI=ON')")
