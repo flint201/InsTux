@@ -38,6 +38,10 @@ ButtonCode_t Settings::FakeLag::key = ButtonCode_t::KEY_BACKSLASH;
 bool Settings::FakeLag::automatic = true;
 int Settings::FakeLag::value = 12;
 
+Color Settings::GUI::color_main = Color(165, 38, 114, 200);
+Color Settings::GUI::color_main2 = Color(219, 0, 131, 180);
+Color Settings::GUI::color_hl = Color(255, 140, 209, 200);
+
 void GetVal(Json::Value &config, int* setting)
 {
     if (config.isNull())
@@ -138,9 +142,11 @@ void Settings::SaveToFile(std::string path)
     settings["Aimbot"]["enable"] = Settings::Aimbot::enable;
     settings["Aimbot"]["key"] = Util::GetButtonName(Settings::Aimbot::key);
     settings["Aimbot"]["sensitivity"] = Settings::Aimbot::sensitivity;
+    settings["Aimbot"]["limit_aim_speed"] = Settings::Aimbot::limit_aim_speed;
     settings["Aimbot"]["fov"] = Settings::Aimbot::fov;
     settings["Aimbot"]["tu"] = Settings::Aimbot::tu;
     settings["Aimbot"]["ku"] = Settings::Aimbot::ku;
+    settings["Aimbot"]["cont_thresh"] = Settings::Aimbot::cont_thresh;
 
     settings["Aimbot"]["silent_fov"] = Settings::Aimbot::silent_fov;
     settings["Aimbot"]["silent_fov_hip"] = Settings::Aimbot::silent_fov_hip;
@@ -165,9 +171,15 @@ void Settings::SaveToFile(std::string path)
 
     settings["NoFlash"]["alpha"] = Settings::NoFlash::alpha;
 
+    settings["NoSmoke"]["enable"] = Settings::NoSmoke::enable;
+
     settings["FakeLag"]["key"] = Util::GetButtonName(Settings::FakeLag::key);
     settings["FakeLag"]["automatic"] = Settings::FakeLag::automatic;
     settings["FakeLag"]["value"] = Settings::FakeLag::value;
+
+    LoadColor(settings["GUI"]["color_main"], Settings::GUI::color_main);
+    LoadColor(settings["GUI"]["color_main2"], Settings::GUI::color_main2);
+    LoadColor(settings["GUI"]["color_hl"], Settings::GUI::color_hl);
     
     Json::StyledWriter styledWriter;
     //std::ofstream(path) << styledWriter.write(settings);
@@ -210,9 +222,11 @@ void Settings::LoadConfig()
     GetVal(settings["Aimbot"]["enable"], &Settings::Aimbot::enable);
     GetButtonCode(settings["Aimbot"]["key"], &Settings::Aimbot::key);
     GetVal(settings["Aimbot"]["sensitivity"], &Settings::Aimbot::sensitivity);
+    GetVal(settings["Aimbot"]["limit_aim_speed"], &Settings::Aimbot::limit_aim_speed);
     GetVal(settings["Aimbot"]["fov"], &Settings::Aimbot::fov);
     GetVal(settings["Aimbot"]["tu"], &Settings::Aimbot::tu);
     GetVal(settings["Aimbot"]["ku"], &Settings::Aimbot::ku);
+    GetVal(settings["Aimbot"]["cont_thresh"], &Settings::Aimbot::cont_thresh);
 
     GetVal(settings["Aimbot"]["silent_fov"], &Settings::Aimbot::silent_fov);
     GetVal(settings["Aimbot"]["silent_fov_hip"], &Settings::Aimbot::silent_fov_hip);
@@ -237,7 +251,13 @@ void Settings::LoadConfig()
 
     GetVal(settings["NoFlash"]["alpha"], &Settings::NoFlash::alpha);
 
+    GetVal(settings["NoSmoke"]["enable"], &Settings::NoSmoke::enable);
+
     GetButtonCode(settings["FakeLag"]["key"], &Settings::FakeLag::key);
     GetVal(settings["FakeLag"]["automatic"], &Settings::FakeLag::automatic);
     GetVal(settings["FakeLag"]["value"], &Settings::FakeLag::value);
+
+    GetVal(settings["GUI"]["color_main"], &Settings::GUI::color_main);
+    GetVal(settings["GUI"]["color_main2"], &Settings::GUI::color_main2);
+    GetVal(settings["GUI"]["color_hl"], &Settings::GUI::color_hl);
 }

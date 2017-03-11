@@ -3,10 +3,33 @@
 
 bool WinMain::showWindow = true;
 
+ImColor mkImColor(Color c)
+{
+    return ImColor(c.r, c.g, c.b, c.a);
+}
+
 void WinMain::RenderWindow()
 {
     if (!showWindow)
         return;
+
+    ImColor imcolmain = mkImColor(Settings::GUI::color_main);
+    ImColor imcolmain2 = mkImColor(Settings::GUI::color_main2);
+    ImColor imcolhl = mkImColor(Settings::GUI::color_hl);
+
+    ImGui::GetStyle().Colors[ImGuiCol_Border] = imcolmain;
+
+    ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = imcolmain;
+    ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = imcolhl;
+    ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = imcolhl;
+
+    ImGui::GetStyle().Colors[ImGuiCol_CheckMark] = imcolmain2;
+
+    ImGui::GetStyle().Colors[ImGuiCol_SliderGrab] = imcolmain2;
+    ImGui::GetStyle().Colors[ImGuiCol_SliderGrabActive] = imcolhl;
+
+    ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = imcolhl;
+    ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = imcolmain2;
 
     static int page = 0;
     ImGui::SetNextWindowSize(ImVec2(960, 645), ImGuiSetCond_FirstUseEver);
@@ -22,7 +45,7 @@ void WinMain::RenderWindow()
         for (int i = 0; i < IM_ARRAYSIZE(tabs); i++)
         {
             if (page == i)
-                ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 200, 100);
+                ImGui::GetStyle().Colors[ImGuiCol_Button] = imcolmain;
             else
                 ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 50, 50);
 
@@ -33,7 +56,7 @@ void WinMain::RenderWindow()
                 ImGui::SameLine();
         }
 
-        ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 200, 100);
+        ImGui::GetStyle().Colors[ImGuiCol_Button] = imcolmain;
         ImGui::Separator();
 
         switch (page)
@@ -165,20 +188,22 @@ void WinMain::TabRadarRender()
         ImGui::SliderFloat("##RADARDOTSIZE", &Settings::Radar::dot_radius, 3.0, 20.0, "Radar Dot Size (Pixels): %.0f");
         ImGui::Text(" ");
         ImGui::Separator();
-        static float col_vis[4];
-        Widgets::ColorEdit4Color("Color Hostile", &Settings::Radar::color_hostile, col_vis);
+        static float col_hos[4];
+        Widgets::ColorEdit4Color("Color Hostile", &Settings::Radar::color_hostile, col_hos);
 
-        static float col_hid[4];
-        Widgets::ColorEdit4Color("Color Friendly", &Settings::Radar::color_friendly, col_hid);
+        static float col_fri[4];
+        Widgets::ColorEdit4Color("Color Friendly", &Settings::Radar::color_friendly, col_fri);
     }
 }
 
 void WinMain::TabMiscRender()
 {
-    ImGui::Text("No Flash");
+    ImGui::Text("Removals");
     ImGui::Separator();
     ImGui::SliderFloat("##NOFLASH", &Settings::NoFlash::alpha, 0.f, 255.f, "No Flash Alpha: %.0f");
+    ImGui::Checkbox("No Smoke", &Settings::NoSmoke::enable);
     ImGui::Separator();
+
 
     ImGui::Text(" ");
     ImGui::Text("Fake Lag");
@@ -190,6 +215,19 @@ void WinMain::TabMiscRender()
 
     ImGui::Checkbox("Automatic - Only Turns On When Visible By Enemy", &Settings::FakeLag::automatic);
     ImGui::SliderInt("##LAGVAL", &Settings::FakeLag::value, 0, 15, "Lag Value (Ticks): %.0f");
+    ImGui::Separator();
 
+
+    ImGui::Text(" ");
+    ImGui::Text("GUI");
+    ImGui::Separator();
+    static float col_main[4];
+    Widgets::ColorEdit4Color("Color Primary", &Settings::GUI::color_main, col_main);
+
+    static float col_main2[4];
+    Widgets::ColorEdit4Color("Color Secondary", &Settings::GUI::color_main2, col_main2);
+
+    static float col_hl[4];
+    Widgets::ColorEdit4Color("Color Highlight", &Settings::GUI::color_hl, col_hl);
     ImGui::Separator();
 }

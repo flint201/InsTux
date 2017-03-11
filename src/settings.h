@@ -75,6 +75,13 @@ namespace Settings
         extern int value;
     }
 
+    namespace GUI
+    {
+        extern Color color_main;
+        extern Color color_main2;
+        extern Color color_hl;
+    }
+
     void SaveToFile(std::string path);
     void LoadConfig();
 }
