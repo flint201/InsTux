@@ -22,7 +22,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
     Vector eyePos = localplayer->GetEyePosition();
 
     C_BasePlayer* closestEntity = NULL;
-    float bestFov = 10;
+    float bestFov = Settings::Aimbot::fov;
 
     for (int i = 0; i <= engine->GetMaxClients(); i++)
     {
@@ -38,7 +38,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 
         if (locked
                 && i != Aimbot::targetIdx
-                && Math::GetDistance(Aimbot::lastAimPoint, player->GetEyePosition()) > 12*15)
+                && Math::GetDistance(Aimbot::lastAimPoint, player->GetEyePosition()) > Settings::Aimbot::cont_thresh*3*12)
         {
             continue;
         }
@@ -46,9 +46,6 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
         Vector vecEyePos = player->GetEyePosition();
         QAngle angToEnemyEye = Math::CalcAngle(eyePos, vecEyePos);
         float fov = Math::GetFov(cmd->viewangles, angToEnemyEye);
-
-        if (fov > Settings::Aimbot::silent_fov_hip)
-            continue;
 
         Bone targetBones[] = { Bone::SPINE_2, Bone::NECK, Bone::PELVIS, Bone::ELBOW_L, Bone::ELBOW_R, Bone::KNEE_L, Bone::KNEE_R };
         static matrix3x4_t BoneMatrix[NUM_BONE];
@@ -181,17 +178,25 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     Math::NormalizeAngles(angle);
     Math::ClampAngles(angle);
-
+    //Log << localplayer->GetAimPunchAngle()->x << endl;
+    static QAngle lastAimPunch = *localplayer->GetAimPunchAngle();
+    static QAngle lastViewPunch = *localplayer->GetViewPunchAngle();
     if (aimKeyDown)
     {
-        angle = angle - *localplayer->GetViewPunchAngle() * 2.0;// - *localplayer->GetAimPunchAngle() * 2.0;
-        if (angle != cmd->viewangles)
-        {
-            QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
-            MouseSim::sim(dAngle);
-        }
+        QAngle currAimPunch = *localplayer->GetAimPunchAngle();
+        cmd->viewangles.x -= (currAimPunch.x - lastAimPunch.x) * 2.0;
+        cmd->viewangles.y -= (currAimPunch.y - lastAimPunch.y) * 2.0;
+        lastAimPunch = currAimPunch;
 
-        if (angSilent != cmd->viewangles)
+        QAngle currViewPunch = *localplayer->GetViewPunchAngle();
+        cmd->viewangles.x -= (currViewPunch.x - lastViewPunch.x) * 2.0;
+        cmd->viewangles.y -= (currViewPunch.y - lastViewPunch.y) * 2.0;
+        lastViewPunch = currViewPunch;
+
+        QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
+        MouseSim::sim(dAngle);
+
+        if (angSilent != cmd->viewangles && localplayer->IsScoped())
         {
             cmd->viewangles = angSilent;
             cmd->muzzleangle = angSilent;

@@ -3,11 +3,13 @@
 bool Settings::Aimbot::enable = true;
 ButtonCode_t Settings::Aimbot::key = ButtonCode_t::KEY_LSHIFT;
 float Settings::Aimbot::sensitivity = 1.1;
+bool Settings::Aimbot::limit_aim_speed = true;
 float Settings::Aimbot::ku = 9;
 float Settings::Aimbot::tu = 0.1;
 float Settings::Aimbot::fov = 10.0;
+float Settings::Aimbot::cont_thresh = 5.0;
 
-float Settings::Aimbot::silent_fov = 1.5;
+float Settings::Aimbot::silent_fov = 0.5;
 float Settings::Aimbot::silent_fov_hip = 60;
 
 bool Settings::Cham::only_on_key_down = false;
@@ -23,7 +25,7 @@ bool Settings::ESP::draw_behind = true;
 
 bool Settings::Radar::enable = true;
 int Settings::Radar::size = 100;
-float Settings::Radar::range = 2000;
+float Settings::Radar::range = 60;
 float Settings::Radar::dot_radius = 4;
 Color Settings::Radar::color_friendly = Color(50, 255, 50, 180);
 Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
@@ -126,11 +128,11 @@ void LoadColor(Json::Value &config, Color color)
     config["a"] = color.a;
 }
 
-void Settings::LoadDefaultsOrSave(std::string path)
+void Settings::SaveToFile(std::string path)
 {
     Json::Value settings;
 
-    // inflate settings with default values
+    // inflate settings with current values
     settings["Aimbot"]["enable"] = Settings::Aimbot::enable;
     settings["Aimbot"]["key"] = Util::GetButtonName(Settings::Aimbot::key);
     settings["Aimbot"]["sensitivity"] = Settings::Aimbot::sensitivity;
@@ -166,7 +168,16 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["FakeLag"]["value"] = Settings::FakeLag::value;
     
     Json::StyledWriter styledWriter;
-    std::ofstream(path) << styledWriter.write(settings);
+    //std::ofstream(path) << styledWriter.write(settings);
+    std::string strJson = styledWriter.write(settings);
+    Log << strJson.c_str() << endl;
+    Log << strJson.length() << endl;
+    FILE* file = fopen(path.c_str(), "w+");
+    if (file)
+    {
+        fwrite(strJson.c_str(), 1, strJson.length(), file);
+        fclose(file);
+    }
 }
 
 void Settings::LoadConfig()
@@ -174,15 +185,25 @@ void Settings::LoadConfig()
     pstring path = getenv("HOME");
     path << "/.instux.cfg";
 
-    if (!std::ifstream(path).good())
+    FILE* infile = fopen(path.c_str(), "r");
+    if (!infile)
     {
-        Settings::LoadDefaultsOrSave(path);
+        Settings::SaveToFile(path);
         return;
     }
 
+    fseek(infile, 0, SEEK_END);
+    long filesize = ftell(infile);
+    char* buf = new char[filesize+1];
+    fseek(infile, 0, SEEK_SET);
+    fread(buf, 1, filesize, infile);
+    buf[filesize] = '\0';
+
+    std::stringstream ss;
+    ss.str(buf);
+
     Json::Value settings;
-    std::ifstream configDoc(path, std::ifstream::binary);
-    configDoc >> settings;
+    ss >> settings;
 
     GetVal(settings["Aimbot"]["enable"], &Settings::Aimbot::enable);
     GetButtonCode(settings["Aimbot"]["key"], &Settings::Aimbot::key);

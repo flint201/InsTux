@@ -7,8 +7,7 @@ const MaterialVarFlags_t hidden_MaterialVarFlags = (MaterialVarFlags_t) (
         );
 
 const MaterialVarFlags_t brightFlags = (MaterialVarFlags_t) (
-        //MATERIAL_VAR_VERTEXCOLOR |
-        MATERIAL_VAR_HALFLAMBERT |
+        //MATERIAL_VAR_HALFLAMBERT |
         MATERIAL_VAR_NOCULL |
         MATERIAL_VAR_NOFOG
         );
@@ -62,8 +61,8 @@ bool Chams::DrawModelExecute(void* thisptr, void* context, void *state, const Mo
     materialWhite->SetMaterialVarFlag(hidden_MaterialVarFlags, true);
     materialWhite->SetMaterialVarFlag(brightFlags, true);
     materialWhite->SetMaterialVarFlag(MATERIAL_VAR_ADDITIVE, false);
-
     materialWhite->AlphaModulate(255);
+
     Color colorHid = Settings::Cham::color_hidden;
     materialWhite->ColorModulate((float)colorHid.r/255, (float)colorHid.g/255, (float)colorHid.b/255);
     //materialWhite->ColorModulate(255, 0, 0);

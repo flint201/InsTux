@@ -77,6 +77,19 @@ void PredictGrenade(C_BasePlayer* localplayer)
     gp.Predict();
 }
 
+void DrawBoxESP(C_BasePlayer* localplayer, int sWidth, int sHeight, Vector enemyPos, Color boxColor, bool snapLine)
+{
+    Vector enemyScreenPos;
+    if (debugOverlay->ScreenPosition(enemyPos, enemyScreenPos) == 0)
+    {
+        int HBox = 1000 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
+        int WBox = 400 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
+        Draw::Rectangle(enemyScreenPos.x - WBox/2.0, enemyScreenPos.y - HBox, enemyScreenPos.x + WBox/2.0, enemyScreenPos.y, boxColor);
+        if (snapLine)
+            Draw::Line(sWidth/2.0, sHeight, enemyScreenPos.x, enemyScreenPos.y, boxColor);
+    }
+}
+
 
 void ESP::Paint()
 {
@@ -96,7 +109,7 @@ void ESP::Paint()
     bool keyDown = true;
     if(!inputSystem->IsButtonDown(Settings::ESP::key))
     {
-        Draw::Text(10, 5, "InsTux", font_foundation18, Color(255, 255, 255, 255));
+        Draw::Text(10, 5, "InsTux 1.0", font_foundation18, Color(255, 255, 255, 255));
         keyDown = false;
     }
 
@@ -141,17 +154,14 @@ void ESP::Paint()
             float dotProd = vecEnemy.Dot(vecView);
             if (dotProd < -1)
             {
+                Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
                 if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
                 {
-                    Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
-                    Vector enemyScreenPos;
-                    if (debugOverlay->ScreenPosition(mirrorEnemyPos, enemyScreenPos) == 0)
-                    {
-                        int HBox = 1000 * 12 * 4 / Math::GetDistance(mirrorEnemyPos, localplayer->GetVecOrigin());
-                        int WBox = 400 * 12 * 4 / Math::GetDistance(mirrorEnemyPos, localplayer->GetVecOrigin());
-                        Draw::Rectangle(enemyScreenPos.x - WBox/2.0, enemyScreenPos.y - HBox, enemyScreenPos.x + WBox/2.0, enemyScreenPos.y, Color(255, 30, 30, 255));
-                        Draw::Line(sWidth/2.0, sHeight, enemyScreenPos.x, enemyScreenPos.y, Color(255, 30, 30, 255));
-                    }
+                    DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 30, 30, 255), true);
+                }
+                else if (Math::GetDistance(localplayer->GetEyePosition(), player->GetEyePosition()) < 12 * 80)
+                {
+                    DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 130, 0, 255), true);
                 }
             }
         }
