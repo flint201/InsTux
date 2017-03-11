@@ -11,25 +11,6 @@
 #include "gui/itgui.h"
 #endif
 
-void CreateMaterialFile()
-{
-    char dir_mat[1024];
-    getcwd(dir_mat, sizeof(dir_mat));
-    strcat(dir_mat, "/insurgency/materials");
-
-	struct stat info;
-    if (!(stat(dir_mat, &info) == 0 && S_ISDIR(info.st_mode)))
-		mkdir(dir_mat, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    
-    FILE* fp = fopen("insurgency/materials/mat_white.vmt", "w+");
-    if (fp)
-    {
-        const char* mat_str = "\"UnLitGeneric\"\n{\n$baseTexture \"vgui/white\"\n}";
-        fwrite(mat_str, 1, strlen(mat_str), fp);
-        fclose(fp);
-    }
-}
-
 // Called on library load
 int __attribute__((constructor)) instux_init()
 {
@@ -75,12 +56,11 @@ int __attribute__((constructor)) instux_init()
 // Called on library unload
 void __attribute__((destructor)) instux_shutdown()
 {
-    MouseSim::mouseDestroy();
-
 #ifdef USE_IMGUI
     GUI::DeInit();
 #endif
 
+    MouseSim::mouseDestroy();
     modelRenderVMT->ReleaseVMT();
     clientModeVMT->ReleaseVMT();
     engineVGuiVMT->ReleaseVMT();

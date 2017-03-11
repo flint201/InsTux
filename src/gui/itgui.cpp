@@ -2,6 +2,8 @@
 #include <dlfcn.h>
 #include "../settings.h"
 
+#include "winmain.h"
+
 bool GUI::visible = true;
 
 uintptr_t* swapwindow_ptr; // Pointer to 'SDL_GL_SwapWindow' in the jump table.
@@ -28,10 +30,14 @@ void SwapWindowHook(SDL_Window* window)
 
     // Perform UI rendering.
     ImGui_ImplSdl_NewFrame(window);
-    ImGui::Text("InsTux!");
-    ImGui::Separator();
-    ImGui::Checkbox("Cham only on key down", &Settings::Cham::only_on_key_down);
+
+    WinMain::RenderWindow();
     ImGui::Render();
+
+    static int counter = 0;
+    if (counter == 0 && inputSystem->IsButtonDown(ButtonCode_t::KEY_INSERT))
+        WinMain::showWindow = true;
+    counter = (counter + 1) % 20;
 
     // Swap back to the game context.
     SDL_GL_MakeCurrent(window, original_context);

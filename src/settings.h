@@ -21,9 +21,11 @@ namespace Settings
         extern bool enable;
         extern ButtonCode_t key;
         extern float sensitivity;
-        extern float fov;
+        extern bool limit_aim_speed;
         extern float tu;
         extern float ku;
+        extern float fov;
+        extern float cont_thresh;
 
         extern float silent_fov;
         extern float silent_fov_hip;

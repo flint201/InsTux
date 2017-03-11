@@ -36,7 +36,7 @@ void Radar::Paint()
     Math::SinCos(forwardAngle / 180.0 * PI, &vecBaseX.y, &vecBaseX.x);
 
     int size = Settings::Radar::size;
-    float range = Settings::Radar::range;
+    float range = Settings::Radar::range * 3 * 12;
     float radius = 4;//Settings::Radar::dot_radius;
 
     int anchorX = sWidth / 2 - size;

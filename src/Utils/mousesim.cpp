@@ -144,19 +144,14 @@ void MouseSim::sim(QAngle deltaAngle)
     dx = pidX.step(dx);
     dy = pidY.step(dy);
 
-    float lim = limit(normVec, dt) + 5;
-    dx = dx<lim ? dx : lim;
-    dy = dy<lim ? dy : lim;
-
-    dx = dx>-lim ? dx : -lim;
-    dy = dy>-lim ? dy : -lim;
-
-    if (dx > 20 || dy > 20)
+    if (Settings::Aimbot::limit_aim_speed)
     {
-        float nx, ny;
-        //noise(lim, dt, nx, ny);
-        //dx += nx;
-        //dy += ny;
+        float lim = limit(normVec, dt) + 5;
+        dx = dx<lim ? dx : lim;
+        dy = dy<lim ? dy : lim;
+
+        dx = dx>-lim ? dx : -lim;
+        dy = dy>-lim ? dy : -lim;
     }
 
     struct input_event ev;

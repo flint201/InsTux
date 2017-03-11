@@ -3,11 +3,13 @@
 bool Settings::Aimbot::enable = true;
 ButtonCode_t Settings::Aimbot::key = ButtonCode_t::KEY_LSHIFT;
 float Settings::Aimbot::sensitivity = 1.1;
+bool Settings::Aimbot::limit_aim_speed = true;
 float Settings::Aimbot::ku = 9;
 float Settings::Aimbot::tu = 0.1;
 float Settings::Aimbot::fov = 10.0;
+float Settings::Aimbot::cont_thresh = 5.0;
 
-float Settings::Aimbot::silent_fov = 1.5;
+float Settings::Aimbot::silent_fov = 0.5;
 float Settings::Aimbot::silent_fov_hip = 60;
 
 bool Settings::Cham::only_on_key_down = false;
@@ -23,7 +25,7 @@ bool Settings::ESP::draw_behind = true;
 
 bool Settings::Radar::enable = true;
 int Settings::Radar::size = 100;
-float Settings::Radar::range = 2000;
+float Settings::Radar::range = 60;
 float Settings::Radar::dot_radius = 4;
 Color Settings::Radar::color_friendly = Color(50, 255, 50, 180);
 Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);

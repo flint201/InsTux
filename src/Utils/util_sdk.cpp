@@ -57,6 +57,17 @@ ButtonCode_t Util::GetButtonCode(std::string buttonName)
     return ButtonCode_t::BUTTON_CODE_INVALID;
 }
 
+ButtonCode_t Util::GetButtonPressed()
+{
+    for (int i = 0; i < ButtonCode_t::KEY_XSTICK2_UP; i++)
+    {
+        if (inputSystem->IsButtonDown((ButtonCode_t) i))
+            return (ButtonCode_t) i;
+    }
+
+    return ButtonCode_t::BUTTON_CODE_INVALID;
+}
+
 IMaterial* Util::CreateMaterial(std::string type, std::string texture, bool ignorez, bool nofog, bool model, bool nocull, bool halflambert)
 {
     //Log << "    + Util::CreateMaterial" << std::endl;
