@@ -21,12 +21,13 @@ void WinMain::RenderWindow()
 
         for (int i = 0; i < IM_ARRAYSIZE(tabs); i++)
         {
-            ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50,200, 150);
+            if (page == i)
+                ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50,200, 150);
+            else
+                ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(50, 50, 50, 50);
 
             if (ImGui::Button(tabs[i], ImVec2(ImGui::GetWindowSize().x / IM_ARRAYSIZE(tabs) - 9, 0)))
                 page = i;
-
-            ImGui::GetStyle().Colors[ImGuiCol_Button] = ImColor(200, 50, 50, 150);
 
             if (i < IM_ARRAYSIZE(tabs) - 1)
                 ImGui::SameLine();
@@ -49,6 +50,15 @@ void WinMain::RenderWindow()
                 TabMiscRender();
                 break;
         }
+    }
+
+    ImGui::Text(" ");
+    ImGui::Text(" ");
+    if (ImGui::Button("    SAVE    "))
+    {
+        pstring path = getenv("HOME");
+        path << "/.instux.cfg";
+        Settings::SaveToFile(path);
     }
     ImGui::End();
 }

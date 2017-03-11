@@ -70,6 +70,6 @@ namespace Settings
         extern int value;
     }
 
-    void LoadDefaultsOrSave(std::string path);
+    void SaveToFile(std::string path);
     void LoadConfig();
 }

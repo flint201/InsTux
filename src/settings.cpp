@@ -128,11 +128,11 @@ void LoadColor(Json::Value &config, Color color)
     config["a"] = color.a;
 }
 
-void Settings::LoadDefaultsOrSave(std::string path)
+void Settings::SaveToFile(std::string path)
 {
     Json::Value settings;
 
-    // inflate settings with default values
+    // inflate settings with current values
     settings["Aimbot"]["enable"] = Settings::Aimbot::enable;
     settings["Aimbot"]["key"] = Util::GetButtonName(Settings::Aimbot::key);
     settings["Aimbot"]["sensitivity"] = Settings::Aimbot::sensitivity;
@@ -168,7 +168,16 @@ void Settings::LoadDefaultsOrSave(std::string path)
     settings["FakeLag"]["value"] = Settings::FakeLag::value;
     
     Json::StyledWriter styledWriter;
-    std::ofstream(path) << styledWriter.write(settings);
+    //std::ofstream(path) << styledWriter.write(settings);
+    std::string strJson = styledWriter.write(settings);
+    Log << strJson.c_str() << endl;
+    Log << strJson.length() << endl;
+    FILE* file = fopen(path.c_str(), "w+");
+    if (file)
+    {
+        fwrite(strJson.c_str(), 1, strJson.length(), file);
+        fclose(file);
+    }
 }
 
 void Settings::LoadConfig()
@@ -176,15 +185,25 @@ void Settings::LoadConfig()
     pstring path = getenv("HOME");
     path << "/.instux.cfg";
 
-    if (!std::ifstream(path).good())
+    FILE* infile = fopen(path.c_str(), "r");
+    if (!infile)
     {
-        Settings::LoadDefaultsOrSave(path);
+        Settings::SaveToFile(path);
         return;
     }
 
+    fseek(infile, 0, SEEK_END);
+    long filesize = ftell(infile);
+    char* buf = new char[filesize+1];
+    fseek(infile, 0, SEEK_SET);
+    fread(buf, 1, filesize, infile);
+    buf[filesize] = '\0';
+
+    std::stringstream ss;
+    ss.str(buf);
+
     Json::Value settings;
-    std::ifstream configDoc(path, std::ifstream::binary);
-    configDoc >> settings;
+    ss >> settings;
 
     GetVal(settings["Aimbot"]["enable"], &Settings::Aimbot::enable);
     GetButtonCode(settings["Aimbot"]["key"], &Settings::Aimbot::key);
