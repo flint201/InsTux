@@ -63,6 +63,11 @@ namespace Settings
         extern float alpha;
     }
 
+    namespace NoSmoke
+    {
+        extern bool enable;
+    }
+
     namespace FakeLag
     {
         extern ButtonCode_t key;

@@ -42,12 +42,11 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
                 IMaterial* mat = material->FindMaterial(nodraw_materials[counter], TEXTURE_GROUP_PARTICLE);
                 if (mat)
                 {
-                    mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
-                    //mat->AlphaModulate(0.5/255);
+                    mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, Settings::NoSmoke::enable);
                 }
             }
         }
         counter++;
-        counter %= 500;
+        counter %= 100;
     }
 }

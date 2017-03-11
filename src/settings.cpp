@@ -32,6 +32,8 @@ Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
 
 float Settings::NoFlash::alpha = 80;
 
+bool Settings::NoSmoke::enable = true;
+
 ButtonCode_t Settings::FakeLag::key = ButtonCode_t::KEY_BACKSLASH;
 bool Settings::FakeLag::automatic = true;
 int Settings::FakeLag::value = 12;
