@@ -1,5 +1,6 @@
 #include "itgui.h"
 #include <dlfcn.h>
+#include "../settings.h"
 
 bool GUI::visible = true;
 
@@ -28,6 +29,8 @@ void SwapWindowHook(SDL_Window* window)
     // Perform UI rendering.
     ImGui_ImplSdl_NewFrame(window);
     ImGui::Text("InsTux!");
+    ImGui::Separator();
+    ImGui::Checkbox("Cham only on key down", &Settings::Cham::only_on_key_down);
     ImGui::Render();
 
     // Swap back to the game context.

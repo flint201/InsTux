@@ -154,9 +154,9 @@ void MouseSim::sim(QAngle deltaAngle)
     if (dx > 20 || dy > 20)
     {
         float nx, ny;
-        noise(lim, dt, nx, ny);
-        dx += nx;
-        dy += ny;
+        //noise(lim, dt, nx, ny);
+        //dx += nx;
+        //dy += ny;
     }
 
     struct input_event ev;

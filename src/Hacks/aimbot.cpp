@@ -181,15 +181,21 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     Math::NormalizeAngles(angle);
     Math::ClampAngles(angle);
-
+    //Log << localplayer->GetAimPunchAngle()->x << endl;
+    static QAngle lastPunch = *localplayer->GetAimPunchAngle();
     if (aimKeyDown)
     {
         angle = angle - *localplayer->GetViewPunchAngle() * 2.0;// - *localplayer->GetAimPunchAngle() * 2.0;
-        if (angle != cmd->viewangles)
-        {
-            QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
-            MouseSim::sim(dAngle);
-        }
+
+        QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
+
+        QAngle currPunch = *localplayer->GetAimPunchAngle();
+        dAngle.x -= (currPunch.x - lastPunch.x) * 60.0;
+        dAngle.y -= (currPunch.y - lastPunch.y) * 70.0;
+
+        lastPunch = currPunch;
+
+        MouseSim::sim(dAngle);
 
         if (angSilent != cmd->viewangles)
         {
