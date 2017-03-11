@@ -14,7 +14,7 @@
 // Called on library load
 int __attribute__((constructor)) instux_init()
 {
-    InitLogger();
+    //InitLogger();
 
     //CreateMaterialFile();
 
