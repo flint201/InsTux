@@ -185,7 +185,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
         QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
         MouseSim::sim(dAngle);
 
-        if (activeWeapon->GetFiremode() != 0)
+        if (activeWeapon->GetFiremode() != 0 && (cmd->buttons & IN_ATTACK))
         {
             float diffx = (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
             float diffy = (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
