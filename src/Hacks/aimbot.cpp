@@ -179,8 +179,6 @@ void Aimbot::CreateMove(CUserCmd* cmd)
     Math::NormalizeAngles(angle);
     Math::ClampAngles(angle);
     static QAngle lastAimPunch = *localplayer->GetAimPunchAngle();
-    static QAngle lastViewPunch = *localplayer->GetViewPunchAngle();
-    QAngle currViewPunch = *localplayer->GetViewPunchAngle();
     QAngle currAimPunch = *localplayer->GetAimPunchAngle();
     if (aimKeyDown)
     {
@@ -201,7 +199,6 @@ void Aimbot::CreateMove(CUserCmd* cmd)
         }
     }
 
-    lastViewPunch = currViewPunch;
     lastAimPunch = currAimPunch;
 
     if (angSilentHip != cmd->muzzleangle)
