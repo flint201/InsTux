@@ -29,6 +29,9 @@ namespace Settings
 
         extern float silent_fov;
         extern float silent_fov_hip;
+
+        extern float recoilx;
+        extern float recoily;
     }
 
     namespace Cham

@@ -134,11 +134,11 @@ void MouseSim::sim(QAngle deltaAngle)
     static PID pidX(kp, ki, kd);
     static PID pidY(kp, ki, kd);
 
-    if (dt > 15)
+    if (dt > 30)
     {
         pidX.clear();
         pidY.clear();
-        dt = 5;
+        dt = 8;
     }
 
     dx = pidX.step(dx);
@@ -146,7 +146,7 @@ void MouseSim::sim(QAngle deltaAngle)
 
     if (Settings::Aimbot::limit_aim_speed)
     {
-        float lim = limit(normVec, dt) + 5;
+        float lim = limit(normVec, dt) + 10;
         dx = dx<lim ? dx : lim;
         dy = dy<lim ? dy : lim;
 

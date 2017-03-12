@@ -32,7 +32,7 @@ void WinMain::RenderWindow()
     ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = imcolmain2;
 
     static int page = 0;
-    ImGui::SetNextWindowSize(ImVec2(960, 645), ImGuiSetCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(1130, 700), ImGuiSetCond_FirstUseEver);
     if (ImGui::Begin("InsTux", &WinMain::showWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_ShowBorders))
     {
         const char* tabs[] = {
@@ -90,12 +90,14 @@ void WinMain::RenderWindow()
 void WinMain::TabAimbotRender()
 {
     ImGui::Checkbox("Enable", &Settings::Aimbot::enable);
-    ImGui::Separator();
     if (!Settings::Aimbot::enable)
+    {
+        ImGui::Separator();
         return;
+    }
 
-    ImGui::Text(" ");
-    ImGui::Text("Aimbot Activation Key");
+    ImGui::SameLine();
+    ImGui::Text("        Aimbot Activation Key");
     ImGui::SameLine();
     Widgets::KeyBindButton(&Settings::Aimbot::key);
     ImGui::Separator();
@@ -103,10 +105,15 @@ void WinMain::TabAimbotRender()
     ImGui::Text(" ");
     ImGui::Text("Aimbot General Settings");
     ImGui::Separator();
-    ImGui::Checkbox("Limit Aim Speed    ", &Settings::Aimbot::limit_aim_speed);
+
+    ImGui::Checkbox(" Limit Aim Speed", &Settings::Aimbot::limit_aim_speed);
     ImGui::SliderFloat("##SENSITIVITY", &Settings::Aimbot::sensitivity, 0.f, 5.f, "Sensitivity: %0.2f");
     ImGui::SliderFloat("##FOV", &Settings::Aimbot::fov, 1.f, 360.f, "Target Selection FOV: %0.2f");
     ImGui::SliderFloat("##CONTTHRESH", &Settings::Aimbot::cont_thresh, 0.f, 200, "Continuous Targeting Mode Threshold Distance (Yards) %0.1f");
+
+    ImGui::Text(" ");
+    ImGui::SliderFloat("##RECOILX", &Settings::Aimbot::recoilx, 0.f, 8.f, "Recoil cancellation X: %0.2f");
+    ImGui::SliderFloat("##RECOILY", &Settings::Aimbot::recoily, 0.f, 8.f, "Recoil cancellation Y: %0.2f");
 
     ImGui::Separator();
 
@@ -121,9 +128,10 @@ void WinMain::TabAimbotRender()
     ImGui::Text("Silent Aim Settings");
     ImGui::Separator();
     ImGui::SliderFloat("##SILENTFOVHIP", &Settings::Aimbot::silent_fov_hip, 0.f, 360.f, "Hip-fire silent aim FOV(Rage bot): %0.2f");
-    ImGui::Text(" ");
-    ImGui::Text("Caution: Aim-down-sight silent aim is very obvious to spectators, a small FOV is recommended.");
+    if (Settings::Aimbot::silent_fov > Settings::Aimbot::fov)
+        Settings::Aimbot::silent_fov = Settings::Aimbot::fov;
     ImGui::SliderFloat("##SILENTFOV", &Settings::Aimbot::silent_fov, 0.f, Settings::Aimbot::fov, "Aim-down-sight silent aim FOV: %0.2f");
+    ImGui::Text("Caution: Aim-down-sight silent aim is very obvious to spectators, a small FOV is recommended.");
     ImGui::Separator();
 }
 

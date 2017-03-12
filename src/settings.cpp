@@ -11,6 +11,8 @@ float Settings::Aimbot::cont_thresh = 5.0;
 
 float Settings::Aimbot::silent_fov = 0.5;
 float Settings::Aimbot::silent_fov_hip = 60;
+float Settings::Aimbot::recoilx = 2.0;
+float Settings::Aimbot::recoily = 2.0;
 
 bool Settings::Cham::only_on_key_down = false;
 ButtonCode_t Settings::Cham::key = KEY_CAPSLOCK;
@@ -152,6 +154,9 @@ void Settings::SaveToFile(std::string path)
     settings["Aimbot"]["silent_fov"] = Settings::Aimbot::silent_fov;
     settings["Aimbot"]["silent_fov_hip"] = Settings::Aimbot::silent_fov_hip;
 
+    settings["Aimbot"]["recoilx"] = Settings::Aimbot::recoilx;
+    settings["Aimbot"]["recoily"] = Settings::Aimbot::recoily;
+
     settings["Cham"]["only_on_key_down"] = Settings::Cham::only_on_key_down;
     settings["Cham"]["key"] = Util::GetButtonName(Settings::Cham::key);
     LoadColor(settings["Cham"]["color_visible"], Settings::Cham::color_visible);
@@ -233,6 +238,8 @@ void Settings::LoadConfig()
 
     GetVal(settings["Aimbot"]["silent_fov"], &Settings::Aimbot::silent_fov);
     GetVal(settings["Aimbot"]["silent_fov_hip"], &Settings::Aimbot::silent_fov_hip);
+    GetVal(settings["Aimbot"]["recoilx"], &Settings::Aimbot::recoilx);
+    GetVal(settings["Aimbot"]["recoily"], &Settings::Aimbot::recoily);
 
     GetVal(settings["Cham"]["only_on_key_down"], &Settings::Cham::only_on_key_down);
     GetButtonCode(settings["Cham"]["key"], &Settings::Cham::key);

@@ -53,7 +53,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 
         matrix3x4_t boneHead = BoneMatrix[(int)Bone::NECK];
         Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3])
-                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 4;
+                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 5;
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
@@ -178,30 +178,31 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
     Math::NormalizeAngles(angle);
     Math::ClampAngles(angle);
-    //Log << localplayer->GetAimPunchAngle()->x << endl;
     static QAngle lastAimPunch = *localplayer->GetAimPunchAngle();
     static QAngle lastViewPunch = *localplayer->GetViewPunchAngle();
+    QAngle currViewPunch = *localplayer->GetViewPunchAngle();
+    QAngle currAimPunch = *localplayer->GetAimPunchAngle();
     if (aimKeyDown)
     {
-        QAngle currAimPunch = *localplayer->GetAimPunchAngle();
-        cmd->viewangles.x -= (currAimPunch.x - lastAimPunch.x) * 2.0;
-        cmd->viewangles.y -= (currAimPunch.y - lastAimPunch.y) * 2.0;
-        lastAimPunch = currAimPunch;
+        //cmd->viewangles.x -= (currViewPunch.x - lastViewPunch.x) * Settings::Aimbot::recoilx;
+        //cmd->viewangles.y -= (currViewPunch.y - lastViewPunch.y) * Settings::Aimbot::recoily;
 
-        QAngle currViewPunch = *localplayer->GetViewPunchAngle();
-        cmd->viewangles.x -= (currViewPunch.x - lastViewPunch.x) * 2.0;
-        cmd->viewangles.y -= (currViewPunch.y - lastViewPunch.y) * 2.0;
-        lastViewPunch = currViewPunch;
+        cmd->viewangles.x -= (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
+        cmd->viewangles.y -= (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
 
         QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
         MouseSim::sim(dAngle);
 
+        engine->SetViewAngles(cmd->viewangles);
         if (angSilent != cmd->viewangles && localplayer->IsScoped())
         {
             cmd->viewangles = angSilent;
             cmd->muzzleangle = angSilent;
         }
     }
+
+    lastViewPunch = currViewPunch;
+    lastAimPunch = currAimPunch;
 
     if (angSilentHip != cmd->muzzleangle)
     {
