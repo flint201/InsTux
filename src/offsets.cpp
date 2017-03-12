@@ -122,12 +122,12 @@ void Offsets::GetOffsets()
     offsets.DT_BaseViewModel.m_hWeapon = NetVarManager::GetOffset(tables, "DT_BaseViewModel", "m_hWeapon");
     offsets.DT_BaseViewModel.m_hOwner = NetVarManager::GetOffset(tables, "DT_BaseViewModel", "m_hOwner");
 
-    offsets.DT_WeaponCSBase.m_fAccuracyPenalty = NetVarManager::GetOffset(tables, "DT_WeaponCSBase", "m_fAccuracyPenalty");
 
     offsets.DT_BaseCombatWeapon.m_flNextPrimaryAttack = NetVarManager::GetOffset(tables, "DT_BaseCombatWeapon", "m_flNextPrimaryAttack");
     offsets.DT_BaseCombatWeapon.m_hOwner = NetVarManager::GetOffset(tables, "DT_BaseCombatWeapon", "m_hOwner");
     offsets.DT_BaseCombatWeapon.m_iClip1 = NetVarManager::GetOffset(tables, "DT_BaseCombatWeapon", "m_iClip1");
     offsets.DT_BaseCombatWeapon.m_bInReload = offsets.DT_BaseCombatWeapon.m_flNextPrimaryAttack + 113;
+    offsets.DT_BaseCombatWeapon.m_iActiveFiremode = NetVarManager::GetOffset(tables, "DT_INSWeaponBallistic", "m_iActiveFiremode");
 
     offsets.DT_INSGrenadeBase.m_bRedraw = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_bRedraw");
     offsets.DT_INSGrenadeBase.m_bPinPulled = NetVarManager::GetOffset(tables, "DT_INSGrenadeBase", "m_bPinPulled");

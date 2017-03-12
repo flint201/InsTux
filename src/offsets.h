@@ -153,11 +153,6 @@ struct COffsets
 
     struct
     {
-        std::ptrdiff_t m_fAccuracyPenalty;
-    } DT_WeaponCSBase;
-
-    struct
-    {
         std::ptrdiff_t m_bRedraw;
         std::ptrdiff_t m_bPinPulled;
         std::ptrdiff_t m_fThrowTime;
@@ -175,6 +170,8 @@ struct COffsets
         std::ptrdiff_t m_hOwner;
         std::ptrdiff_t m_iClip1;
         std::ptrdiff_t m_bInReload;
+
+        std::ptrdiff_t m_iActiveFiremode;
     } DT_BaseCombatWeapon;
 
     struct

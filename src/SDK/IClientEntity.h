@@ -362,22 +362,21 @@ public:
         return *(bool*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_bInReload);
     }
 
-    float GetAccuracyPenalty()
+    int GetFiremode()
     {
-        return *(float*)((uintptr_t)this + offsets.DT_WeaponCSBase.m_fAccuracyPenalty);
+        return *(int*)((uintptr_t)this + offsets.DT_BaseCombatWeapon.m_iActiveFiremode);
     }
 
     bool IsGrenade()
     {
-        char* weaponName = this->GetName();
-        if (strcmp(weaponName, "weapon_f1")==0 ||
-            strcmp(weaponName, "weapon_m67")==0 ||
-            strcmp(weaponName, "weapon_m18")==0 ||
-            strcmp(weaponName, "weapon_m84")==0 ||
-            strcmp(weaponName, "weapon_anm14")==0 ||
-            strcmp(weaponName, "weapon_molotov")==0 ||
-            strcmp(weaponName, "weapon_gp25_he")==0 ||
-            strcmp(weaponName, "weapon_m203")==0)
+        std::string weaponName(this->GetName());
+        if (weaponName.find("_f1")!=std::string::npos ||
+            weaponName.find("_m67")!=std::string::npos ||
+            weaponName.find("_m18")!=std::string::npos ||
+            weaponName.find("_anm14")!=std::string::npos ||
+            weaponName.find("_molotov")!=std::string::npos ||
+            weaponName.find("_gp25")!=std::string::npos ||
+            weaponName.find("_m203")!=std::string::npos)
             return true;
 
         return false;

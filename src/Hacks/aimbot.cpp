@@ -185,16 +185,19 @@ void Aimbot::CreateMove(CUserCmd* cmd)
         QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
         MouseSim::sim(dAngle);
 
-        float diffx = (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
-        float diffy = (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
+        if (activeWeapon->GetFiremode() != 0)
+        {
+            float diffx = (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
+            float diffy = (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
 
-        cmd->viewangles.x -= diffx;
-        cmd->viewangles.y -= diffy;
+            cmd->viewangles.x -= diffx;
+            cmd->viewangles.y -= diffy;
 
-        cmd->muzzleangle.x -= diffx;
-        cmd->muzzleangle.y -= diffy;
+            cmd->muzzleangle.x -= diffx;
+            cmd->muzzleangle.y -= diffy;
 
-        engine->SetViewAngles(cmd->viewangles);
+            engine->SetViewAngles(cmd->viewangles);
+        }
 
         if (angSilent != cmd->viewangles && localplayer->IsScoped())
         {
