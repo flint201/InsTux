@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "../imgui/imgui.h"
 #include "imgui_impl_sdl.h"
 #include "../settings.h"

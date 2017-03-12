@@ -28,6 +28,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-maybe-uninitialize
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++ --no-gnu-unique")
 set(CMAKE_BUILD_TYPE Release)
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
 
 option(WITH_GUI "Compile with ImGui." OFF)
@@ -36,6 +38,11 @@ if(WITH_GUI)
     add_definitions(-DUSE_IMGUI=1)
     EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "${CMAKE_SOURCE_DIR}/src/imgui/examples/" FALSE)
     EXCLUDE_FILES_FROM_DIR_IN_LIST("${SOURCE_FILES}" "${CMAKE_SOURCE_DIR}/src/imgui/extra_fonts" FALSE)
+
+    find_package(SDL2)
+    include_directories(${SDL2_INCLUDE_DIR})
+    message(STATUS "SDL2 include directory: " ${SDL2_INCLUDE_DIR})
+
     add_library(InsTux SHARED ${SOURCE_FILES})
     set_target_properties(InsTux PROPERTIES COMPILE_FLAGS "-m32 --no-gnu-unique" LINK_FLAGS "-m32 --no-gnu-unique")
     target_link_libraries(InsTux SDL2 dl)
