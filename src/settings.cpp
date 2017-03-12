@@ -191,8 +191,6 @@ void Settings::SaveToFile(std::string path)
     Json::StyledWriter styledWriter;
     //std::ofstream(path) << styledWriter.write(settings);
     std::string strJson = styledWriter.write(settings);
-    Log << strJson.c_str() << endl;
-    Log << strJson.length() << endl;
     FILE* file = fopen(path.c_str(), "w+");
     if (file)
     {
