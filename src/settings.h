@@ -56,6 +56,7 @@ namespace Settings
         extern float dot_radius;
         extern Color color_friendly;
         extern Color color_hostile;
+        extern bool draw_level;
     }
 
     namespace NoFlash

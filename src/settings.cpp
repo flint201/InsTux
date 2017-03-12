@@ -29,6 +29,7 @@ float Settings::Radar::range = 60;
 float Settings::Radar::dot_radius = 4;
 Color Settings::Radar::color_friendly = Color(50, 255, 50, 180);
 Color Settings::Radar::color_hostile = Color(255, 108, 10, 250);
+bool Settings::Radar::draw_level = true;
 
 float Settings::NoFlash::alpha = 80;
 
@@ -168,6 +169,7 @@ void Settings::SaveToFile(std::string path)
     settings["Radar"]["dot_radius"] = Settings::Radar::dot_radius;
     LoadColor(settings["Radar"]["color_friendly"], Settings::Radar::color_friendly);
     LoadColor(settings["Radar"]["color_hostile"], Settings::Radar::color_hostile);
+    settings["Radar"]["draw_level"] = Settings::Radar::draw_level;
 
     settings["NoFlash"]["alpha"] = Settings::NoFlash::alpha;
 
@@ -212,6 +214,7 @@ void Settings::LoadConfig()
     fseek(infile, 0, SEEK_SET);
     fread(buf, 1, filesize, infile);
     buf[filesize] = '\0';
+    fclose(infile);
 
     std::stringstream ss;
     ss.str(buf);
@@ -248,6 +251,7 @@ void Settings::LoadConfig()
     GetVal(settings["Radar"]["dot_radius"], &Settings::Radar::dot_radius);
     GetVal(settings["Radar"]["color_friendly"], &Settings::Radar::color_friendly);
     GetVal(settings["Radar"]["color_hostile"], &Settings::Radar::color_hostile);
+    GetVal(settings["Radar"]["draw_level"], &Settings::Radar::draw_level);
 
     GetVal(settings["NoFlash"]["alpha"], &Settings::NoFlash::alpha);
 

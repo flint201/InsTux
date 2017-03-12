@@ -94,11 +94,13 @@ void WinMain::TabAimbotRender()
     if (!Settings::Aimbot::enable)
         return;
 
+    ImGui::Text(" ");
     ImGui::Text("Aimbot Activation Key");
     ImGui::SameLine();
     Widgets::KeyBindButton(&Settings::Aimbot::key);
     ImGui::Separator();
 
+    ImGui::Text(" ");
     ImGui::Text("Aimbot General Settings");
     ImGui::Separator();
     ImGui::Checkbox("Limit Aim Speed    ", &Settings::Aimbot::limit_aim_speed);
@@ -108,15 +110,18 @@ void WinMain::TabAimbotRender()
 
     ImGui::Separator();
 
+    ImGui::Text(" ");
     ImGui::Text("Aimbot PID Tuning");
     ImGui::Separator();
     ImGui::SliderFloat("##KU", &Settings::Aimbot::ku, 0.f, 50.f, "PID Ku: %0.2f");
     ImGui::SliderFloat("##TU", &Settings::Aimbot::tu, 0.f, 10.f, "PID Tu: %0.2f");
     ImGui::Separator();
 
+    ImGui::Text(" ");
     ImGui::Text("Silent Aim Settings");
     ImGui::Separator();
     ImGui::SliderFloat("##SILENTFOVHIP", &Settings::Aimbot::silent_fov_hip, 0.f, 360.f, "Hip-fire silent aim FOV(Rage bot): %0.2f");
+    ImGui::Text(" ");
     ImGui::Text("Caution: Aim-down-sight silent aim is very obvious to spectators, a small FOV is recommended.");
     ImGui::SliderFloat("##SILENTFOV", &Settings::Aimbot::silent_fov, 0.f, Settings::Aimbot::fov, "Aim-down-sight silent aim FOV: %0.2f");
     ImGui::Separator();
@@ -152,7 +157,7 @@ void WinMain::TabVisualsRender()
 
     ImGui::Separator();
     ImGui::Text("ESP");
-    ImGui::BeginChild("ESP", ImVec2(0, 0), true);
+    ImGui::BeginChild("ESP", ImVec2(0, 150), true);
     {
         ImGui::Checkbox("Enable", &Settings::ESP::enable);
         if (Settings::ESP::enable)
@@ -193,6 +198,10 @@ void WinMain::TabRadarRender()
 
         static float col_fri[4];
         Widgets::ColorEdit4Color("Color Friendly", &Settings::Radar::color_friendly, col_fri);
+        ImGui::Separator();
+
+        ImGui::Text(" ");
+        ImGui::Checkbox("Show Level Indicator", &Settings::Radar::draw_level);
     }
 }
 

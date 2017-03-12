@@ -8,6 +8,7 @@
 
 #define PI 3.1415926
 
+const float levelHeight = 200;
 
 void Radar::Paint()
 {
@@ -23,6 +24,7 @@ void Radar::Paint()
 
     TeamID myteam = localplayer->GetTeam();
     Vector vecPos = localplayer->GetVecOrigin();
+    float myZ = vecPos.z;
 
     QAngle angViewAngle;
     engine->GetViewAngles(angViewAngle);
@@ -56,6 +58,8 @@ void Radar::Paint()
             continue;
         }
 
+        int level = round((player->GetVecOrigin().z - myZ) / levelHeight);
+
         Vector vecPlayerPosRel = player->GetEyePosition() - vecPos;
 
         float coordY = vecPlayerPosRel.Dot(vecBaseY);
@@ -88,5 +92,36 @@ void Radar::Paint()
         v2dTick *= radius + 1;
 
         Draw::Line(circleCenter, circleCenter + v2dTick, color);
+
+        // draw level indicator
+        if (Settings::Radar::draw_level)
+        {
+            const Vector2D levelMark(radius, 0);
+            if (level != 0)
+            {
+                Vector2D levelMarkStart = circleCenter;
+                levelMarkStart.x -= radius/2.0;
+                if (level > 0)
+                {
+                    levelMarkStart.y -= radius + 2;
+                    Draw::Line(levelMarkStart, levelMarkStart + levelMark, color);
+                    if (level > 1)
+                    {
+                        levelMarkStart.y -= 2;
+                        Draw::Line(levelMarkStart, levelMarkStart + levelMark, color);
+                    }
+                }
+                else
+                {
+                    levelMarkStart.y += radius + 2;
+                    Draw::Line(levelMarkStart, levelMarkStart + levelMark, color);
+                    if (level < -1)
+                    {
+                        levelMarkStart.y += 2;
+                        Draw::Line(levelMarkStart, levelMarkStart + levelMark, color);
+                    }
+                }
+            }
+        }
     }
 }
