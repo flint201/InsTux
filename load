@@ -1,11 +1,13 @@
 #!/bin/sh
-
-ins_pid=$(pidof insurgency_linux)
-#ins_pid=$(pidof firefox)
-if [ -z "$ins_pid" ]; then
+pids=$(pidof insurgency_linux)
+if [ -z "$pids" ]; then
     /bin/echo -e "\e[31mCannot find Insurgency process.\e[0m"
     exit 1
 fi
+
+for pid in $pids; do
+    ins_pid=$pid
+done
 
 #Credit: Aixxe @ aixxe.net
 if grep -q libAimTux.so /proc/$ins_pid/maps; then
