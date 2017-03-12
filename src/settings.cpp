@@ -12,7 +12,7 @@ float Settings::Aimbot::cont_thresh = 5.0;
 float Settings::Aimbot::silent_fov = 0.5;
 float Settings::Aimbot::silent_fov_hip = 60;
 float Settings::Aimbot::recoilx = 2.0;
-float Settings::Aimbot::recoily = 2.0;
+float Settings::Aimbot::recoily = 1.5;
 
 bool Settings::Cham::only_on_key_down = false;
 ButtonCode_t Settings::Cham::key = KEY_CAPSLOCK;

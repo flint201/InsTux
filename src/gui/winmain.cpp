@@ -112,8 +112,8 @@ void WinMain::TabAimbotRender()
     ImGui::SliderFloat("##CONTTHRESH", &Settings::Aimbot::cont_thresh, 0.f, 200, "Continuous Targeting Mode Threshold Distance (Yards) %0.1f");
 
     ImGui::Text(" ");
-    ImGui::SliderFloat("##RECOILX", &Settings::Aimbot::recoilx, 0.f, 8.f, "Recoil cancellation X: %0.2f");
-    ImGui::SliderFloat("##RECOILY", &Settings::Aimbot::recoily, 0.f, 8.f, "Recoil cancellation Y: %0.2f");
+    ImGui::SliderFloat("##RECOILX", &Settings::Aimbot::recoilx, 0.f, 8.f, "Recoil cancellation Vertical: %0.2f");
+    ImGui::SliderFloat("##RECOILY", &Settings::Aimbot::recoily, 0.f, 8.f, "Recoil cancellation Horizontal: %0.2f");
 
     ImGui::Separator();
 
