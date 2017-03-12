@@ -38,7 +38,7 @@ See post on UnknownCheats.me:
     ```
     sudo dpkg --add-architecture i386
     sudo apt-get update
-    sudo apt-get install libsdl2-dev libegl1-mesa:i386 libwayland-egl1-mesa:i386 libsdl2-2.0-0:i386 libsdl2-dev:i386
+    sudo apt-get install libegl1-mesa:i386 libwayland-egl1-mesa:i386 libsdl2-2.0-0:i386 libsdl2-dev:i386
     ```
     After that, run
     ```
