@@ -16,6 +16,8 @@ std::vector<const char*> nodraw_materials = {
     "particle/smoke_multi1/smoke_01"
 };
 
+bool Hooks::dirty = true;
+
 void Hooks::Paint(void* thisptr, PaintMode_t mode)
 {
     engineVGuiVMT->GetOriginalMethod<PaintFn>(15)(thisptr, mode);
@@ -33,20 +35,17 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
         Radar::Paint();
         NoFlash::Paint();
 
-        static unsigned counter = 0;
-        if (counter < nodraw_materials.size())
+        if (dirty)
         {
-            C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
-            if (localplayer)
+            for (const char* mat_name : nodraw_materials)
             {
-                IMaterial* mat = material->FindMaterial(nodraw_materials[counter], TEXTURE_GROUP_PARTICLE);
+                IMaterial* mat = material->FindMaterial(mat_name, TEXTURE_GROUP_PARTICLE);
                 if (mat)
                 {
                     mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, Settings::NoSmoke::enable);
                 }
             }
+            dirty = false;
         }
-        counter++;
-        counter %= 100;
     }
 }
