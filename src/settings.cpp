@@ -216,11 +216,12 @@ void Settings::LoadConfig()
     char* buf = new char[filesize+1];
     fseek(infile, 0, SEEK_SET);
     fread(buf, 1, filesize, infile);
-    buf[filesize] = '\0';
     fclose(infile);
 
+    buf[filesize] = '\0';
     std::stringstream ss;
     ss.str(buf);
+    delete[] buf;
 
     Json::Value settings;
     ss >> settings;
