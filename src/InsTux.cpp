@@ -1,3 +1,5 @@
+#include <fstream>
+#include <iostream>
 #include "interfaces.h"
 #include "hooker.h"
 #include "./Hooks/hooks.h"
