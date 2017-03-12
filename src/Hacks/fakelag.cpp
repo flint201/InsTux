@@ -5,7 +5,7 @@ int ticksMax = 16;
 
 namespace FakeLag
 {
-    bool enable = true;
+    bool enable = false;
     int lagDuration = 0;
 }
 
