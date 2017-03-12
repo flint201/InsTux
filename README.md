@@ -34,7 +34,8 @@ See post on UnknownCheats.me:
     make
     ```
 5. build with GUI (optional)
-    InsTux comes with an optional GUI support, to build the project with GUI, you will need to install libSDL2-dev package for 32-bit architecture, on Ubuntu, use the following commands:
+
+    InsTux comes with an optional GUI support, to build the project with GUI, you will need to install libSDL2-dev package for 32-bit architecture, on Ubuntu/Debian, use the following commands:
     ```
     sudo dpkg --add-architecture i386
     sudo apt-get update
@@ -46,6 +47,8 @@ See post on UnknownCheats.me:
     ```
 
     Finally, run `make` to build.
+
+    (To disable GUI, run `cmake . -DWITH_GUI=OFF` and then run `make`.)
 
 At this point if you see a file called `libInsTux.so` in you directory you have succeessfully compiled the hack.
 To use, start the game and wait until it reaches main menu, then run `./load` in the repo directory.
