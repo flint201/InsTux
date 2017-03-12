@@ -35,7 +35,7 @@ See post on UnknownCheats.me:
     ```
 5. build with GUI (optional)
 
-    InsTux comes with an optional GUI support, to build the project with GUI, you will need to install libSDL2-dev package for 32-bit architecture, on Ubuntu/Debian, use the following commands:
+    InsTux comes with an optional GUI support, to build the project with GUI, you will need to install the 32-bit version of libSDL2-dev package, on Ubuntu/Debian, use the following commands:
     ```
     sudo dpkg --add-architecture i386
     sudo apt-get update
