@@ -67,11 +67,15 @@ If the last line of the output shows `$2 = 0x0` like this it means the hack has 
 
 ```
 ++++ InsTux starting...
-++++ InsTux loading complete! +++++++++++++++++++++++++++++++++++++++
+++++ InsTux loading complete! ++++
 ```
 
 # Config
-After running the hack, a config file will be generated in your home directory `~/.instux.cfg`, you can edit the file to change the settings. You will need to reload the hack in order for the changes to take effect. If you wish to restore the default config, simply delete or rename `~/.instux.cfg`, and it will be generated for you. You may have to re-generate the config file after updating, since the items in the config file may change.
+After running the hack, a config file will be generated in your home directory `~/.instux.cfg`. 
+
+If you are not using the GUI, you can edit the file to change the settings. You will need to reload the hack in order for the changes to take effect.
+
+If you wish to restore the default config, simply delete or rename `~/.instux.cfg`, and it will be generated for you. You may have to re-generate the config file after updating, since the items in the config file may change.
 
 # Updating
 This project is undergoing active development, run `./update` in your repo directory to get the latest version.
