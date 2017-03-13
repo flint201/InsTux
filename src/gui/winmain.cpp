@@ -265,12 +265,15 @@ void WinMain::TabPlayersRender()
 
     ImGui::ListBoxHeader("##PLAYERS", ImVec2(-1, (ImGui::GetWindowSize().y - 20)));
 
-    ImGui::Columns(2);
+    ImGui::Columns(3);
 
     ImGui::Text("ID");
     ImGui::NextColumn();
 
     ImGui::Text("Nickname");
+    ImGui::NextColumn();
+
+    ImGui::Text("GUID");
     ImGui::NextColumn();
 
     for (int i = 1; i < engine->GetMaxClients(); i++)
@@ -282,10 +285,15 @@ void WinMain::TabPlayersRender()
 
         std::string id = std::to_string(i);
         if (ImGui::Selectable(id.c_str(), i == currentPlayer, ImGuiSelectableFlags_SpanAllColumns))
+        {
             currentPlayer = i;
+        }
         ImGui::NextColumn();
 
         ImGui::Text("%s", playerInfo.name);
+        ImGui::NextColumn();
+
+        ImGui::Text("%s", playerInfo.guid);
         ImGui::NextColumn();
     }
     ImGui::ListBoxFooter();
