@@ -62,7 +62,7 @@ See post on UnknownCheats.me:
 
     (To disable GUI, run `cmake . -DWITH_GUI=OFF` and then run `make`.)
 
-At this point if you see a file called `libInsTux.so` in you directory you have succeessfully compiled the hack.
+At this point if you see a file called `libInsTux.so` in you directory, you have succeessfully compiled the hack.
 To use, start the game and wait until it reaches main menu, then run `./load` in the repo directory.
 ```
 Insurgency PID: 12229
