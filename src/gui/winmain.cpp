@@ -218,7 +218,9 @@ void WinMain::TabMiscRender()
     ImGui::Text("Removals");
     ImGui::Separator();
     ImGui::SliderFloat("##NOFLASH", &Settings::NoFlash::alpha, 0.f, 255.f, "No Flash Alpha: %.0f");
-    ImGui::Checkbox("No Smoke", &Settings::NoSmoke::enable);
+    ImGui::Checkbox("No Smoke        ", &Settings::NoSmoke::enable);
+    ImGui::SameLine();
+    ImGui::Checkbox("Diable Post Processing", &Settings::PPDisable::enable);
     ImGui::Separator();
 
 

@@ -10,19 +10,10 @@ uint8_t* CamThinkSvCheatsCheck = nullptr;
 VMT* modelRenderVMT = nullptr;
 VMT* clientModeVMT = nullptr;
 
-VMT* clientVMT = nullptr;
 VMT* materialVMT = nullptr;
 
 VMT* surfaceVMT = nullptr;
 VMT* engineVGuiVMT = nullptr;
-/*
-VMT* panelVMT = nullptr;
-VMT* gameEventsVMT = nullptr;
-VMT* viewRenderVMT = nullptr;
-VMT* inputInternalVMT = nullptr;
-VMT* launcherMgrVMT = nullptr;
-VMT* soundVMT = nullptr;
-*/
 
 uintptr_t* GetCSWpnData_address = nullptr;
 
@@ -43,7 +34,6 @@ FinishDrawingFn FinishDrawing;
 
 GetLocalClientFn GetLocalClient;
 
-//LineGoesThroughSmokeFn LineGoesThroughSmoke;
 InitKeyValuesFn InitKeyValues;
 LoadFromBufferFn LoadFromBuffer;
 
@@ -78,7 +68,6 @@ bool Hooker::GetLibraryInformation(const char* library, uintptr_t* address, size
         return true;
     }
 
-    //Log << "    -- Failed to GetLibraryInformation for " << library << std::endl;
     return false;
 }
 
@@ -114,7 +103,6 @@ void Hooker::InitializeVMHooks()
     engineVGuiVMT = new VMT(engineVGui);
 
     /*
-    panelVMT = new VMT(panel);
     gameEventsVMT = new VMT(gameEvents);
     viewRenderVMT = new VMT(viewRender);
     inputInternalVMT = new VMT(inputInternal);

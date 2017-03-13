@@ -182,8 +182,6 @@ void Aimbot::CreateMove(CUserCmd* cmd)
     QAngle currAimPunch = *localplayer->GetAimPunchAngle();
     if (aimKeyDown)
     {
-        QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
-        MouseSim::sim(dAngle);
 
         if (activeWeapon->GetFiremode() != 0 && (cmd->buttons & IN_ATTACK))
         {
@@ -193,11 +191,11 @@ void Aimbot::CreateMove(CUserCmd* cmd)
             cmd->viewangles.x -= diffx;
             cmd->viewangles.y -= diffy;
 
-            cmd->muzzleangle.x -= diffx;
-            cmd->muzzleangle.y -= diffy;
-
             engine->SetViewAngles(cmd->viewangles);
         }
+
+        QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
+        MouseSim::sim(dAngle);
 
         if (angSilent != cmd->viewangles && localplayer->IsScoped())
         {

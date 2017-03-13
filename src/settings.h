@@ -73,6 +73,11 @@ namespace Settings
         extern bool enable;
     }
 
+    namespace PPDisable
+    {
+        extern bool enable;
+    }
+
     namespace FakeLag
     {
         extern ButtonCode_t key;

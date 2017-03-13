@@ -37,8 +37,17 @@ void Hooks::Paint(void* thisptr, PaintMode_t mode)
             {
                 mat->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, Settings::NoSmoke::enable);
             }
+            if (counter == 0)
+            {
+                ConVar* pp_enable = cvar->FindVar("mat_postprocess_enable");
+                if (pp_enable)
+                {
+                    int val = Settings::PPDisable::enable ? 0 : 1;
+                    pp_enable->SetValue(val);
+                }
+            }
         }
         counter++;
-        counter %= 150;
+        counter %= 200;
     }
 }

@@ -41,27 +41,7 @@ IEngineVGui* engineVGui = nullptr;
 
 IVDebugOverlay* debugOverlay = nullptr;
 IInputSystem* inputSystem = nullptr;
-/*
-IVPanel* panel = nullptr;
-IInputInternal* inputInternal = nullptr;
-CGlobalVars* globalVars = nullptr;
-CEffects* effects = nullptr;
-IGameEventManager2* gameEvents = nullptr;
-IPhysicsSurfaceProps* physics = nullptr;
-CViewRender* viewRender = nullptr;
-IPrediction* prediction = nullptr;
-IGameMovement* gameMovement = nullptr;
-IMoveHelper* moveHelper = nullptr;
-ILauncherMgr* launcherMgr = nullptr;
-CGlowObjectManager* glowManager = nullptr;
-C_CSPlayerResource** csPlayerResource = nullptr;
-C_CSGameRules** csGameRules = nullptr;
-IEngineSound* sound = nullptr;
-ILocalize* localize = nullptr;
-ICommandLine* commandline = nullptr;
-CInput* input = nullptr;
-CGameServer* sv = nullptr;
-*/
+
 char cwd[1024];
 
 void checknull(void* ptr, std::string varname)
@@ -79,7 +59,7 @@ void Interfaces::FindInterfaces()
 {
     getcwd(cwd, sizeof(cwd));
 
-    //cvar = GetInterface<ICvar>("./bin/materialsystem.so", "VEngineCvar");
+    cvar = GetInterface<ICvar>("./bin/materialsystem.so", "VEngineCvar");
 
     void* hLibtier0 = dlopen("./bin/libtier0.so", 1);
     checknull(hLibtier0, "libtier0.so");

@@ -37,6 +37,8 @@ float Settings::NoFlash::alpha = 80;
 
 bool Settings::NoSmoke::enable = true;
 
+bool Settings::PPDisable::enable = false;
+
 ButtonCode_t Settings::FakeLag::key = ButtonCode_t::KEY_BACKSLASH;
 bool Settings::FakeLag::automatic = true;
 int Settings::FakeLag::value = 12;
@@ -180,6 +182,8 @@ void Settings::SaveToFile(std::string path)
 
     settings["NoSmoke"]["enable"] = Settings::NoSmoke::enable;
 
+    settings["PPDisable"]["enable"] = Settings::PPDisable::enable;
+
     settings["FakeLag"]["key"] = Util::GetButtonName(Settings::FakeLag::key);
     settings["FakeLag"]["automatic"] = Settings::FakeLag::automatic;
     settings["FakeLag"]["value"] = Settings::FakeLag::value;
@@ -262,6 +266,8 @@ void Settings::LoadConfig()
     GetVal(settings["NoFlash"]["alpha"], &Settings::NoFlash::alpha);
 
     GetVal(settings["NoSmoke"]["enable"], &Settings::NoSmoke::enable);
+
+    GetVal(settings["PPDisable"]["enable"], &Settings::PPDisable::enable);
 
     GetButtonCode(settings["FakeLag"]["key"], &Settings::FakeLag::key);
     GetVal(settings["FakeLag"]["automatic"], &Settings::FakeLag::automatic);
