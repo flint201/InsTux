@@ -1,6 +1,5 @@
 #include "winmain.h"
 #include "widgets.h"
-#include "../Hooks/hooks.h"
 
 bool WinMain::showWindow = true;
 
@@ -219,8 +218,7 @@ void WinMain::TabMiscRender()
     ImGui::Text("Removals");
     ImGui::Separator();
     ImGui::SliderFloat("##NOFLASH", &Settings::NoFlash::alpha, 0.f, 255.f, "No Flash Alpha: %.0f");
-    if(ImGui::Checkbox("No Smoke", &Settings::NoSmoke::enable))
-        Hooks::dirty = true;
+    ImGui::Checkbox("No Smoke", &Settings::NoSmoke::enable);
     ImGui::Separator();
 
 
