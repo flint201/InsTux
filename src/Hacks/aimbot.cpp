@@ -188,8 +188,8 @@ void Aimbot::CreateMove(CUserCmd* cmd)
             float diffx = (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
             float diffy = (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
 
-            cmd->viewangles.x -= diffx;
-            cmd->viewangles.y -= diffy;
+            angle.x -= diffx;
+            angle.y -= diffy;
 
             engine->SetViewAngles(cmd->viewangles);
         }

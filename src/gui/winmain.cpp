@@ -39,7 +39,8 @@ void WinMain::RenderWindow()
                 "Aimbot",
                 "Visuals",
                 "Radar",
-                "Misc"
+                "Misc",
+                "Players"
         };
 
         for (int i = 0; i < IM_ARRAYSIZE(tabs); i++)
@@ -72,6 +73,9 @@ void WinMain::RenderWindow()
                 break;
             case 3:
                 TabMiscRender();
+                break;
+            case 4:
+                TabPlayersRender();
                 break;
         }
     }
@@ -112,8 +116,8 @@ void WinMain::TabAimbotRender()
     ImGui::SliderFloat("##CONTTHRESH", &Settings::Aimbot::cont_thresh, 0.f, 200, "Continuous Targeting Mode Threshold Distance (Yards) %0.1f");
 
     ImGui::Text(" ");
-    ImGui::SliderFloat("##RECOILX", &Settings::Aimbot::recoilx, 0.f, 5.f, "Recoil cancellation Vertical: %0.2f");
-    ImGui::SliderFloat("##RECOILY", &Settings::Aimbot::recoily, 0.f, 5.f, "Recoil cancellation Horizontal: %0.2f");
+    ImGui::SliderFloat("##RECOILX", &Settings::Aimbot::recoilx, 0.f, 20.f, "Recoil cancellation Vertical: %0.2f");
+    ImGui::SliderFloat("##RECOILY", &Settings::Aimbot::recoily, 0.f, 20.f, "Recoil cancellation Horizontal: %0.2f");
 
     ImGui::Separator();
 
@@ -249,4 +253,40 @@ void WinMain::TabMiscRender()
     static float col_hl[4];
     Widgets::ColorEdit4Color("Color Highlight", &Settings::GUI::color_hl, col_hl);
     ImGui::Separator();
+}
+
+void WinMain::TabPlayersRender()
+{
+    static int currentPlayer = -1;
+    if (engine->IsInGame())
+        currentPlayer = engine->GetLocalPlayer();
+
+    IEngineClient::player_info_t playerInfo;
+
+    ImGui::ListBoxHeader("##PLAYERS", ImVec2(-1, (ImGui::GetWindowSize().y - 20)));
+
+    ImGui::Columns(2);
+
+    ImGui::Text("ID");
+    ImGui::NextColumn();
+
+    ImGui::Text("Nickname");
+    ImGui::NextColumn();
+
+    for (int i = 1; i < engine->GetMaxClients(); i++)
+    {
+        if (!engine->GetPlayerInfo(i, &playerInfo))
+            continue;
+
+        ImGui::Separator();
+
+        std::string id = std::to_string(i);
+        if (ImGui::Selectable(id.c_str(), i == currentPlayer, ImGuiSelectableFlags_SpanAllColumns))
+            currentPlayer = i;
+        ImGui::NextColumn();
+
+        ImGui::Text("%s", playerInfo.name);
+        ImGui::NextColumn();
+    }
+    ImGui::ListBoxFooter();
 }

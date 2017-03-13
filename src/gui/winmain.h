@@ -12,4 +12,5 @@ namespace WinMain
     extern void TabVisualsRender();
     extern void TabRadarRender();
     extern void TabMiscRender();
+    extern void TabPlayersRender();
 }

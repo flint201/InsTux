@@ -146,7 +146,7 @@ void MouseSim::sim(QAngle deltaAngle)
 
     if (Settings::Aimbot::limit_aim_speed)
     {
-        float lim = limit(normVec, dt) + 10;
+        float lim = limit(normVec, dt) + 20;
         dx = dx<lim ? dx : lim;
         dy = dy<lim ? dy : lim;
 
