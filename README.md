@@ -14,9 +14,20 @@ See post on UnknownCheats.me:
     sudo apt-get install cmake g++ gdb git zlib1g-dev
     ```
 
-1. make sure your `g++` version is at least 6.0. Here is AimTux's tutorial page for updating g++
+1. make sure your `g++` version is at least 6.0. On Ubuntu/Debian:
+    ```
+    sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+    sudo apt-get update
+    sudo apt-get install gcc-6 g++-6
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+    ```
+    Also ere is AimTux's tutorial page for updating g++ if you need further information.
     [How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
-    You will also need to install the corresponding g++ multilib
+    
+    You will also need to install the corresponding g++ multilib, on Ubuntu/Debian:
+    ```
+    sudo apt-get install gcc-6-multilib g++-6-multilib
+    ```
     
 2. clone the repository with recursive flag and cd to its root directory
     ```
@@ -26,6 +37,7 @@ See post on UnknownCheats.me:
 
 3. generate the Makefile 
     ```
+    git clean -fdx
     cmake .
     ```
 
@@ -50,7 +62,7 @@ See post on UnknownCheats.me:
 
     (To disable GUI, run `cmake . -DWITH_GUI=OFF` and then run `make`.)
 
-At this point if you see a file called `libInsTux.so` in you directory you have succeessfully compiled the hack.
+At this point if you see a file called `libInsTux.so` in you directory, you have succeessfully compiled the hack.
 To use, start the game and wait until it reaches main menu, then run `./load` in the repo directory.
 ```
 Insurgency PID: 12229
