@@ -30,7 +30,7 @@ float Settings::ESP::draw_behind_range = 30;
 
 Color Settings::ESP::color_bone = Color(66, 173, 244, 255);
 Color Settings::ESP::color_box_vis = Color(30, 250, 30, 150);
-Color Settings::ESP::color_box_hid = Color(200, 200, 200, 100);
+Color Settings::ESP::color_box_hid = Color(250, 250, 250, 250);
 Color Settings::ESP::color_box_behind_vis = Color(255, 30, 30, 255);
 Color Settings::ESP::color_box_behind_hid = Color(255, 130, 0, 255);
 
