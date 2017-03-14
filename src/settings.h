@@ -33,6 +33,8 @@ namespace Settings
 
         extern float recoilx;
         extern float recoily;
+
+        extern bool trigger;
     }
 
     namespace Cham

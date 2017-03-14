@@ -132,6 +132,8 @@ void WinMain::TabAimbotRender()
     ImGui::Text("Silent Aim Settings");
     ImGui::Separator();
     ImGui::SliderFloat("##SILENTFOVHIP", &Settings::Aimbot::silent_fov_hip, 0.f, 360.f, "Hip-fire silent aim FOV(Rage bot): %0.2f");
+    ImGui::SameLine();
+    ImGui::Checkbox("Trigger bot", &Settings::Aimbot::trigger);
     if (Settings::Aimbot::silent_fov > Settings::Aimbot::fov)
         Settings::Aimbot::silent_fov = Settings::Aimbot::fov;
     ImGui::SliderFloat("##SILENTFOV", &Settings::Aimbot::silent_fov, 0.f, Settings::Aimbot::fov, "Aim-down-sight silent aim FOV: %0.2f");

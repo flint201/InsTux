@@ -186,8 +186,6 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 
             angle.x -= diffx;
             angle.y -= diffy;
-
-            engine->SetViewAngles(cmd->viewangles);
         }
 
         QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
@@ -201,9 +199,24 @@ void Aimbot::CreateMove(CUserCmd* cmd)
     }
 
     lastAimPunch = currAimPunch;
-
+    static int fromLastFire = 10;
     if (angSilentHip != cmd->muzzleangle)
     {
         cmd->muzzleangle = angSilentHip;
+        if (Settings::Aimbot::trigger)
+        {
+            if (fromLastFire == 0)
+            {
+                if (activeWeapon->GetFiremode() < 2)
+                    cmd->buttons &= (~IN_ATTACK);
+            }
+
+            if (activeWeapon->GetFiremode() > 1 || fromLastFire > 1)
+            {
+                cmd->buttons |= IN_ATTACK;
+                fromLastFire = 0;
+            }
+        }
     }
+    fromLastFire = fromLastFire > 100 ? fromLastFire : fromLastFire+1;
 }
