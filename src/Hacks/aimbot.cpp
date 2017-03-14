@@ -53,7 +53,7 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
 
         matrix3x4_t boneHead = BoneMatrix[(int)Bone::NECK];
         Vector vecBoneHead = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3])
-                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 5;
+                + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 8;
         if (Util::Ray(localplayer, player, i, eyePos, vecBoneHead))
         {
             QAngle angHead = Math::CalcAngle(eyePos, vecBoneHead);
@@ -92,18 +92,14 @@ C_BasePlayer* GetClosestPlayer(CUserCmd* cmd, C_BasePlayer* localplayer, Bone& b
             found = true;
             break;
         }
-
-        matrix3x4_t currBone = BoneMatrix[(int)Bone::NECK];
-        Vector headTop = Vector(currBone[0][3], currBone[1][3], currBone[2][3])
-            + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 5;
         
-        if (!found && (fov < forceSelectFov || Util::Ray(localplayer, player, i, eyePos, headTop)))
+        if (!found && (fov < forceSelectFov || Util::Ray(localplayer, player, i, eyePos, vecBoneHead)))
         {
             Aimbot::targetIdx = i;
             closestEntity = player;
             bestFov = fov;
             bestBone = Bone::NECK;
-            aimPoint = headTop;
+            aimPoint = vecBoneHead;
         }
     }
 

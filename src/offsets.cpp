@@ -106,6 +106,7 @@ void Offsets::GetOffsets()
     offsets.DT_INSPlayer.m_iPlayerFlags = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iPlayerFlags");
     offsets.DT_INSPlayer.m_nPlayerSpecialRole = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_nPlayerSpecialRole");
     offsets.DT_INSPlayer.m_iLeanType = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iLeanType");
+    offsets.DT_INSPlayer.m_iCurrentStance= NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_iCurrentStance");
     offsets.DT_INSPlayer.m_flSpawnTime = NetVarManager::GetOffset(tables, "DT_INSPlayer", "m_flSpawnTime");
 
     offsets.DT_BaseAttributableItem.m_iItemDefinitionIndex = NetVarManager::GetOffset(tables, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");

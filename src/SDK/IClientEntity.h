@@ -315,6 +315,11 @@ public:
     {
         return *((int*)((uintptr_t)this + offsets.DT_INSPlayer.m_iLeanType));
     }
+
+    int GetStance()
+    {
+        return *((int*)((uintptr_t)this + offsets.DT_INSPlayer.m_iCurrentStance));
+    }
 };
 
 

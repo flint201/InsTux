@@ -127,6 +127,7 @@ struct COffsets
 		std::ptrdiff_t m_nPlayerSpecialRole;
 		std::ptrdiff_t m_iLeanType;
 		std::ptrdiff_t m_iPlayerClass;
+		std::ptrdiff_t m_iCurrentStance;
 
         std::ptrdiff_t m_flSpawnTime;
     } DT_INSPlayer;

@@ -23,6 +23,7 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
 
     std::stringstream ss;
     ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
+    ss << "  stance: " << localplayer->GetStance();
 
     Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(0, 0, 0, 255));
     Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(66, 180, 255, 255));
@@ -186,8 +187,8 @@ void ESP::DrawSkeleton(C_BasePlayer* player)
     if (!pStudioModel)
         return;
 
-    static matrix3x4_t pBoneToWorldOut[128];
-    if (player->SetupBones(pBoneToWorldOut, 128, 256, 0))
+    static matrix3x4_t BoneMatrix[128];
+    if (player->SetupBones(BoneMatrix, 128, BONE_USED_BY_HITBOX, 0))
     {
         for (int i = 0; i < pStudioModel->numbones; i++)
         {
@@ -196,14 +197,24 @@ void ESP::DrawSkeleton(C_BasePlayer* player)
                 continue;
 
             Vector vBonePos1;
-            if (debugOverlay->ScreenPosition(Vector(pBoneToWorldOut[i][0][3], pBoneToWorldOut[i][1][3], pBoneToWorldOut[i][2][3]), vBonePos1))
+            if (debugOverlay->ScreenPosition(Vector(BoneMatrix[i][0][3], BoneMatrix[i][1][3], BoneMatrix[i][2][3]), vBonePos1))
                 continue;
 
             Vector vBonePos2;
-            if (debugOverlay->ScreenPosition(Vector(pBoneToWorldOut[pBone->parent][0][3], pBoneToWorldOut[pBone->parent][1][3], pBoneToWorldOut[pBone->parent][2][3]), vBonePos2))
+            if (debugOverlay->ScreenPosition(Vector(BoneMatrix[pBone->parent][0][3], BoneMatrix[pBone->parent][1][3], BoneMatrix[pBone->parent][2][3]), vBonePos2))
                 continue;
 
             Draw::Line(Vector2D(vBonePos1.x, vBonePos1.y), Vector2D(vBonePos2.x, vBonePos2.y), Settings::ESP::color_bone);
         }
     }
+
+    /*
+    matrix3x4_t boneHead = BoneMatrix[(int)Bone::NECK];
+    Vector vecBoneNeck = Vector(boneHead[0][3], boneHead[1][3], boneHead[2][3]);
+    Vector vecBoneHead = vecBoneNeck + Vector(boneHead[0][0], boneHead[1][0], boneHead[2][0]) * 9;
+    Vector v1, v2;
+    debugOverlay->ScreenPosition(vecBoneNeck, v1);
+    debugOverlay->ScreenPosition(vecBoneHead, v2);
+    Draw::Line(Vector2D(v1.x, v1.y), Vector2D(v2.x, v2.y), Color(255, 0, 0, 255));
+    */
 }
