@@ -175,16 +175,24 @@ void WinMain::TabVisualsRender()
         if (Settings::ESP::enable)
         {
             ImGui::Separator();
+            ImGui::Text(" ");
+            ImGui::Columns(2);
             ImGui::Text("Activation Key");
             ImGui::SameLine();
             Widgets::KeyBindButton(&Settings::ESP::key);
-            ImGui::Separator();
+            ImGui::NextColumn();
             ImGui::Checkbox("Toggle", &Settings::ESP::is_toggle);
+            ImGui::Columns(1);
 
             ImGui::Separator();
+            ImGui::Text(" ");
+            ImGui::Columns(3);
             ImGui::Checkbox("Show Bone", &Settings::ESP::show_bone);
+            ImGui::NextColumn();
             ImGui::Checkbox("Show Name", &Settings::ESP::show_name);
+            ImGui::NextColumn();
             ImGui::Checkbox("Draw Behind", &Settings::ESP::draw_behind);
+            ImGui::Columns(1);
         }
 
         ImGui::Separator();
