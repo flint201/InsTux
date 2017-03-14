@@ -182,6 +182,7 @@ void WinMain::TabVisualsRender()
             Widgets::KeyBindButton(&Settings::ESP::key);
             ImGui::NextColumn();
             ImGui::Checkbox("Toggle", &Settings::ESP::is_toggle);
+            ImGui::NextColumn();
             ImGui::Columns(1);
 
             ImGui::Separator();
@@ -192,6 +193,7 @@ void WinMain::TabVisualsRender()
             ImGui::Checkbox("Show Name", &Settings::ESP::show_name);
             ImGui::NextColumn();
             ImGui::Checkbox("Draw Behind", &Settings::ESP::draw_behind);
+            ImGui::NextColumn();
             ImGui::Columns(1);
         }
 
@@ -231,10 +233,16 @@ void WinMain::TabMiscRender()
 {
     ImGui::Text("Removals");
     ImGui::Separator();
-    ImGui::SliderFloat("##NOFLASH", &Settings::NoFlash::alpha, 0.f, 255.f, "No Flash Alpha: %.0f");
-    ImGui::Checkbox("No Smoke        ", &Settings::NoSmoke::enable);
+    ImGui::Text("No Flash    ");
     ImGui::SameLine();
+    ImGui::SliderFloat("##NOFLASH", &Settings::NoFlash::alpha, 0.f, 255.f, "No Flash Alpha: %.0f");
+
+    ImGui::Columns(2);
+    ImGui::Checkbox("No Smoke", &Settings::NoSmoke::enable);
+    ImGui::NextColumn();
     ImGui::Checkbox("Diable Post Processing", &Settings::PPDisable::enable);
+    ImGui::SameLine();
+    ImGui::Columns(1);
     ImGui::Separator();
 
 
@@ -242,11 +250,16 @@ void WinMain::TabMiscRender()
     ImGui::Text("Fake Lag");
     ImGui::Separator();
 
+    ImGui::Columns(2);
     ImGui::Text("Toggle Key");
     ImGui::SameLine();
     Widgets::KeyBindButton(&Settings::FakeLag::key);
+    ImGui::NextColumn();
 
     ImGui::Checkbox("Automatic - Only Turns On When Visible By Enemy", &Settings::FakeLag::automatic);
+    ImGui::NextColumn();
+
+    ImGui::Columns(1);
     ImGui::SliderInt("##LAGVAL", &Settings::FakeLag::value, 0, 15, "Lag Value (Ticks): %.0f");
     ImGui::Separator();
 
