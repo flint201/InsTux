@@ -50,7 +50,15 @@ namespace Settings
         extern bool is_toggle;
         extern bool show_bone;
         extern bool show_name;
+        extern bool show_box;
         extern bool draw_behind;
+        extern float draw_behind_range;
+
+        extern Color color_bone;
+        extern Color color_box_vis;
+        extern Color color_box_hid;
+        extern Color color_box_behind_vis;
+        extern Color color_box_behind_hid;
     }
 
     namespace Radar

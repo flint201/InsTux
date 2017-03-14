@@ -83,8 +83,8 @@ void DrawBoxESP(C_BasePlayer* localplayer, int sWidth, int sHeight, Vector enemy
     Vector enemyScreenPos;
     if (debugOverlay->ScreenPosition(enemyPos, enemyScreenPos) == 0)
     {
-        int HBox = 1000 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
-        int WBox = 400 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
+        int HBox = 500 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
+        int WBox = 200 * 12 * 4 / Math::GetDistance(enemyPos, localplayer->GetVecOrigin());
         Draw::Rectangle(enemyScreenPos.x - WBox/2.0, enemyScreenPos.y - HBox, enemyScreenPos.x + WBox/2.0, enemyScreenPos.y, boxColor);
         if (snapLine)
             Draw::Line(sWidth/2.0, sHeight, enemyScreenPos.x, enemyScreenPos.y, boxColor);
@@ -150,29 +150,31 @@ void ESP::Paint()
                 Draw::Text(vPlayerOrigin.x, (int)(vPlayerOrigin.y + 3), playerInfo.name, esp_name_font, Color(255, 255, 255, 255));
         }
 
-        // draw behind
-        if (Settings::ESP::draw_behind)
+        QAngle angViewAngle;
+        engine->GetViewAngles(angViewAngle);
+
+        Vector vecView;
+        Math::AngleVectors(angViewAngle, vecView);
+
+        Vector vecEnemy = player->GetVecOrigin() - localplayer->GetVecOrigin();
+        float dotProd = vecEnemy.Dot(vecView);
+        if (dotProd < -1 && Settings::ESP::draw_behind)
         {
-            QAngle angViewAngle;
-            engine->GetViewAngles(angViewAngle);
-
-            Vector vecView;
-            Math::AngleVectors(angViewAngle, vecView);
-
-            Vector vecEnemy = player->GetVecOrigin() - localplayer->GetVecOrigin();
-            float dotProd = vecEnemy.Dot(vecView);
-            if (dotProd < -1)
-            {
-                Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
-                if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
-                {
-                    DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 30, 30, 255), true);
-                }
-                else if (Math::GetDistance(localplayer->GetEyePosition(), player->GetEyePosition()) < 12 * 80)
-                {
-                    DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 130, 0, 255), true);
-                }
-            }
+            // draw behind
+            Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
+            if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
+                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 30, 30, 255), true);
+            else if (Math::GetDistance(localplayer->GetEyePosition(), player->GetEyePosition())
+                    < Settings::ESP::draw_behind_range * 12 * 3)
+                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 130, 0, 255), true);
+        }
+        else if (Settings::ESP::show_box && drawESP)
+        {
+            // draw box front
+            if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
+                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Color(0, 250, 30, 255), true);
+            else
+                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Color(200, 200, 200, 255), true);
         }
     }
 
@@ -201,7 +203,7 @@ void ESP::DrawSkeleton(C_BasePlayer* player)
             if (debugOverlay->ScreenPosition(Vector(pBoneToWorldOut[pBone->parent][0][3], pBoneToWorldOut[pBone->parent][1][3], pBoneToWorldOut[pBone->parent][2][3]), vBonePos2))
                 continue;
 
-            Draw::Line(Vector2D(vBonePos1.x, vBonePos1.y), Vector2D(vBonePos2.x, vBonePos2.y), Color(66, 173, 244, 255));
+            Draw::Line(Vector2D(vBonePos1.x, vBonePos1.y), Vector2D(vBonePos2.x, vBonePos2.y), Settings::ESP::color_bone);
         }
     }
 }

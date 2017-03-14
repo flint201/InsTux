@@ -24,7 +24,15 @@ ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;
 bool Settings::ESP::is_toggle = false;
 bool Settings::ESP::show_bone = true;
 bool Settings::ESP::show_name = true;
+bool Settings::ESP::show_box = true;
 bool Settings::ESP::draw_behind = true;
+float Settings::ESP::draw_behind_range = 30;
+
+Color Settings::ESP::color_bone = Color(66, 173, 244, 255);
+Color Settings::ESP::color_box_vis = Color(30, 250, 30, 150);
+Color Settings::ESP::color_box_hid = Color(200, 200, 200, 100);
+Color Settings::ESP::color_box_behind_vis = Color(255, 30, 30, 255);
+Color Settings::ESP::color_box_behind_hid = Color(255, 130, 0, 255);
 
 bool Settings::Radar::enable = true;
 int Settings::Radar::size = 100;
@@ -170,7 +178,15 @@ void Settings::SaveToFile(std::string path)
     settings["ESP"]["is_toggle"] = Settings::ESP::is_toggle;
     settings["ESP"]["show_bone"] = Settings::ESP::show_bone;
     settings["ESP"]["show_name"] = Settings::ESP::show_name;
+    settings["ESP"]["show_box"] = Settings::ESP::show_box;
     settings["ESP"]["draw_behind"] = Settings::ESP::draw_behind;
+    settings["ESP"]["draw_behind_range"] = Settings::ESP::draw_behind_range;
+
+    LoadColor(settings["ESP"]["color_bone"], Settings::ESP::color_bone);
+    LoadColor(settings["ESP"]["color_box_vis"], Settings::ESP::color_box_vis);
+    LoadColor(settings["ESP"]["color_box_hid"], Settings::ESP::color_box_hid);
+    LoadColor(settings["ESP"]["color_box_behind_hid"], Settings::ESP::color_box_behind_hid);
+    LoadColor(settings["ESP"]["color_box_behind_hid"], Settings::ESP::color_box_behind_hid);
 
     settings["Radar"]["enable"] = Settings::Radar::enable;
     settings["Radar"]["size"] = Settings::Radar::size;
@@ -256,7 +272,15 @@ void Settings::LoadConfig()
     GetVal(settings["ESP"]["is_toggle"], &Settings::ESP::is_toggle);
     GetVal(settings["ESP"]["show_bone"], &Settings::ESP::show_bone);
     GetVal(settings["ESP"]["show_name"], &Settings::ESP::show_name);
+    GetVal(settings["ESP"]["show_box"], &Settings::ESP::show_box);
     GetVal(settings["ESP"]["draw_behind"], &Settings::ESP::draw_behind);
+    GetVal(settings["ESP"]["draw_behind_range"], &Settings::ESP::draw_behind_range);
+
+    GetVal(settings["ESP"]["color_bone"], &Settings::ESP::color_bone);
+    GetVal(settings["ESP"]["color_box_vis"], &Settings::ESP::color_box_vis);
+    GetVal(settings["ESP"]["color_box_hid"], &Settings::ESP::color_box_hid);
+    GetVal(settings["ESP"]["color_box_behind_hid"], &Settings::ESP::color_box_behind_hid);
+    GetVal(settings["ESP"]["color_box_behind_hid"], &Settings::ESP::color_box_behind_hid);
 
     GetVal(settings["Radar"]["enable"], &Settings::Radar::enable);
     GetVal(settings["Radar"]["size"], &Settings::Radar::size);

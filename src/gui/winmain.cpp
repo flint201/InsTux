@@ -145,12 +145,11 @@ void WinMain::TabVisualsRender()
     ImGui::Separator();
 
     ImGui::Text("Cham");
-    ImGui::BeginChild("Cham", ImVec2(0, 150), true);
+    ImGui::BeginChild("Cham", ImVec2(0, 110), true);
     {
-        ImGui::Checkbox("Only When Key Pressed", &Settings::Cham::only_on_key_down);
+        ImGui::Checkbox("Only When Key Pressed  ", &Settings::Cham::only_on_key_down);
         if (Settings::Cham::only_on_key_down)
         {
-            ImGui::Text("    Activation Key");
             ImGui::SameLine();
             Widgets::KeyBindButton(&Settings::Cham::key);
         }
@@ -163,20 +162,19 @@ void WinMain::TabVisualsRender()
 
         static float col_hid[4];
         Widgets::ColorEdit4Color("Color Hidden", &Settings::Cham::color_hidden, col_hid);
-        ImGui::Separator();
     }
     ImGui::EndChild();
 
-    ImGui::Separator();
+    ImGui::Text(" ");
     ImGui::Text("ESP");
-    ImGui::BeginChild("ESP", ImVec2(0, 150), true);
+    ImGui::BeginChild("ESP", ImVec2(0, 200), true);
     {
+        if (Settings::ESP::enable)
+            ImGui::Columns(3);
         ImGui::Checkbox("Enable", &Settings::ESP::enable);
         if (Settings::ESP::enable)
         {
-            ImGui::Separator();
-            ImGui::Text(" ");
-            ImGui::Columns(2);
+            ImGui::NextColumn();
             ImGui::Text("Activation Key");
             ImGui::SameLine();
             Widgets::KeyBindButton(&Settings::ESP::key);
@@ -186,18 +184,31 @@ void WinMain::TabVisualsRender()
             ImGui::Columns(1);
 
             ImGui::Separator();
-            ImGui::Text(" ");
-            ImGui::Columns(3);
+            ImGui::Columns(4);
             ImGui::Checkbox("Show Bone", &Settings::ESP::show_bone);
             ImGui::NextColumn();
             ImGui::Checkbox("Show Name", &Settings::ESP::show_name);
             ImGui::NextColumn();
-            ImGui::Checkbox("Draw Behind", &Settings::ESP::draw_behind);
+            ImGui::Checkbox("Show Box", &Settings::ESP::show_box);
+            ImGui::NextColumn();
+            ImGui::Checkbox("Show Box Behind", &Settings::ESP::draw_behind);
             ImGui::NextColumn();
             ImGui::Columns(1);
-        }
+            ImGui::Separator();
 
-        ImGui::Separator();
+            static float col_bone[4];
+            Widgets::ColorEdit4Color("Bone Color", &Settings::ESP::color_bone, col_bone);
+
+            static float col_box_vis[4];
+            Widgets::ColorEdit4Color("Box Color Visible", &Settings::ESP::color_box_vis, col_box_vis);
+            static float col_box_hid[4];
+            Widgets::ColorEdit4Color("Box Color Hidden", &Settings::ESP::color_box_hid, col_box_hid);
+
+            static float col_box_behind_vis[4];
+            Widgets::ColorEdit4Color("Box Color Visible Behind", &Settings::ESP::color_box_behind_vis, col_box_behind_vis);
+            static float col_box_behind_hid[4];
+            Widgets::ColorEdit4Color("Box Color Hidden Behind", &Settings::ESP::color_box_behind_hid, col_box_behind_hid);
+        }
     }
     ImGui::EndChild();
 }
