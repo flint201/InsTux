@@ -32,7 +32,7 @@ void WinMain::RenderWindow()
     ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = imcolmain2;
 
     static int page = 0;
-    ImGui::SetNextWindowSize(ImVec2(1130, 700), ImGuiSetCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(1295, 800), ImGuiSetCond_FirstUseEver);
     if (ImGui::Begin("InsTux", &WinMain::showWindow, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_ShowBorders))
     {
         const char* tabs[] = {
@@ -166,7 +166,7 @@ void WinMain::TabVisualsRender()
 
     ImGui::Text(" ");
     ImGui::Text("ESP");
-    ImGui::BeginChild("ESP", ImVec2(0, 200), true);
+    ImGui::BeginChild("ESP", ImVec2(0, 210), true);
     {
         if (Settings::ESP::enable)
             ImGui::Columns(3);
