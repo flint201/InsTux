@@ -12,11 +12,11 @@ public:
                 int xuidhigh;
             };
         };
-        char name[128];
+        char name[32];
         int userid;
         char guid[33];
         unsigned int friendsid;
-        char friendsname[128];
+        char friendsname[32];
         bool fakeplayer;
         bool ishltv;
         unsigned int customfiles[4];
