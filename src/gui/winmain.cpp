@@ -178,6 +178,8 @@ void WinMain::TabVisualsRender()
             ImGui::Text("Activation Key");
             ImGui::SameLine();
             Widgets::KeyBindButton(&Settings::ESP::key);
+            ImGui::Separator();
+            ImGui::Checkbox("Toggle", &Settings::ESP::is_toggle);
 
             ImGui::Separator();
             ImGui::Checkbox("Show Bone", &Settings::ESP::show_bone);

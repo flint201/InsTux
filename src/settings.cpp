@@ -21,6 +21,7 @@ Color Settings::Cham::color_hidden = Color(255, 0, 0, 255);
 
 bool Settings::ESP::enable = true;
 ButtonCode_t Settings::ESP::key = KEY_CAPSLOCK;
+bool Settings::ESP::is_toggle = false;
 bool Settings::ESP::show_bone = true;
 bool Settings::ESP::show_name = true;
 bool Settings::ESP::draw_behind = true;
@@ -166,6 +167,7 @@ void Settings::SaveToFile(std::string path)
 
     settings["ESP"]["enable"] = Settings::ESP::enable;
     settings["ESP"]["key"] = Util::GetButtonName(Settings::ESP::key);
+    settings["ESP"]["is_toggle"] = Settings::ESP::is_toggle;
     settings["ESP"]["show_bone"] = Settings::ESP::show_bone;
     settings["ESP"]["show_name"] = Settings::ESP::show_name;
     settings["ESP"]["draw_behind"] = Settings::ESP::draw_behind;
@@ -251,6 +253,7 @@ void Settings::LoadConfig()
 
     GetVal(settings["ESP"]["enable"], &Settings::ESP::enable);
     GetButtonCode(settings["ESP"]["key"], &Settings::ESP::key);
+    GetVal(settings["ESP"]["is_toggle"], &Settings::ESP::is_toggle);
     GetVal(settings["ESP"]["show_bone"], &Settings::ESP::show_bone);
     GetVal(settings["ESP"]["show_name"], &Settings::ESP::show_name);
     GetVal(settings["ESP"]["draw_behind"], &Settings::ESP::draw_behind);

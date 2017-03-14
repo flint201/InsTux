@@ -1,5 +1,6 @@
 #include <iomanip>
 
+
 #include "esp.h"
 #include "hacks.h"
 
@@ -106,12 +107,20 @@ void ESP::Paint()
 
     DrawInfo(localplayer, sWidth, sHeight);
 
-    bool keyDown = true;
-    if(!inputSystem->IsButtonDown(Settings::ESP::key))
+    static bool drawESP = false;
+    static bool lastKeyDown = false;
+    bool keyDown = inputSystem->IsButtonDown(Settings::ESP::key);
+    if (Settings::ESP::is_toggle)
     {
-        Draw::Text(10, 5, "InsTux 1.0", font_foundation18, Color(255, 255, 255, 255));
-        keyDown = false;
+        if (keyDown && !lastKeyDown)
+            drawESP = !drawESP;
+    } else
+    {
+        drawESP = keyDown;
     }
+    lastKeyDown = keyDown;
+
+    Draw::Text(10, 5, "InsTux", font_foundation18, Color(255, 255, 255, 255));
 
     for (int i = 0; i <= engine->GetMaxClients(); i++)
     {
@@ -130,11 +139,11 @@ void ESP::Paint()
             continue;
 
         // draw skeleton
-        if (Settings::ESP::show_bone && keyDown)
+        if (Settings::ESP::show_bone && drawESP)
             DrawSkeleton(player);
 
         // draw name
-        if (Settings::ESP::show_name && keyDown)
+        if (Settings::ESP::show_name && drawESP)
         {
             Vector vPlayerOrigin;
             if (debugOverlay->ScreenPosition(player->GetVecOrigin(), vPlayerOrigin) == 0)

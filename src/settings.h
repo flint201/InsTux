@@ -47,6 +47,7 @@ namespace Settings
     {
         extern bool enable;
         extern ButtonCode_t key;
+        extern bool is_toggle;
         extern bool show_bone;
         extern bool show_name;
         extern bool draw_behind;
