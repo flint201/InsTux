@@ -159,7 +159,6 @@ void WinMain::TabVisualsRender()
         ImGui::Separator();
         static float col_vis[4];
         Widgets::ColorEdit4Color("Color Visible", &Settings::Cham::color_visible, col_vis);
-
         static float col_hid[4];
         Widgets::ColorEdit4Color("Color Hidden", &Settings::Cham::color_hidden, col_hid);
     }
@@ -195,15 +194,15 @@ void WinMain::TabVisualsRender()
             ImGui::NextColumn();
             ImGui::Columns(1);
             ImGui::Separator();
+            ImGui::SliderFloat("##DRAWBEHINDRANGE", &Settings::ESP::draw_behind_range, 0, 200, "Show Box Behind Range Limit (Yards): %.0f");
+            ImGui::Separator();
 
             static float col_bone[4];
             Widgets::ColorEdit4Color("Bone Color", &Settings::ESP::color_bone, col_bone);
-
             static float col_box_vis[4];
             Widgets::ColorEdit4Color("Box Color Visible", &Settings::ESP::color_box_vis, col_box_vis);
             static float col_box_hid[4];
             Widgets::ColorEdit4Color("Box Color Hidden", &Settings::ESP::color_box_hid, col_box_hid);
-
             static float col_box_behind_vis[4];
             Widgets::ColorEdit4Color("Box Color Visible Behind", &Settings::ESP::color_box_behind_vis, col_box_behind_vis);
             static float col_box_behind_hid[4];
@@ -280,10 +279,8 @@ void WinMain::TabMiscRender()
     ImGui::Separator();
     static float col_main[4];
     Widgets::ColorEdit4Color("Color Primary", &Settings::GUI::color_main, col_main);
-
     static float col_main2[4];
     Widgets::ColorEdit4Color("Color Secondary", &Settings::GUI::color_main2, col_main2);
-
     static float col_hl[4];
     Widgets::ColorEdit4Color("Color Highlight", &Settings::GUI::color_hl, col_hl);
     ImGui::Separator();
@@ -301,13 +298,13 @@ void WinMain::TabPlayersRender()
 
     ImGui::Columns(3);
 
-    ImGui::Text("ID");
+    ImGui::Text("Index");
     ImGui::NextColumn();
 
     ImGui::Text("Nickname");
     ImGui::NextColumn();
 
-    ImGui::Text("GUID");
+    ImGui::Text("Steam ID");
     ImGui::NextColumn();
 
     for (int i = 1; i < engine->GetMaxClients(); i++)

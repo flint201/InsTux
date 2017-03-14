@@ -163,18 +163,18 @@ void ESP::Paint()
             // draw behind
             Vector mirrorEnemyPos = localplayer->GetVecOrigin() * 2.0 - player->GetVecOrigin();
             if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
-                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 30, 30, 255), true);
+                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Settings::ESP::color_box_behind_vis, true);
             else if (Math::GetDistance(localplayer->GetEyePosition(), player->GetEyePosition())
                     < Settings::ESP::draw_behind_range * 12 * 3)
-                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Color(255, 130, 0, 255), true);
+                DrawBoxESP(localplayer, sWidth, sHeight, mirrorEnemyPos, Settings::ESP::color_box_behind_hid, true);
         }
         else if (Settings::ESP::show_box && drawESP)
         {
             // draw box front
             if (Util::Ray(localplayer, player, i, localplayer->GetEyePosition(), player->GetEyePosition()))
-                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Color(0, 250, 30, 255), true);
+                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Settings::ESP::color_box_vis, true);
             else
-                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Color(200, 200, 200, 255), true);
+                DrawBoxESP(localplayer, sWidth, sHeight, player->GetVecOrigin(), Settings::ESP::color_box_hid, false);
         }
     }
 

@@ -185,7 +185,7 @@ void Settings::SaveToFile(std::string path)
     LoadColor(settings["ESP"]["color_bone"], Settings::ESP::color_bone);
     LoadColor(settings["ESP"]["color_box_vis"], Settings::ESP::color_box_vis);
     LoadColor(settings["ESP"]["color_box_hid"], Settings::ESP::color_box_hid);
-    LoadColor(settings["ESP"]["color_box_behind_hid"], Settings::ESP::color_box_behind_hid);
+    LoadColor(settings["ESP"]["color_box_behind_vis"], Settings::ESP::color_box_behind_vis);
     LoadColor(settings["ESP"]["color_box_behind_hid"], Settings::ESP::color_box_behind_hid);
 
     settings["Radar"]["enable"] = Settings::Radar::enable;
@@ -279,7 +279,7 @@ void Settings::LoadConfig()
     GetVal(settings["ESP"]["color_bone"], &Settings::ESP::color_bone);
     GetVal(settings["ESP"]["color_box_vis"], &Settings::ESP::color_box_vis);
     GetVal(settings["ESP"]["color_box_hid"], &Settings::ESP::color_box_hid);
-    GetVal(settings["ESP"]["color_box_behind_hid"], &Settings::ESP::color_box_behind_hid);
+    GetVal(settings["ESP"]["color_box_behind_vis"], &Settings::ESP::color_box_behind_vis);
     GetVal(settings["ESP"]["color_box_behind_hid"], &Settings::ESP::color_box_behind_hid);
 
     GetVal(settings["Radar"]["enable"], &Settings::Radar::enable);
