@@ -23,7 +23,6 @@ void DrawInfo(C_BasePlayer* localplayer, int sWidth, int sHeight)
 
     std::stringstream ss;
     ss << "HP: " << localplayer->GetHealth() << "    Ammo: " << ammoInMag;
-    ss << "  stance: " << localplayer->GetStance();
 
     Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(0, 0, 0, 255));
     Draw::Text(10, 50, ss.str().c_str(), font_foundation20, Color(66, 180, 255, 255));
