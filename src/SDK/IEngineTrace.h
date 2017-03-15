@@ -56,10 +56,12 @@ struct trace_t
     csurface_t surface;
 
     HitGroups hitgroup;
-    short physicsbone;
 
-    unsigned short worldSurfaceIndex;
     C_BaseEntity* m_pEntityHit;
+
+    uint16_t physicsbone;
+    uint16_t worldSurfaceIndex;
+
     int hitbox;
 };
 

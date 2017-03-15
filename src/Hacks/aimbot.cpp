@@ -224,7 +224,7 @@ void Aimbot::CreateMove(CUserCmd* cmd)
                     cmd->buttons &= (~IN_ATTACK);
             }
 
-            if (activeWeapon->GetFiremode() > 1 || fromLastFire > 1)
+            if ((activeWeapon->GetFiremode() > 1 || fromLastFire > 1) && !localplayer->IsScoped())
             {
                 cmd->buttons |= IN_ATTACK;
                 fromLastFire = 0;
