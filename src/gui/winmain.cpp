@@ -129,7 +129,7 @@ void WinMain::TabAimbotRender()
     ImGui::Separator();
 
     ImGui::Text(" ");
-    ImGui::Text("Silent Aim Settings");
+    ImGui::Text("Silent Aim Settings (use with caution, it may be detected.)");
     ImGui::Separator();
     ImGui::SliderFloat("##SILENTFOVHIP", &Settings::Aimbot::silent_fov_hip, 0.f, 360.f, "Hip-fire silent aim FOV(Rage bot): %0.2f");
     ImGui::SameLine();

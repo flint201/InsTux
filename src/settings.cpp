@@ -9,8 +9,8 @@ float Settings::Aimbot::tu = 0.1;
 float Settings::Aimbot::fov = 10.0;
 float Settings::Aimbot::cont_thresh = 5.0;
 
-float Settings::Aimbot::silent_fov = 0.5;
-float Settings::Aimbot::silent_fov_hip = 60;
+float Settings::Aimbot::silent_fov = 0.0;
+float Settings::Aimbot::silent_fov_hip = 0.0;
 float Settings::Aimbot::recoilx = 1.5;
 float Settings::Aimbot::recoily = 1.0;
 bool Settings::Aimbot::trigger = false;
