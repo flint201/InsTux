@@ -22,6 +22,6 @@ namespace MouseSim
     long getDT();
 
     // Takes the delta angle to be simulated
-    void sim(QAngle deltaAngle);
+    void sim(QAngle deltaAngle, bool bNoise);
     void update(CUserCmd* cmd);
 }

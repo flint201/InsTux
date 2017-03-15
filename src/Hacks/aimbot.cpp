@@ -125,6 +125,18 @@ long GetDT(long min = 5, long max = 20)
     return dt;
 }
 
+QAngle randAngle(float magnitude, float prob)
+{
+    QAngle res(0, 0, 0);
+    if (std::rand() % 1000 < prob * 1000)
+    {
+        float ang = std::rand() % 360;
+        Math::SinCos(DEG2RAD(ang), &res.x, &res.y);
+        res *= magnitude;
+    }
+    return res;
+}
+
 
 void Aimbot::CreateMove(CUserCmd* cmd)
 {
@@ -178,18 +190,19 @@ void Aimbot::CreateMove(CUserCmd* cmd)
     QAngle currAimPunch = *localplayer->GetAimPunchAngle();
     if (aimKeyDown)
     {
-
         if (activeWeapon->GetFiremode() != 0 && (cmd->buttons & IN_ATTACK))
         {
             float diffx = (currAimPunch.x - lastAimPunch.x) * Settings::Aimbot::recoilx;
             float diffy = (currAimPunch.y - lastAimPunch.y) * Settings::Aimbot::recoily;
 
-            angle.x -= diffx;
-            angle.y -= diffy;
+            MouseSim::sim(QAngle (-diffx, -diffy, 0), false);
         }
 
-        QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
-        MouseSim::sim(dAngle);
+        if (localplayer->IsScoped())
+        {
+            QAngle dAngle = Math::DeltaAngles(cmd->viewangles, angle);
+            MouseSim::sim(dAngle, true);
+        }
 
         if (angSilent != cmd->viewangles && localplayer->IsScoped())
         {

@@ -19,7 +19,7 @@ namespace MouseSim
 
     float omega = 2; // angular velocity of noise vector in rad/second
     float theta = 1.5; // angle of noise vector in rad
-    float noiseCoeff = 1.72; //0.618;//1/0.618; // magnitude of noise vector measured in times of norm of error
+    float noiseCoeff = 3; //0.618;//1/0.618; // magnitude of noise vector measured in times of norm of error
 
     int fd; // file descriptor to the mouse device
 }
@@ -109,17 +109,12 @@ long MouseSim::getDT()
 }
 
 // Takes the delta angle to be simulated
-void MouseSim::sim(QAngle deltaAngle)
+void MouseSim::sim(QAngle deltaAngle, bool bNoise)
 {
     float dy = deltaAngle.x / sensitivity();
     float dx = -deltaAngle.y / sensitivity();
 
     float normVec = norm(dx, dy);
-
-    /*
-    if (normVec < 0.5)
-        return;
-    */
     
     long dt = getDT();
 
@@ -143,6 +138,14 @@ void MouseSim::sim(QAngle deltaAngle)
 
     dx = pidX.step(dx);
     dy = pidY.step(dy);
+
+    if (bNoise)
+    {
+        float nx, ny;
+        noise(normVec, dt, nx, ny);
+        dx += nx;
+        dy += ny;
+    }
 
     if (Settings::Aimbot::limit_aim_speed)
     {
