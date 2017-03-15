@@ -21,7 +21,7 @@ See post on UnknownCheats.me:
     sudo apt-get install gcc-6 g++-6
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
     ```
-    Also ere is AimTux's tutorial page for updating g++ if you need further information.
+    Also here is AimTux's tutorial page for updating g++ if you need further information.
     [How to update g++](https://github.com/AimTuxOfficial/AimTux/wiki/Updating-your-compiler)
     
     You will also need to install the corresponding g++ multilib, on Ubuntu/Debian:
